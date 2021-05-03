@@ -79,7 +79,7 @@ jp_region_choice =(
     ('kyushu','Kyushu')
 )
 
-jp_provices_choice = (
+jp_Provinces_choice = (
     (1,'default'),
 )
 choice = (

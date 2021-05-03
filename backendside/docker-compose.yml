@@ -1,33 +1,43 @@
 version: '3.8'
+
+networks:
+  vietcatholicjp-network:
+    name: vietcatholicjp-network
+    driver: bridge
+  
 services: 
-    backend:
+    vietcatholicjp-backend:
       build: 
         context: .
         dockerfile: Dockerfile
-      command: 'python3 manage.py runserver 0.0.0.0:8000'
+      command: 'bash run_server.sh'
       ports:
         - 8000:8000
       volumes: 
         - .:/app
+      environment:
+        - DB_NAME=vietcatholicjp
+        - DB_USER=administrator
+        - DB_PASSWORD=Upde5rx_m20813
+        - DB_HOSTNAME=vietcatholic-db
+        - DB_PORT=3306
       depends_on: 
-        - db
-    queue:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      command: 'python consumer.py'
-      depends_on:
-        - db
+        - vietcatholic-db
+      networks:
+        - vietcatholicjp-network
 
-    db:
+    vietcatholic-db:
+      container_name: vietcatholic-db
       image: mysql:5.7.22
       restart: always
       environment:
-        MYSQL_DATABASE: admin
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
-        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: vietcatholicjp
+        MYSQL_USER: administrator
+        MYSQL_PASSWORD: Upde5rx_m20813
+        MYSQL_ROOT_PASSWORD: Upde5rx_m20813
       volumes:
         - .dbdata:/var/lib/mysql
       ports: 
         - 33066:3306
+      networks:
+        - vietcatholicjp-network

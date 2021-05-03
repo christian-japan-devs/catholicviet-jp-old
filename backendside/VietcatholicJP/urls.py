@@ -18,7 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include('usersapp.urls')),
+    path('api/',include('api.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('qr_code/', include('qr_code.urls', namespace="qr_code")),
 ]
