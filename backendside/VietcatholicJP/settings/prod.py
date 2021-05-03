@@ -12,11 +12,11 @@ WSGI_APPLICATION = 'VietcatholicJP.wsgi.prod.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'admin',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'db',
-        'PORT': '3306'
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOSTNAME'),
+        'PORT': env('DB_PORT'),
     }
 }
 

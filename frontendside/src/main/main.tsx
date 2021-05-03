@@ -1,6 +1,7 @@
 import React from 'react';
 import MainFooter from '../components/MainFooter';
 import MainHeader from '../components/MainHeader'
+import NewFeeds from './NewFeed'
 import './main.css';
 
 const Main = () => {
@@ -18,49 +19,7 @@ const Main = () => {
                 </div>
 
                 <div className="row mb-2">
-                    <div className="card col-md-6">
-                        <a href="#" target="_blank">
-                            <div className="card-body">
-                                <div className="gd-item--content-headline ">Tông thư “Lòng mến mộ Kinh thánh” của Đức Thánh Cha
-                                    Phanxico</div>
-                                <p>Ngày 09 /12/2020</p>
-                                <p>Lòng mến mộ Kinh Thánh, một “tình yêu sống động và dịu dàng” đối với lời Chúa: đây chính
-                                    là di sản mà Thánh Giêrônimô đã để lại cho Giáo hội bằng cả cuộc đời và công sức của
-                                    mình...</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                            <div className="col p-4 d-flex flex-column position-static">
-                                <strong className="d-inline-block mb-2 text-primary">Tông thư</strong>
-                                <h3 className="mb-0">Sứ điệp Mùa Chay 2021 của Đức Thánh Cha Phanxico</h3>
-                                <div className="mb-1 text-muted">Tháng 2, 2021 lúc 12:00 PM</div>
-                                <p className="card-text mb-auto">“Này chúng ta lên Giêrusalem” (Mt 20,18)
-                                        Mùa Chay: Thời gian làm tươi mới Niềm tin, Hy vọng và Tình yêu....</p>
-                                <a href="#" className="stretched-link">Xem thêm</a>
-                            </div>
-                            <div className="col-auto d-none d-lg-block">
-                                <svg className="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                            <div className="col p-4 d-flex flex-column position-static">
-                                <strong className="d-inline-block mb-2 text-success">Design</strong>
-                                <h3 className="mb-0">Post title</h3>
-                                <div className="mb-1 text-muted">Nov 11</div>
-                                <p className="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                                <a href="#" className="stretched-link">Continue reading</a>
-                            </div>
-                            <div className="col-auto d-none d-lg-block">
-                                <svg className="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                            </div>
-                        </div>
-                    </div>
+                    <NewFeeds/>
                 </div>
 
                 <div className="row">

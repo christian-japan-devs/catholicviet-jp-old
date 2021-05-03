@@ -11,10 +11,28 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
+env = environ.Env(
+    DEBUG=(bool, True),
+    DB_NAME=(str, 'my_db'),
+    DB_USER=(str, 'my_admin'),
+    DB_PASSWORD=(str, 'my_password'),
+    DB_HOSTNAME=(str, 'localhost'),
+    DB_PORT=(int, 5432),
+    SENTRY_DSN=(str, None),
+    DEPLOY_ENV=(str, 'local'),
+    GIT_VERSION=(str, None),
+    CSRF_COOKIE_SECURE=(bool, False),
+    SECRET_KEY=(str, 'change_me'),
+)
+env.read_env(
+    os.path.join(BASE_DIR, '..', '.env')
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -22,8 +40,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o8=7dy09#%9xc@!#)m8a_tkrox&eiy2!rtl6h9yyfjyh4b1v&w'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -41,7 +57,8 @@ INSTALLED_APPS = [
     'corsheaders',
     #'tinymce',
     #'qr_code',
-    'usersapp.apps.UsersappConfig'
+    'api.apps.ApiConfig',
+    'adminapp.apps.AdminappConfig'
 ]
 
 MIDDLEWARE = [
