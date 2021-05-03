@@ -4,8 +4,44 @@
 
 
 
-#Hướng dẫn cài đặt dự án ở local.
+# Hướng dẫn cài đặt dự án ở local.
 
+## 1. Đảm bảo đã cài Python và Node
+
+Hãy đảm bảo rằng bạn đã cài Python 3.6 trở lên.
+
+Kiểm tra như sau:
+
+```
+$ python -V
+Python 3.8.5
+```
+
+Hãy đảm bảo rằng bạn đã cài `node` và `npm`.
+
+Kiểm tra như sau:
+
+```
+$ node -v
+v12.16.3
+
+$ npm -v
+6.14.4
+```
+
+## Cài đặt phần frontend
+
+```
+cd frontendside
+npm run install
+```
+### Truy cập phía người dùng
+
+
+```
+npm run start
+# Truy cập http://localhost:3000
+```
 
 ## Cài đặt phần backend bằng Docker
 
@@ -63,17 +99,65 @@ mysql -u username -p
 
 ## Cài đặt phần backend không dùng Docker
 
+### 1. Database Installation
+Cài docker theo hướng dẫn tại [đây](https://dev.mysql.com/doc/workbench/en/wb-installing.html)
 
-## Cài đặt phần frontend
+### 2. Chuẩn bị tệp .env
 
-```
-cd frontendside
-npm run install
-```
-### Truy cập phía người dùng
-
+Tạo tệp `.env` với nội dung như sau:
 
 ```
-npm run start
-# Truy cập http://localhost:3000
+DB_NAME=my_db
+DB_USER=my_user
+DB_PASSWORD=my_password
+DB_HOSTNAME=localhost
+```
+
+### 2. Tạo schema
+
+```
+$ bash run_migrate.sh
+```
+
+Về bản chất, lệnh này tương đương với:
+
+```
+$ cd project
+$ python3 manage.py makemigrations
+$ python3 manage.py migrate
+```
+
+## 3. Tạo tài khoản admin
+
+Tạo tài khoản `user1` với mật khẩu tùy ý bằng cách chạy:
+
+```
+$ bash run_create_admin.sh
+```
+
+Về bản chất, lệnh này tương đương với:
+
+```
+$ cd project
+$ python3 manage.py createsuperuser
+```
+# Cài đặt các yêu cầu tiên quyết
+
+Chú ý: Nếu bạn chọn cách sử dụng `venv` như hướng dẫn trong tệp [`docs/installation-without-docker/SET_UP_VIRTUALENV.md`](/docs/installation-without-docker/SET_UP_VIRTUALENV.md), hãy bật `venv` khi thực hiện bất cứ lệnh nào dưới đây.
+
+Chú ý: Nếu bạn chọn cách sử dụng `pipenv` như hướng dẫn trong tệp [`docs/installation-without-docker/SET_UP_PIPENV.md`](/docs/installation-without-docker/SET_UP_PIPENV.md), hãy bật môi trường `pipenv` khi thực hiện bất cứ lệnh nào dưới đây.
+
+
+## 1. Thỏa mãn requirements.txt
+
+```
+$ pip install -r requirements/development.txt
+$ pip install -r requirements/testing.txt
+```
+
+## 2. Thoả mãn package.json
+
+```
+cd adminapp
+$ npm install
 ```
