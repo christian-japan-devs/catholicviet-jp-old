@@ -1,1 +1,1 @@
-python3 VietcatholicJP/manage.py createsuperuser
+python3 manage.py createsuperuser

@@ -14,6 +14,7 @@ django-tinymce==3.3.0
 django-qr-code==2.1.0
 django-mysql==3.9
 django-multipleselectfield==0.2.0.post2
+django-smart-selects==1.5.9
 django-environ==0.4.5
 django-webpack-loader==0.7.0
 mysqlclient==2.0.1

@@ -37,6 +37,7 @@ services:
         MYSQL_ROOT_PASSWORD: Upde5rx_m20813
       volumes:
         - .dbdata:/var/lib/mysql
+      command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
       ports: 
         - 33066:3306
       networks:

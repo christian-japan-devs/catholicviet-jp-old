@@ -20,7 +20,7 @@ docker-compose up -d --build
 ## Cài đặt database cho lần đầu
 
 ```
-docker exec -it vietcatholicjp-backend bash
+docker-compose exec vietcatholicjp-backend sh
 bash run_migrate.sh
 bash run_create_admin.sh ## Create with username: `catholicjpadmin`
 ```
@@ -46,5 +46,5 @@ docker-compose exec vietcatholicjp-backend rs
 ## Mẹo: Lệnh truy cập vào cửa sổ dòng lệnh của docker
 
 ```
-docker exec -it vietcatholicjp-backend bash
+docker-compose exec vietcatholicjp-backend sh
 ```

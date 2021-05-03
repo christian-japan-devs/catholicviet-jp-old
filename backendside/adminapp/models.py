@@ -2,8 +2,10 @@ from django.db import models
 from django.utils import timezone
 import sys
 from PIL import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 from tinymce.models import HTMLField
+from smart_selects.db_fields import ChainedForeignKey
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -28,70 +30,6 @@ def generate_unique_code():
 
     return code
 
-
-class Province(models.Model):
-    province_nation = models.CharField(_('Quốc gia'),help_text=_('Tên Quốc gia'),max_length=50)
-    province_code = models.CharField(_('Mã'),help_text=_('Mã theo i18n'),max_length=3)
-    province_en_name = models.CharField(_('Tên quốc tế'),help_text=_('Tên theo tiếng anh'),max_length=50)
-    
-    def __str__(self):
-        return self.province_en_name
-
-class Place(models.Model):
-    from VietcatholicJP.constant_choice import  jp_Provinces_choice ,jp_region_choice
-
-    place_name = models.CharField(_('Tiêu đề'),help_text=_('Tiêu đề'),max_length=255,null=True,blank=True)
-    place_address = models.CharField(_('Địa chỉ'),help_text=_('Địa chỉ'),max_length=255)
-    place_url = models.CharField(_('URL'),help_text=_('Link liên kết'),max_length=100, default='',null=True,blank=True)
-    place_phone = models.CharField(_('Điện thoại'),help_text=_('Số điện thoại'),max_length=15, default='',null=True,blank=True)
-    place_email = models.CharField(_('Email'),help_text=_('Địa chỉ email'),max_length=50, default='',null=True,blank=True)
-    place_province = models.ForeignKey(Province,on_delete=models.CASCADE,help_text=_('Tỉnh thành'),null=True,blank=True)
-    place_lon = models.FloatField(_('Vĩ độ'),help_text=_('Vĩ độ theo bản đồ Google'),null=True,blank=True)
-    place_lat = models.FloatField(_('Kinh độ'),help_text=_('Kinh độ theo bản đồ Google'),null=True,blank=True)
-    place_created_user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,default=None,blank=True)
-    place_updated_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,default=None,blank=True,related_name='place_updated_user')
-    place_last_updated_date = models.DateTimeField(_('Ngày cập nhật'),help_text=_('Lần cuối cập nhật'),default=timezone.now)
-    
-
-    def __str__(self):
-        return self.place_name
-
-class Church(models.Model):
-    from VietcatholicJP.constant_choice import  jp_Provinces_choice ,jp_region_choice
-
-    church_name = models.CharField(_('Tên Nhà thờ'),help_text=_('Tên Nhà thờ'),max_length=120)
-    church_describe = HTMLField(_('Mô tả'),help_text=_('Mô tả sơ lược về Nhà thờ'),blank=True)
-    church_image = models.ImageField(_('Hình ảnh'),help_text=_('Hình ảnh đại diện'),null=True,blank=True,upload_to='church_images')
-    church_address = models.CharField(_('Địa chỉ'),help_text=_('Địa chỉ'),max_length=255)
-    church_url = models.CharField(_('URL'),help_text=_('Link liên kết'),max_length=100, default='',blank=True)
-    church_phone = models.CharField(_('Điện thoại'),help_text=_('Số điện thoại'),max_length=15, default='',blank=True)
-    church_email = models.CharField(_('Email'),help_text=_('Địa chỉ email'),max_length=50, default='',blank=True)
-    #church_language = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Ngôn ngữ chính'),related_name='Church')
-    #church_language_1 = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Ngôn ngữ 1'),null=True,blank=True,related_name='church_language_1')
-    #church_language_2 = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Ngôn ngữ 2'),null=True,blank=True,related_name='church_language_2')
-    #church_language_3 = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Ngôn ngữ 3'),null=True,blank=True,related_name='church_language_3')
-    #church_language_4 = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Ngôn ngữ 4'),null=True,blank=True,related_name='church_language_4')
-    #church_province = models.SmallIntegerField(_('Tỉnh'),help_text=_('Tỉnh thành'),max_length=10,choices= jp_Provinces_choice,blank=True,default=1)
-    church_province = models.ForeignKey(Province,verbose_name=_('Tỉnh'),help_text=_('Tỉnh'),default=None,blank=True,null=True,on_delete=models.SET_NULL)
-    church_notice_on_map = HTMLField(_('Thông báo'),help_text=_('Nội dung hiển thị trên Map'),blank=True,default = "")
-    church_lon = models.FloatField(_('Kinh độ'),help_text=_('Kinh độ theo bản đồ Google'),default=0.0,blank=True,null=True)
-    church_lat = models.FloatField(_('Vĩ độ'),help_text=_('Vĩ độ theo bản đồ Google'),default=0.0,blank=True,null=True)
-    church_geo_hash = models.CharField('geo_hash',max_length=30, default='',blank=True)
-    church_register_user = models.ForeignKey(User,on_delete=models.CASCADE,help_text=_('Người tạo'),default=None,blank=True,null=True)
-    church_update_user = models.ForeignKey(User,on_delete=models.CASCADE,default=None,blank=True,null=True,help_text=_('Người cuối cập nhật'),related_name='church_update_user')
-    church_update_date = models.DateTimeField(_('Ngày cập nhật'),help_text=_('Lần cuối cập nhật'),default=timezone.now)
-
-    def __str__(self):
-        return self.church_name
-
-class ChurchImages(models.Model):
-    church_image_title = models.CharField(_('image title'),help_text=_('Tiêu đề cho hình ảnh'),max_length=120)
-    church_image = models.ImageField(_('Hình ảnh'),help_text=_('Hình ảnh đại diện'),null=True,blank=True,upload_to='church_images')
-    church_image_church = models.ForeignKey(Church, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.church_image_title} : {self.id}'
-
 class Language(models.Model):
     language_name = models.CharField(_('Tên Ngôn ngữ'),help_text=_('Ngôn ngữ của Quốc gia'),max_length=50)
     language_code = models.CharField(_('Mã'),help_text=_('Mã theo i18n'),max_length=3)
@@ -102,48 +40,138 @@ class Language(models.Model):
     def __str__(self):
         return self.language_name
 
-class DailyReading(models.Model):
-    daily_reading_title = models.CharField(_('Chủ đề'),help_text=_('Chủ đề của ngày '),max_length=50)
-    daily_reading_date = models.DateField(_('Ngày tháng'),help_text=_('Ngày tháng dương lịch'))
-    daily_date_ordinary = models.CharField(_('Tuần phụng vụ'),help_text=_('Tuần phụng vụ'),max_length=3)
-    daily_reading_first_reading_ref = models.CharField(_('Tham chiếu 1'),help_text=_('Bài đọc 1 tham chiếu'),default='',max_length=100)
-    daily_reading_first_reading_title = models.CharField(_('Chủ đề 1'),help_text=_('Bài đọc 1 Chủ đề'),default='',blank=True,max_length=100)
-    daily_reading_first_reading_according = models.CharField(_('Người viết'),help_text=_('Bài đọc 1 người viết'),default='',max_length=100)
-    daily_reading_first_reading_content = HTMLField(_('Nội dung'),help_text=_('Bài đọc 1 Nội dung'),default='')
-    daily_reading_responsorial_ref = models.CharField(_('Đáp ca Tham chiếu'),help_text=_('Bài đọc 1 tham chiếu'),blank=True,default='',max_length=100)
-    daily_reading_responsorial_res = models.CharField(_('Cộng đoàn'),help_text=_('Cộng đoàn đáp'),default='',blank=True,max_length=200)
-    daily_reading_responsorial_content = HTMLField(_('Đáp ca'),help_text=_('Nội dung đáp ca'),blank=True,default='')
-    daily_reading_second_reading_ref = models.CharField(_('Tham chiếu 2'),help_text=_('Bài đọc 2 tham chiếu'),blank=True,default='',max_length=100)
-    daily_reading_second_reading_title = models.CharField(_('Chủ đề 2'),help_text=_('Bài đọc 2 Chủ đề'),blank=True,default='',max_length=100)
-    daily_reading_second_reading_according = models.CharField(_('Người viết'),help_text=_('Bài đọc 2 người viết'),blank=True,default='',max_length=100)
-    daily_reading_second_reading_content = HTMLField(_('Nội dung'),help_text=_('Bài đọc 2 Nội dung'),blank=True,default='')
-    daily_reading_acclamation_res = models.CharField(_('Tung hô tin mừng'),help_text=_('Tham chiếu'),default='',blank=True,max_length=300)
-    daily_reading_acclamation_content = models.CharField(_('Tung hô tin mừng'),help_text=_('Nội dung'),default='',blank=True,max_length=500)
-    daily_reading_gosspel_ref = models.CharField(_('Tham chiếu 3'),help_text=_('Lời Chúa tham chiếu'),default='',max_length=100)
-    daily_reading_gosspel_title = models.CharField(_('Chủ đề 3'),help_text=_('Lời Chúa Chủ đề'),default='',blank=True,max_length=100)
-    daily_reading_gosspel_according = models.CharField(_('Người viết'),help_text=_('Lời Chúa người viết'),default='',max_length=100)
-    daily_reading_gosspel_content = HTMLField(_('Nội dung'),help_text=_('Lời Chúa Nội dung'),default='',null=True,blank=True)
-    daily_reading_readed = models.IntegerField(_('Số lượt đọc'),help_text=_('Số lượt đọc'),default=0)
-    daily_reading_reading_laguage = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Ngôn ngữ chính'),related_name="daily_reading_reading_laguage")
-    daily_reading_created_date = models.DateTimeField(_('Ngày viết'),help_text=_('Ngày tạo'),default=timezone.now)
-    daily_reading_last_updated_date = models.DateTimeField(_('Ngày cập nhật'),help_text=_('Lần cuối cập nhật'),default=timezone.now)
-    daily_reading_created_user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True,related_name="daily_reading_created_user")
-    
+class Country(models.Model):
+    country_name = models.CharField(_('Name'),help_text=_('Country name'),max_length=50)
+    country_code = models.CharField(_('Postal code'),help_text=_('Country code'),max_length=12)
+    country_en_name = models.CharField(_('International Name'),help_text=_('International Name'),max_length=50)
 
     def __str__(self):
-        return f'{self.daily_date_ordinary} : {str(self.id)} : {self.daily_reading_title}'
-    
-    class meta:
-        ordering = ["daily_reading_created_date"]
+        return self.country_en_name
 
+    class Meta:
+        verbose_name = _("Country")
+        verbose_name_plural = _("Countries")
+
+class Province(models.Model):
+    province_name = models.CharField(_('Name'),help_text=_('Province name'),max_length=50)
+    province_code = models.CharField(_('Postal code'),help_text=_('Postal code'),max_length=12)
+    province_en_name = models.CharField(_('International Name'),help_text=_('International Name'),max_length=50)
+    country = models.ForeignKey(Country,on_delete=models.CASCADE,default=None,related_name='province')
+
+    def __str__(self):
+        return self.province_en_name
+
+    class Meta:
+        verbose_name = _("Province")
+        verbose_name_plural = _("Provinces")
+
+
+class District(models.Model):
+    district_name = models.CharField(_('Name'),help_text=_('District name'),max_length=50)
+    district_code = models.CharField(_('Postal code'),help_text=_('Postal code'),max_length=12)
+    district_en_name = models.CharField(_('International Name'),help_text=_('International Name'),max_length=50)
+    province = models.ForeignKey(Province,on_delete=models.CASCADE,default=None,related_name='province')
+
+    def __str__(self):
+        return self.district_en_name
+
+    class Meta:
+        verbose_name = _("District")
+        verbose_name_plural = _("Districts")
+
+
+class Church(models.Model):
+
+    church_name = models.CharField(verbose_name=_('Church Name'),help_text=_('Church Name'),max_length=120)
+    church_brief_description = HTMLField(verbose_name=_('Brief discription'),help_text=_('Brief discription'),blank=True)
+    church_image = models.ImageField(verbose_name=_('Profile image'),help_text=_('Profile Image'),null=True,blank=True,upload_to='church_images')
+    church_address = models.CharField(verbose_name=_('Address'),help_text=_('Address'),max_length=255)
+    church_url = models.CharField(verbose_name=_('Web adress'),help_text=_('Website adress'),max_length=100, default='',blank=True)
+    church_phone = models.CharField(verbose_name=_('Phone number'),help_text=_('Phone number'),max_length=15, default='',blank=True)
+    church_email = models.CharField(verbose_name=_('Email'),help_text=_('Email address'),max_length=50, default='',blank=True)
+    church_language_main = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Main Language'),related_name='Church_language')
+    church_country = models.ForeignKey(
+        Country, blank=True, null=True, 
+        verbose_name=_('Country'),
+        help_text=_('Belong to country'),
+        on_delete=models.CASCADE,
+        related_name="church_reversed"
+        )
+    church_province = ChainedForeignKey(
+        Province,
+        verbose_name=_('Province'),
+        chained_field = "country",
+        chained_model_field = "country",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="church_reversed",
+        on_delete=models.CASCADE
+        )
+    church_district = ChainedForeignKey(
+        District,
+        verbose_name=_('District'),
+        chained_field = "province",
+        chained_model_field = "province",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="church_reversed",
+        on_delete=models.CASCADE)
+    church_notice_on_map = HTMLField(verbose_name=_('Brief inform on map'),help_text=_('Brief inform on map'),blank=True,default = "")
+    church_lon = models.FloatField(verbose_name=_('Churchs longtitue'),help_text=_('Churchs longtitue acorrding Google'),default=0.0,blank=True,null=True)
+    church_lat = models.FloatField(verbose_name=_('Churchs latitue'),help_text=_('Churchs latitue acorrding Google'),default=0.0,blank=True,null=True)
+    church_geo_hash = models.CharField(verbose_name=_('geo_hash'),max_length=30, default='',blank=True)
+    church_register_user = models.ForeignKey(User,verbose_name=_('Created User'),on_delete=models.CASCADE,default=None,blank=True,null=True)
+    church_update_user = models.ForeignKey(User,verbose_name=_('Last updated User'),on_delete=models.CASCADE,default=None,blank=True,null=True,related_name='church_update_user')
+    church_update_date = models.DateTimeField(verbose_name=_('Last updated date'),help_text=_('Last updated date'),default=timezone.now)
+
+    def __str__(self):
+        return self.church_name
+
+class ChurchImages(models.Model):
+    church_image_title = models.CharField(_('Image title'),help_text=_('Title for the image'),max_length=120)
+    church_image_title = models.CharField(_('Image title'),help_text=_('Brief discription for the image'),max_length=120)
+    church_image = models.ImageField(_('Hình ảnh'),help_text=_('Hình ảnh đại diện'),null=True,blank=True,upload_to='church_images')
+    church_image_church = models.ForeignKey(Church, on_delete=models.CASCADE)
+    church_image_user = models.ForeignKey(User,verbose_name=_('UpLoaded User'),on_delete=models.CASCADE,default=None,blank=True,null=True)
+    church_image_like = models.IntegerField(_('Post like'),help_text=_('Number of post liked'),default=0)
+    church_image_share = models.IntegerField(_('Posted Shared'),help_text=_('Number of post shared'),default=0)
+    church_image_clicked = models.IntegerField(_('View numbers'),help_text=_('View numbers'),default=0)
+
+    def __str__(self):
+        return f'{self.church_image_title} : {self.id}'
+
+class ChurchPost(models.Model):
+    church_post_title = models.CharField(verbose_name=_('Post title'),help_text=_('Post title max length = 120'),max_length=120)
+    church_post_image = models.ImageField(verbose_name=_('Image'),help_text=_('Image for the title'),null=True,blank=True,upload_to='church_images')
+    church_post_type = models.CharField(verbose_name=_('Post type'),help_text=_('Type of this post'),max_length=120)
+    church_post_content = HTMLField(verbose_name=_('Content'),help_text=_('Content'),default='')
+    church_post_church = models.ForeignKey(Church,verbose_name=_('Belong to Church'),on_delete=models.CASCADE)
+    church_post_date = models.DateTimeField(_('Posted date'),help_text=_('Posted date'),default=timezone.now)
+    church_post_user = models.ForeignKey(User,verbose_name=_('Posted User'),on_delete=models.CASCADE,default=None,blank=True,null=True,related_name='church_post_user')
+    church_post_update_date = models.DateTimeField(_('Last updated date'),default=timezone.now)
+    church_post_update_user = models.ForeignKey(User,verbose_name=_('Last updated User'),on_delete=models.CASCADE,default=None,blank=True,null=True,related_name='church_post_update_user')
+    church_post_like = models.IntegerField(_('Post like'),help_text=_('Number of post liked'),default=0)
+    church_post_share = models.IntegerField(_('Posted Shared'),help_text=_('Number of post shared'),default=0)
+    church_post_clicked = models.IntegerField(_('View numbers'),help_text=_('Viewed numbers'),default=0)
+    church_post_status = models.BooleanField(_('Status'),help_text=_('Approve status'),default=True,blank=True,null=True)
+
+    def __str__(self):
+        return f'{self.church_post_title}'
 
 
 class MassTime(models.Model):
     mass_type = (
-        ('NORMAL',_('Ngày thường')),
-        ('SUNDAY',_('Chúa Nhật')),
-        ('SPECIAL',_('Lễ Trọng')),
-        ('OTHER',_('Khác'))
+        ('NORMAL',_('Weekday')),
+        ('SUNDAY',_('Sunday')),
+        ('SPECIAL',_('Special')),
+        ('Ceremony',_('Ceremony')),
+        ('OTHER',_('Others'))
     )
     mass_time_title = models.CharField(_('Tiêu đề'),help_text=_('Tiêu đề'),max_length=255,null=True,blank=True)
     mass_time_start = models.DateTimeField(_('Thời gian'),help_text=_('Thời điểm bắt đầu'),null=True,blank=True)
@@ -152,7 +180,7 @@ class MassTime(models.Model):
     mass_time_type = models.CharField(_('Mass type'),max_length=15,choices=mass_type,default="NORMAL",help_text=_('Kiểu Thánh Lễ'))
     mass_time_date_ordinary = models.CharField(_('Tuần Phụng vụ'),help_text=_('Tuần phụng vụ'),max_length=4,default="0")
     mass_time_church = models.ForeignKey(Church, on_delete=models.CASCADE,help_text=_('Tên nhà thờ'))
-    mass_time_reading = models.ForeignKey(DailyReading,on_delete=models.CASCADE,help_text=_('Bài đọc'))
+    #mass_time_reading = models.ForeignKey(DailyReading,on_delete=models.CASCADE,help_text=_('Bài đọc'))
     mass_time_created_user = models.ForeignKey(User,on_delete=models.CASCADE)
     mass_time_updated_user = models.ForeignKey(User,on_delete=models.CASCADE,default=None,blank=True,null=True,related_name='mass_time_updated_user')
     mass_time_last_updated_date = models.DateTimeField(_('Ngày cập nhật'),help_text=_('Lần cuối cập nhật'),default=timezone.now)
@@ -195,7 +223,7 @@ class Mass(models.Model):
     mass_time = models.TimeField(_('Giờ'),help_text=_('thời gian'))
     mass_schedule = models.ForeignKey(MassSchedule,help_text=_('Lựa chọn lịch xếp Lễ'),on_delete=models.SET_NULL, null=True)
     mass_title = models.CharField(_('Chủ đề'),help_text=_('Tiêu đề của sự kiện'),max_length=50)
-    mass_reading = models.ForeignKey(DailyReading, on_delete=models.CASCADE,blank=True,null=True)
+    #mass_reading = models.ForeignKey(DailyReading, on_delete=models.CASCADE,blank=True,null=True)
     mass_language = models.CharField(_('Ngôn ngữ'),help_text=_('Ngôn ngữ'),max_length=15,choices=language_choice)
     mass_date_ordinary = models.CharField(_('Tuần phụng vụ'),help_text=_('Tuần phụng vụ'),max_length=3)
     mass_VietcatholicJP_celebrant = models.CharField(_('Cha chủ tế'),help_text=_('Cha chủ tế'),max_length=40,blank=True,null=True)
@@ -230,6 +258,41 @@ class Mass(models.Model):
         mass_image = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.png" % mass_image.name.split('.')[0], 'image/png', sys.getsizeof(outputIoStream), None)
         return mass_image
 
+class Seat(models.Model):
+    from VietcatholicJP.constant_choice import seat_choice, seat_status_choice
+    
+    seat_no = models.CharField(_('Số ghế'),help_text=_('Số ghế'),max_length=4,null=True,blank=False)
+    seat_type = models.CharField(_('Kiểu ghế'),help_text=_('Kiểu ghế'),max_length=30,choices=seat_choice, blank=False)
+    seat_mass_schedule = models.ForeignKey(MassSchedule, on_delete=models.SET_NULL,help_text=_('Mass chapel schedule'),default=None,blank=True,null=True)
+    seat_status = models.CharField(_('Tình trạng'),help_text=_('Chọn tình trạng'),max_length=2,default='A',choices=seat_status_choice)
+
+    #class Meta:
+        #unique_together = ('seat_no','seat_mass','seat_type')
+
+    def __str__(self):
+        return f'{self.seat_no} : {self.seat_type}' #:{self.seat_mass_schedule.mass_schedule_chapel.church_chapel_name}:{self.seat_mass_schedule.mass_time}'
+
+class Registration(models.Model):
+    from VietcatholicJP.constant_choice import status_choice, cf_status_choice
+    registration_date = models.DateTimeField(default=timezone.now,null=True,blank=True)
+    registration_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    registration_user_name = models.CharField(default='',null=True, blank=True,max_length=30)
+    registration_user_age = models.SmallIntegerField(default=0,null=True, blank=True)
+    registration_mass = models.ForeignKey(Mass, on_delete=models.CASCADE)
+    registration_confirm_code = models.CharField(max_length=25,default='',blank=True)
+    registration_code = models.CharField(max_length=200,default='',null=True,blank=True)
+    registration_seat = models.ForeignKey(Seat, on_delete=models.SET_NULL,null=True)
+    registration_total_seats = models.SmallIntegerField(default=1,null=True,blank=True)
+    registration_status = models.CharField(max_length=3,choices=status_choice,default=WAITING,null=True,blank=True)
+    registration_approve_status = models.CharField(max_length=3,choices=status_choice,default=APPROVED,null=True,blank=True,help_text=_('Trạng thái được cập nhập sau khi đăng ký'))
+    registration_last_update = models.DateTimeField(default=timezone.now,null=True,blank=True)
+    registration_confirm_status = models.CharField(max_length=3,choices=cf_status_choice,default=NOTCONFIRM,null=True,blank=True)
+    registration_last_updated_user = models.ForeignKey(User,on_delete=models.CASCADE,default=None,blank=True,null=True,help_text=_('Người cuối cập nhật'),related_name='registration_last_updated_user')
+    registration_last_update_time = models.DateTimeField(default=timezone.now,null=True,blank=True,help_text=_('Thời gian cập nhập lần cuối bởi quản lý'))
+
+    def __str__(self):
+        return f'{self.registration_user.username}:{self.registration_user.profile.profile_full_name}:{self.registration_status}' #: {self.userregistration_seat}'
+
 class Event(models.Model):
     from VietcatholicJP.constant_choice import language_choice 
 
@@ -240,7 +303,7 @@ class Event(models.Model):
     event_content = HTMLField(_('Nội dung'),help_text=_('Nội dung của sự kiện'),blank=True)
     event_language = models.CharField(_('Ngôn ngữ'),help_text=_('Ngôn ngữ'),max_length=15,choices=language_choice)
     event_date_ordinary = models.CharField(_('Tuần phụng vụ'),help_text=_('Tuần phụng vụ'),max_length=10)
-    event_place = models.ForeignKey(Place,on_delete=models.CASCADE, help_text=_('Nơi tổ chức'),blank=True,null=True)
+    #event_place = models.ForeignKey(Place,on_delete=models.CASCADE, help_text=_('Nơi tổ chức'),blank=True,null=True)
     event_holder = models.CharField(_('Người tổ chức'),help_text=_('Người tổ chức'),max_length=40)
     event_slots = models.SmallIntegerField(_('Tổng số ghế'),help_text=_('Tổng số ghế'),default=125)
     event_slots_registered = models.SmallIntegerField(_('Số người đăng ký'),help_text=_('Số người đã đăng ký'),default=0)
@@ -269,40 +332,3 @@ class Event(models.Model):
         outputIoStream.seek(0)
         event_image = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.png" % event_image.name.split('.')[0], 'image/png', sys.getsizeof(outputIoStream), None)
         return event_image
-
-class Seat(models.Model):
-    from VietcatholicJP.constant_choice import seat_choice, seat_status_choice
-    
-    seat_no = models.CharField(_('Số ghế'),help_text=_('Số ghế'),max_length=4,null=True,blank=False)
-    seat_type = models.CharField(_('Kiểu ghế'),help_text=_('Kiểu ghế'),max_length=30,choices=seat_choice, blank=False)
-    seat_mass_schedule = models.ForeignKey(MassSchedule, on_delete=models.SET_NULL,help_text=_('Mass chapel schedule'),default=None,blank=True,null=True)
-    seat_status = models.CharField(_('Tình trạng'),help_text=_('Chọn tình trạng'),max_length=2,default='A',choices=seat_status_choice)
-
-    #class Meta:
-        #unique_together = ('seat_no','seat_mass','seat_type')
-
-    def __str__(self):
-        return f'{self.seat_no} : {self.seat_type}' #:{self.seat_mass_schedule.mass_schedule_chapel.church_chapel_name}:{self.seat_mass_schedule.mass_time}'
-
-class Registration(models.Model):
-    from VietcatholicJP.constant_choice import status_choice, cf_status_choice
-    registration_date = models.DateTimeField(default=timezone.now,null=True,blank=True)
-    registration_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    registration_user_name = models.CharField(default='',null=True, blank=True,max_length=30)
-    registration_user_age = models.SmallIntegerField(default=0,null=True, blank=True)
-    #registration_relationship = models.ForeignKey(Relationships,on_delete=models.SET_NULL,null=True,blank=True)
-    registration_mass = models.ForeignKey(Mass, on_delete=models.CASCADE)
-    registration_confirm_code = models.CharField(max_length=25,default='',blank=True)
-    registration_code = models.CharField(max_length=200,default='',null=True,blank=True)
-    registration_seat = models.ForeignKey(Seat, on_delete=models.SET_NULL,null=True)
-    registration_total_seats = models.SmallIntegerField(default=1,null=True,blank=True)
-    registration_status = models.CharField(max_length=3,choices=status_choice,default=WAITING,null=True,blank=True)
-    registration_approve_status = models.CharField(max_length=3,choices=status_choice,default=APPROVED,null=True,blank=True,help_text=_('Trạng thái được cập nhập sau khi đăng ký'))
-    registration_last_update = models.DateTimeField(default=timezone.now,null=True,blank=True)
-    registration_confirm_status = models.CharField(max_length=3,choices=cf_status_choice,default=NOTCONFIRM,null=True,blank=True)
-    registration_last_updated_user = models.ForeignKey(User,on_delete=models.CASCADE,default=None,blank=True,null=True,help_text=_('Người cuối cập nhật'),related_name='registration_last_updated_user')
-    registration_last_update_time = models.DateTimeField(default=timezone.now,null=True,blank=True,help_text=_('Thời gian cập nhập lần cuối bởi quản lý'))
-
-    def __str__(self):
-        return f'{self.registration_user.username}:{self.registration_user.profile.profile_full_name}:{self.registration_status}' #: {self.userregistration_seat}'
-

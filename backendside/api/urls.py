@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import DailyReadingViewSet,ProviceViewSet, UserAPIView
+from .views import NewFeedViewSet,ProviceViewSet, UserAPIView
 
 urlpatterns = [
-    path('dailyreading',DailyReadingViewSet.as_view({
+    path('newfeed',NewFeedViewSet.as_view({
         'get': 'list',
         'post':'create'
     })),
-    path('dailyreading/<str:pk>',DailyReadingViewSet.as_view({
+    path('newfeed/<str:pk>',NewFeedViewSet.as_view({
         'get': 'retrieve',
         'put':'update',
         'delete':'destroy'

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Contact, DailyReading, Provice
-
+from .models import NewFeed, Contact
+from adminapp.models import Province
 
 class GuessContactSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,13 +13,13 @@ class UserContactSerializer(serializers.ModelSerializer):
         model = Contact
         fields = ('contact_email','contact_content','created_at')
 
-
-class DailyReadingSerializer(serializers.ModelSerializer):
+class NewFeedSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DailyReading
-        fields = '__all__'
+        model = NewFeed
+        fields = ('id','nf_title','nf_type','nf_image','nf_brief_content','nf_content','nf_language','nf_date_created')
 
-class ProviceSerializer(serializers.ModelSerializer):
+
+class ProvinceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Provice
+        model = Province
         fields = '__all__'

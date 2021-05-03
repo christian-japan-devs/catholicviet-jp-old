@@ -1,53 +1,85 @@
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+import sys
+from PIL import Image
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from tinymce.models import HTMLField
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from adminapp.models import Language
 
 # Create your models here.
+class NewFeed(models.Model):
+    new_feed_type = (
+        ('Mass',_('Mass')),
+        ('Event',_('Event')),
+        ('Inform',_('Inform')),
+        ('News',_('News')),
+        
+    )
 
-class Provice(models.Model):
-    province_nation = models.CharField(_('Quốc gia'),help_text=_('Tên Quốc gia'),max_length=50)
-    province_code = models.CharField(_('Mã'),help_text=_('Mã theo i18n'),max_length=3)
-    province_en_name = models.CharField(_('Tên quốc tế'),help_text=_('Tên theo tiếng anh'),max_length=50)
+    post_status_choice = (
+        ('E',_('Editing')),
+        ('W',_('Waiting')),
+        ('A',_('Approved')),
+        ('R',_('Rejected')),
+    )
+
+    post_priority_choice = (
+        ('0',_('Very Importance')),
+        ('1',_('Importance')),
+        ('2',_('Normal')),
+        ('3',_('Rejected')),
+    )
+
+    language_choice = (
+        ('ja',_('日本語')),
+        ('en',_('English')),
+        ('es',_('Spanish')),
+        ('vi',_('Tiếng Việt'))
+    )
+
+    nf_title = models.CharField(_('Chủ đề'),help_text=_('Tiêu đề của sự kiện'),max_length=100)
+    nf_type =  models.CharField(_('Thể loại'),help_text=_('Bài viết liên quan đến thể loại gì'),max_length=15,choices=new_feed_type)
+    nf_image = models.ImageField(_('Hình ảnh'),help_text=_('Hình ảnh'),null=True,blank=True,upload_to='post_images')
+    nf_brief_content = HTMLField(_('Tóm tắt'),help_text=_('Nội dung tóm tắt'))
+    nf_content = HTMLField(_('Nội dung'),help_text=_('Nội dung'))
+    nf_language = models.CharField(_('Ngôn ngữ'),help_text=_('Ngôn ngữ'),max_length=15,choices=language_choice)
+    nf_user_created = models.ForeignKey(User, on_delete=models.CASCADE,default=None,blank=True,null=True,related_name="nf_user_created")
+    nf_date_created = models.DateTimeField(_('Ngày tạo'),help_text=_('Ngày tạo'),default=timezone.now)
+    nf_user_approved = models.ForeignKey(User, on_delete=models.CASCADE,default=None,blank=True,null=True,related_name="nf_user_approved")
+    nf_date_approved = models.DateTimeField(_('Ngày chấp nhận'),help_text=_('Ngày chấp nhận'),default=timezone.now)
+    nf_user_last_edit = models.ForeignKey(User, on_delete=models.CASCADE,default=None,blank=True,null=True,related_name="nf_user_last_edit")
+    nf_date_edited = models.DateTimeField(_('Ngày sửa'),help_text=_('Ngày cuối sửa đổi'),default=timezone.now)
+    nf_post_like = models.IntegerField(_('Post like'),help_text=_('Number of post liked'),default=0)
+    nf_post_share = models.IntegerField(_('Posted Shared'),help_text=_('Number of post shared'),default=0)
+    nf_post_clicked = models.IntegerField(_('View numbers'),help_text=_('Viewed numbers'),default=0)
+    nf_priority_level = models.CharField(_('Độ ưu tiên'),help_text=_('Mức độ ưu tiên của bài viết'),max_length=2,choices=post_priority_choice)
+    nf_status = models.CharField(_('Tình trạng'),help_text=_('Tình trạng của bài viết'),max_length=10,choices=post_status_choice)
+    nf_post_status = models.BooleanField(_('Status'),help_text=_('Approve status'),default=True,blank=True,null=True)
+
+    class Meta:
+        verbose_name = _('New Feed')
+        verbose_name_plural = _('New Feeds')
+        ordering = ('nf_date_edited',)
     
     def __str__(self):
-        return self.province_en_name
+        return self.nf_title
 
-class DailyReading(models.Model):
-    daily_reading_title = models.CharField(_('Chủ đề'),help_text=_('Chủ đề của ngày '),max_length=50)
-    daily_reading_date = models.DateField(_('Ngày tháng'),help_text=_('Ngày tháng dương lịch'))
-    daily_date_ordinary = models.CharField(_('Tuần phụng vụ'),help_text=_('Tuần phụng vụ'),max_length=3)
-    daily_reading_first_reading_ref = models.CharField(_('Tham chiếu 1'),help_text=_('Bài đọc 1 tham chiếu'),default='',max_length=100)
-    daily_reading_first_reading_title = models.CharField(_('Chủ đề 1'),help_text=_('Bài đọc 1 Chủ đề'),default='',blank=True,max_length=100)
-    daily_reading_first_reading_according = models.CharField(_('Người viết'),help_text=_('Bài đọc 1 người viết'),default='',max_length=100)
-    daily_reading_first_reading_content = HTMLField(_('Nội dung'),help_text=_('Bài đọc 1 Nội dung'),default='')
-    daily_reading_responsorial_ref = models.CharField(_('Đáp ca Tham chiếu'),help_text=_('Bài đọc 1 tham chiếu'),blank=True,default='',max_length=100)
-    daily_reading_responsorial_res = models.CharField(_('Cộng đoàn'),help_text=_('Cộng đoàn đáp'),default='',blank=True,max_length=200)
-    daily_reading_responsorial_content = HTMLField(_('Đáp ca'),help_text=_('Nội dung đáp ca'),blank=True,default='')
-    daily_reading_second_reading_ref = models.CharField(_('Tham chiếu 2'),help_text=_('Bài đọc 2 tham chiếu'),blank=True,default='',max_length=100)
-    daily_reading_second_reading_title = models.CharField(_('Chủ đề 2'),help_text=_('Bài đọc 2 Chủ đề'),blank=True,default='',max_length=100)
-    daily_reading_second_reading_according = models.CharField(_('Người viết'),help_text=_('Bài đọc 2 người viết'),blank=True,default='',max_length=100)
-    daily_reading_second_reading_content = HTMLField(_('Nội dung'),help_text=_('Bài đọc 2 Nội dung'),blank=True,default='')
-    daily_reading_acclamation_res = models.CharField(_('Tung hô tin mừng'),help_text=_('Tham chiếu'),default='',blank=True,max_length=300)
-    daily_reading_acclamation_content = models.CharField(_('Tung hô tin mừng'),help_text=_('Nội dung'),default='',blank=True,max_length=500)
-    daily_reading_gosspel_ref = models.CharField(_('Tham chiếu 3'),help_text=_('Lời Chúa tham chiếu'),default='',max_length=100)
-    daily_reading_gosspel_title = models.CharField(_('Chủ đề 3'),help_text=_('Lời Chúa Chủ đề'),default='',blank=True,max_length=100)
-    daily_reading_gosspel_according = models.CharField(_('Người viết'),help_text=_('Lời Chúa người viết'),default='',max_length=100)
-    daily_reading_gosspel_content = HTMLField(_('Nội dung'),help_text=_('Lời Chúa Nội dung'),default='',null=True,blank=True)
-    daily_reading_readed = models.IntegerField(_('Số lượt đọc'),help_text=_('Số lượt đọc'),default=0)
-    daily_reading_reading_laguage = models.ForeignKey(Language,on_delete=models.CASCADE,help_text=_('Ngôn ngữ chính'))
-    daily_reading_created_date = models.DateTimeField(_('Ngày viết'),help_text=_('Ngày tạo'),default=timezone.now)
-    daily_reading_last_updated_date = models.DateTimeField(_('Ngày cập nhật'),help_text=_('Lần cuối cập nhật'),default=timezone.now)
-    daily_reading_created_user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
-    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.nf_image = self.compressImage(self.nf_image)
+        super(NewFeed, self).save(*args, **kwargs)
+    def compressImage(self,nf_image):
+        imageTemproary = Image.open(nf_image)
+        outputIoStream = BytesIO()
+        imageTemproaryResized = imageTemproary.resize( (720,420) ) 
+        imageTemproaryResized.save(outputIoStream , format='PNG', quality=60)
+        outputIoStream.seek(0)
+        nf_image = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.png" % nf_image.name.split('.')[0], 'image/png', sys.getsizeof(outputIoStream), None)
+        return nf_image
 
-    def __str__(self):
-        return f'{self.daily_date_ordinary} : {str(self.id)} : {self.daily_reading_title}'
-    
-    class meta:
-        ordering = ["daily_reading_created_date"]
 
 class Contact(models.Model):
     contact_full_name = models.CharField(_('Họ Tên'),default='',max_length=30,help_text=_('Họ tên đầy đủ'))
