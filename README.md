@@ -6,7 +6,7 @@
 
 # Hướng dẫn cài đặt dự án ở local.
 
-## 1. Đảm bảo đã cài Python và Node
+## Đảm bảo đã cài Python và Node
 
 Hãy đảm bảo rằng bạn đã cài Python 3.6 trở lên.
 
@@ -141,14 +141,8 @@ Về bản chất, lệnh này tương đương với:
 $ cd project
 $ python3 manage.py createsuperuser
 ```
-# Cài đặt các yêu cầu tiên quyết
 
-Chú ý: Nếu bạn chọn cách sử dụng `venv` như hướng dẫn trong tệp [`docs/installation-without-docker/SET_UP_VIRTUALENV.md`](/docs/installation-without-docker/SET_UP_VIRTUALENV.md), hãy bật `venv` khi thực hiện bất cứ lệnh nào dưới đây.
-
-Chú ý: Nếu bạn chọn cách sử dụng `pipenv` như hướng dẫn trong tệp [`docs/installation-without-docker/SET_UP_PIPENV.md`](/docs/installation-without-docker/SET_UP_PIPENV.md), hãy bật môi trường `pipenv` khi thực hiện bất cứ lệnh nào dưới đây.
-
-
-## 1. Thỏa mãn requirements.txt
+## 4. Thỏa mãn requirements.txt
 
 ```
 $ pip install -r requirements/development.txt
