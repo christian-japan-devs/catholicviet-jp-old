@@ -15,10 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.authtoken import views
+from django.conf import settings
+from django.conf.urls.static import static
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
+    path('',include('userapp.urls')),
     path('admin/', admin.site.urls),
     path('api/',include('api.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('qr_code/', include('qr_code.urls', namespace="qr_code")),
+    path('api-token-auth',views.obtain_auth_token,name='api-token-auth'),
+    path('tinymce/', include('tinymce.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('chaining/', include('smart_selects.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+urlpatterns = format_suffix_patterns(urlpatterns)

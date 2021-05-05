@@ -1,44 +1,45 @@
 from django.utils.translation import ugettext_lazy as _
+from .constants import *
 #Booking status
 status_choice = (
-    ('W','Waiting'),
-    ('A','Approved'),
-    ('D','Denied'),
-    ('P','Presented'),
-    ('AB','Absented'),
-    ('C','Cancel')
+    (WAITING,_('Waiting')),
+    (APPROVED,_('Approved')),
+    (DENY,_('Denied')),
+    (PRESENTED,_('Presented')),
+    (ABSENTED,_('Absented')),
+    (CANCEL,_('Cancel'))
 )
 
 cf_status_choice = (
-    ('CF', 'CONFIRMED'),
-    ('NF','NOTCONFIRM')
+    (CONFIRMED, _('confirmed')),
+    (NOTCONFIRM,_('not confirmed yet'))
 )
 #language
 
 language_choice = (
-        ('ja',_('日本語')),
-        ('en',_('English')),
-        ('es',_('Spanish')),
-        ('vi',_('Tiếng Việt'))
+        (EN,_('English')),
+        (JA,_('日本語')),
+        (VI,_('Tiếng Việt')),
+        (ES,_('Spanish'))
     )
 
 event_choice = (
-        ('MASS','Mass'),
-        ('EVENT','Event')
+        (MASS,'Mass'),
+        (EVENT,'Event')
     )
 
 seat_status_choice = (
-        ('A','Availabel'),
-        ('T','Taken'),
-        ('U','Unavailabel')
+        (AVAILABEL,_('Availabel')),
+        (REGISTERED,_('Registered')),
+        (TAKEN,_('Taken')),
+        (UNAVAILABEL,_('Unavailabel')),
     )
 
 seat_choice = (
-        ('','Select'),
-        ('20','Over 20'),
-        ('35','Over 35'),
-        ('55','Over 55'),
-        ('priority','Priority Seat')
+        (SEAT_20,_('Over 20')),
+        (SEAT_32,_('Over 32')),
+        (SEAT_50,_('Over 50')),
+        (SEAT_PRI,_('Priority Seat'))
     )
 
 week_day_choice  = (
@@ -67,66 +68,25 @@ health_choice = (
     ('SICK',_('Bị ốm gần đây'))
 )
 
-
-jp_region_choice =(
-    ('hokkaido','Hokkaido'),
-    ('tohoku','Tohoku'),
-    ('kanto','Kanto'),
-    ('chubu','Chubu'),
-    ('kansai','Kansai'),
-    ('chugoku','Chugoku'),
-    ('shikoku','Shikoku'),
-    ('kyushu','Kyushu')
+new_feed_type = (
+    ('letter',_('Letter')),
+    ('Refl',_('Gospel Reflection')),
+    ('Event',_('Event')),
+    ('Inform',_('Inform')),
+    ('News',_('News')),
+    
 )
 
-jp_Provinces_choice = (
-    (1,'default'),
+post_status_choice = (
+    ('E',_('Editing')),
+    ('W',_('Waiting')),
+    ('A',_('Approved')),
+    ('R',_('Rejected')),
 )
-choice = (
-    ('hokkaido','Hokkaido'),
-    ('akita','Akita'),
-    ('aomori','Aomori'),
-    ('fukushima','Iwate'),
-    ('miyagi','Miyagi'),
-    ('yamagata','yamagata'),
-    ('chiba','Chiba'),
-    ('gunma','Gunma'),
-    ('ibaraki','Ibaraki'),
-    ('kanagawa','Kanagawa'),
-    ('saitama','Saitama'),
-    ('tochigi','Tochigi'),
-    ('tokyo','Tokyo'),
-    ('aichi','Aichi'),
-    ('fukui','Fukui'),
-    ('gifu','Gifu'),
-    ('ishikawa','Ishikawa'),
-    ('nagano','Nagano'),
-    ('niigata','Niigata'),
-    ('shizuoka','Shizuoka'),
-    ('toyama','Toyama'),
-    ('yamanashi','Yamanashi'),
-    ('hyogo','Hyogo'),
-    ('kyoto','Kyoto'),
-    ('mie','Mie'),
-    ('nara','Nara'),
-    ('osaka','Osaka'),
-    ('shiga','Shiga'),
-    ('wakayama','Wakayama'),
-    ('hiroshima','Hiroshima'),
-    ('okayama','Okayama'),
-    ('shimane','Shimane'),
-    ('tottori','Tottori'),
-    ('yamaguchi','Yamaguchi'),
-    ('ehime','Ehime'),
-    ('kagawa','Kagawa'),
-    ('kochi','Kochi'),
-    ('tokushima','Tokushima'),
-    ('fukuoka','Fukuoka'),
-    ('kagoshima','Kagoshima'),
-    ('kumamoto','Kumamoto'),
-    ('miyazaki','Miyazaki'),
-    ('nagasaki','Nagasaki'),
-    ('oita','Oita'),
-    ('okinawa','Okinawa'),
-    ('saga','Saga')
+
+post_priority_choice = (
+    ('0',_('Very Importance')),
+    ('1',_('Importance')),
+    ('2',_('Normal')),
+    ('3',_('Rejected')),
 )

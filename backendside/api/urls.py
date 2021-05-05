@@ -1,24 +1,34 @@
 from django.urls import path
-from .views import NewFeedViewSet,ProviceViewSet, UserAPIView
+from .views import NewFeedViewSet,ReMassListViewSet,MassRegister, GospelViewSet, ProvinceViewSet
 
 urlpatterns = [
     path('newfeed',NewFeedViewSet.as_view({
-        'get': 'list',
-        'post':'create'
+        'get': 'getlist'
     })),
     path('newfeed/<str:pk>',NewFeedViewSet.as_view({
         'get': 'retrieve',
-        'put':'update',
-        'delete':'destroy'
+        'put':'update'
     })),
-    path('province',ProviceViewSet.as_view({
+    path('getmass/',ReMassListViewSet.as_view({
+        'get': 'getlist'
+    })),
+    path('getmass/<str:pk>',ReMassListViewSet.as_view({
+        'get': 'retrieve'
+    })),
+    path('massregister/',MassRegister.as_view({
+        'get': 'getlist',
+        'post': 'create'
+    })),
+    path('massregister/<str:pk>',MassRegister.as_view({
+        'get': 'retrieve'
+    })),
+    path('province',ProvinceViewSet.as_view({
         'get': 'list',
         'post':'create'
     })),
-    path('province/<str:pk>',ProviceViewSet.as_view({
+    path('province/<str:pk>',ProvinceViewSet.as_view({
         'get': 'retrieve',
         'put':'update',
         'delete':'destroy'
     })),
-    path('user',UserAPIView.as_view()),
 ]

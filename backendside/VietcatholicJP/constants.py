@@ -33,6 +33,14 @@ TAKEN = "T"
 UNAVAILABEL = "U"
 REGISTERED = "R"
 
+#Seat Type
+
+SEAT_20 = '20'
+SEAT_32 = '32'
+SEAT_50 = '50'
+SEAT_PRI = 'Pr'
+
+
 MAXGOSPELNUM = 2
 ACCESS_YEAR = 1
 
@@ -49,6 +57,7 @@ DANGER = "danger"
 RESULT = "result"
 CONTENT = "content"
 BLANK = ""
+REDIRECT = "redirect"
 
 #Booking status
 WAITING = "W"

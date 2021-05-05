@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import environ
+from ..globalconst import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,11 +55,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
-    #'tinymce',
-    #'qr_code',
+    'admin_auto_filters',
+    'django_admin_listfilter_dropdown',
+    'smart_selects',
+    'tinymce',
+    'qr_code',
+    'adminapp',
+    'userapp',
     'api.apps.ApiConfig',
-    'adminapp.apps.AdminappConfig'
 ]
 
 MIDDLEWARE = [
@@ -92,6 +98,7 @@ TEMPLATES = [
 
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -110,7 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+MEDIA_URL = './media/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -122,12 +129,17 @@ CORS_ORIGIN_ALLOW_ALL = True
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
+        #'rest_framework.permissions.IsAdminUser',
+        #'rest_framework.permissions.IsAuthenticated'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
+    #'DEFAULT_PAGINATION_CLASS': PAGE_SIZE,
 }
 
+SELECT2_USE_BUNDLED_JQUERY = False
 
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username'

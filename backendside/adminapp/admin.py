@@ -3,7 +3,8 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
 from admin_auto_filters.filters import AutocompleteFilter
-from .models import Country, Province, District, Church
+from .models import Country, Province, District, UserProfile, Mass, Seat, Registration, Event
+from .models import NewFeed, Church, ChurchImages, ChurchPost, MassTime, ChurchChapel, ChurchChapelSeat, MassSchedule
 
 
 admin.site.site_header = 'VietCatholicJP'
@@ -26,16 +27,11 @@ class StatusAdminFilter(AutocompleteFilter):
 
 class CountryAdminFilter(AutocompleteFilter):
     title = 'Country Filter'
-    field_name = 'country'
+    field_name = 'country'    # name of the foreign key field
 
 class ProvinceAdminFilter(AutocompleteFilter):
     title = 'Province Filter'
     field_name = 'province'
-
-
-class DistrictAdminFilter(AutocompleteFilter):
-    title = 'District Filter'
-    field_name = 'district'
 
 
 class ChurchBase(admin.ModelAdmin):
@@ -47,28 +43,40 @@ class ChurchBase(admin.ModelAdmin):
     list_per_page = PAGE_SIZE
 
 class CountryAdmin(admin.ModelAdmin):
+    search_fields = ['country_name','country_en_name'] # this is required for django's autocomplete functionality
     URL_CUSTOM_TAG = 'country'
     list_per_page = PAGE_SIZE
 
 
 class ProvinceAdmin(admin.ModelAdmin):
-    list_filter = (
-        CountryAdminFilter,
-    )
-    URL_CUSTOM_TAG = 'province'
+    search_fields = ['province_name','province_en_name']
+    list_filter = [CountryAdminFilter]
     list_per_page = PAGE_SIZE
 
 
 class DistrictAdmin(admin.ModelAdmin):
-    list_filter = (
-        ('province__country', RelatedDropdownFilter),
-        ProvinceAdminFilter,
-    )
+    search_fields = ['district_name','district_en_name']
+    list_filter = [('province__country', RelatedDropdownFilter),ProvinceAdminFilter]
     URL_CUSTOM_TAG = 'district'
     list_per_page=PAGE_SIZE
 
+class NewFeedAdmin(admin.ModelAdmin):
+    list_per_page = PAGE_SIZE
+    search_fields = ('nf_title','nf_status')
 
-
+admin.site.register(NewFeed, NewFeedAdmin)
 admin.site.register(Country, CountryAdmin)
 admin.site.register(Province, ProvinceAdmin)
 admin.site.register(District, DistrictAdmin)
+admin.site.register(UserProfile)
+admin.site.register(Church)
+admin.site.register(ChurchImages)
+admin.site.register(ChurchPost)
+admin.site.register(MassTime)
+admin.site.register(ChurchChapel)
+admin.site.register(ChurchChapelSeat)
+admin.site.register(MassSchedule)
+admin.site.register(Mass)
+admin.site.register(Seat)
+admin.site.register(Registration)
+admin.site.register(Event)

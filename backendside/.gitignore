@@ -8,3 +8,4 @@ build
 static
 package-lock.json
 .dbdata
+**/media/
