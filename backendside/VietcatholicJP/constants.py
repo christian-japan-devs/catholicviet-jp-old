@@ -46,7 +46,7 @@ ACCESS_YEAR = 1
 
 #Return status
 STATUS = "status"
-FULL = "FULL"
+FULL = "full"
 OK = "ok"
 NULL = "null"
 ERROR= "error"
@@ -74,6 +74,7 @@ NOTCONFIRM = "NC"
 
 #
 USERNAME = "uname"
+USERCONDITION = "ucondi"
 SEATNUM = "snum"
 VI = "vi"
 EN = "en"

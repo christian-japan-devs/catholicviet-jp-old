@@ -18,6 +18,7 @@ from adminapp.models import NewFeed, Mass, DailyGospel, MassTime, Registration, 
 from .producer import publish
 from VietcatholicJP.constants import *
 from .permissions import IsOwner
+from adminapp.common_messages import *
 
 
 # Create your viewsets here.
@@ -83,39 +84,48 @@ class MassRegister(viewsets.ViewSet):
         CONTENT:BLANK,
     }
     permission_classes = [IsAuthenticated,IsOwner]
-    #@login_required
     def getlist(self,request,uid=None):  #/api/massregister/  get registration history of a user.
+        print("Start get user registration")
         try:
-            print("Start get user registration")
             request_user = request.user
-            print(request_user.username)
-            registers = Registration.objects.all()
+            registers = Registration.objects.get(registration_user=request_user)
         except:
             print("End get user registration error: ",sys.exc_info()[0])
-            return Response({"error":"error"},status=status.HTTP_400_BAD_REQUEST)
-        serializer = RegistrationSerializer(registers,many=True)
+            return Response({ERROR:SYSTEM_QUERY_0001},status=status.HTTP_404_NOT_FOUND)
+        serializer = RegistrationSerializer(registers)
+        print("End get user registration")
         return Response(serializer.data)
     
-    @login_required
-    def create(self,request): #/api/massregister
-        print("Start create new Province")
-        serializer = ProvinceSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            #publish('Province_created',serializer.data)
-            print("End create new Province Successful")
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            print("End create new error")
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self,request): #/api/massregister/   create a new registration for a mass
+        print("Start create new massregister")
+        try:
+            from .controller import sigleRegister
+            request_user = request.user            #get requested user
+            mass_id = request.data[MASS_ID]       #get id of the Mass  (mid)
+            user_condition = request.data[USERCONDITION]    #get user condition confirmation [ucondi]
+            register = sigleRegister(mass_id,user_condition,request_user)
+            if register[STATUS] != ERROR:          
+                serializer = RegistrationSerializer(register[RESULT])
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                print("End create new error")
+                return Response(register, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            print("End get user registration error: ",sys.exc_info()[0])
+            return Response({ERROR:"System error"},status=status.HTTP_404_NOT_FOUND)
     
-    @login_required
-    def retrieve(self,request,pk=None): #/api/massregister/<int:uid>/   get registration detail of a user.
-        mass = Mass.objects.get(id=pk)
-        serializer = ReMassSerializer(mass)
+    
+    def retrieve(self,request,rid=None): #/api/massregister/<int:rid>/   get registration detail of a user.
+        try:
+            request_user = request.user
+            registers = Registration.objects.get(id=rid,registration_user=request_user)
+        except:
+            print("End get user registration error: ",sys.exc_info()[0])
+            return Response({ERROR:SYSTEM_QUERY_0001},status=status.HTTP_404_NOT_FOUND)
+        serializer = RegistrationSerializer(registers)
+        print("End get user registration")
         return Response(serializer.data)
     
-    @login_required
     def update(self,request,pk=None): # /api/massregister/<str:id>
         print("Start update Province")
         province = Province.objects.get(id=pk)

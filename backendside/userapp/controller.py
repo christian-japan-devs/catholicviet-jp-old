@@ -2,10 +2,8 @@ from django.utils import timezone
 from datetime import datetime
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from kanri.models import Language
-from .models import Registration, UnRegistration
 from django.utils.crypto import get_random_string
-from kanri.models import Seat, Mass
+from adminapp.models import Seat, Mass, Language, Registration
 import sys
 from VietcatholicJP.constants import *
 from adminapp.common_messages import *

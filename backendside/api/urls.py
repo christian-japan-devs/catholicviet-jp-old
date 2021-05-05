@@ -19,7 +19,7 @@ urlpatterns = [
         'get': 'getlist',
         'post': 'create'
     })),
-    path('massregister/<str:pk>',MassRegister.as_view({
+    path('massregister/<str:rid>',MassRegister.as_view({
         'get': 'retrieve'
     })),
     path('province',ProvinceViewSet.as_view({
