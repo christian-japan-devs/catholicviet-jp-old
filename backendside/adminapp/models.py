@@ -392,7 +392,7 @@ class Registration(models.Model):
     class Meta:
         verbose_name = _('Registration')
         verbose_name_plural = _('Registration')
-        ordering = ('registration_date',)
+        ordering = ('-registration_date',)
     
     def __str__(self):
         return f'{self.registration_user.username}:{self.registration_user.userprofile.profile_full_name}:{self.registration_status}' #: {self.userregistration_seat}'

@@ -9,3 +9,6 @@ SYSTEM_GREETING_0001 = _('Xin chào, ')
 
 #Finished
 SYSTEM_CREATE_0001 =  _('Tác vụ của bạn đã hoàn thành.')
+
+#QUERY
+SYSTEM_QUERY_0001= _('Yêu cầu không hợp lệ')
