@@ -28,6 +28,30 @@ v12.16.3
 $ npm -v
 6.14.4
 ```
+## Setting up a new environment
+This will make sure our package configuration is kept nicely isolated from any other projects we're working on.
+
+```
+python3 -m venv env
+source env/bin/activate
+
+```
+
+
+## 4. install package requirements
+Now that we're inside a virtual environment, we can install our package requirements.
+
+```
+$ pip install -r requirements/development.txt
+$ pip install -r requirements/testing.txt
+```
+
+## 2. install package.json
+
+```
+cd adminapp
+$ npm install
+```
 
 ## Cài đặt phần frontend
 
@@ -142,16 +166,4 @@ $ cd project
 $ python3 manage.py createsuperuser
 ```
 
-## 4. Thỏa mãn requirements.txt
 
-```
-$ pip install -r requirements/development.txt
-$ pip install -r requirements/testing.txt
-```
-
-## 2. Thoả mãn package.json
-
-```
-cd adminapp
-$ npm install
-```

@@ -19,7 +19,9 @@ const Main = () => {
                 </div>
 
                 <div className="row mb-2">
+                    <div className="col-md-2"></div>
                     <NewFeeds/>
+                    <div className="col-md-2"></div>
                 </div>
 
                 <div className="row">
