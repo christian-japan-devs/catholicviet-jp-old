@@ -40,3 +40,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = "/var/www/example.com/static/"
+#Run $ python3 manage.py collectstatic
+#This will copy all files from your static folders into the STATIC_ROOT directory.

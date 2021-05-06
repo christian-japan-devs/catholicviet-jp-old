@@ -62,8 +62,8 @@ INSTALLED_APPS = [
     'smart_selects',
     'tinymce',
     'qr_code',
-    'adminapp',
-    'userapp',
+    'adminapp.apps.AdminappConfig',
+    'userapp.apps.UserappConfig',
     'api.apps.ApiConfig',
 ]
 
@@ -117,11 +117,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = './media/'
+MEDIA_URL = '/media/'
+
+# static assets that aren’t tied to a particular app
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-SITE_ID = 1
+
+#SITE_ID = 1
 
 CORS_ORIGIN_ALLOW_ALL = True
 
