@@ -42,20 +42,20 @@ pip install -r requirements/testing.txt
 
 ## 4. Install node_modules
 
-```
+```sh
 cd adminapp
 npm ci
 ```
 
 ## 5. Cài đặt phần frontend
 
-```
+```sh
 cd ../../frontendside
 npm ci
 ```
 ### Truy cập phía người dùng
 
-```
+```sh
 npm start
 # Truy cập http://localhost:3000
 ```
@@ -70,21 +70,21 @@ Cài docker-compose theo hướng dẫn tại [đây](https://docs.docker.com/co
 
 Chạy trên local:
 
-```
+```sh
 cd backendside
 docker-compose up -d --build
 ```
 
 ### Cài đặt database cho lần đầu
 
-```
+```sh
 docker-compose exec vietcatholicjp-backend sh
 bash run_migrate.sh
 bash run_create_admin.sh ## Create with username: `christian`
 ```
 ### Build webpack static files
 
-```
+```sh
 docker-compose exec vietcatholicjp-backend npm run build
 ```
 or
@@ -104,14 +104,16 @@ docker-compose exec vietcatholicjp-backend rs
 ### Mẹo: lệnh thường dùng với docker
 
 Truy cập vào backend container
-```
+
+```sh
 docker-compose exec vietcatholicjp-backend sh
 ```
+
 Truy cập vào db container
-```
+
+```sh
 docker-compose exec vietcatholic-db sh
 mysql -u username -p
-
 ```
 
 ## Cài đặt phần backend không dùng Docker
@@ -123,7 +125,7 @@ Cài docker theo hướng dẫn tại [đây](https://dev.mysql.com/doc/workbenc
 
 Tạo tệp `.env` với nội dung như sau:
 
-```
+```sh
 DB_NAME=my_db
 DB_USER=my_user
 DB_PASSWORD=my_password
@@ -132,29 +134,29 @@ DB_HOSTNAME=localhost
 
 ### 2. Tạo schema
 
-```
-$ bash run_migrate.sh
+```sh
+bash run_migrate.sh
 ```
 
 Về bản chất, lệnh này tương đương với:
 
-```
-$ cd project
-$ python3 manage.py makemigrations
-$ python3 manage.py migrate
+```sh
+cd project
+python3 manage.py makemigrations
+python3 manage.py migrate
 ```
 
 ## 3. Tạo tài khoản admin
 
 Tạo tài khoản `user1` với mật khẩu tùy ý bằng cách chạy:
 
-```
-$ bash run_create_admin.sh
+```sh
+bash run_create_admin.sh
 ```
 
 Về bản chất, lệnh này tương đương với:
 
-```
-$ cd project
-$ python3 manage.py createsuperuser
+```sh
+cd project
+python3 manage.py createsuperuser
 ```
