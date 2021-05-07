@@ -69,7 +69,7 @@ export default class HomePage extends Component {
 
     openInformDialog(){
         this.setState({openDialog:true});
-        setTimeout(() => this.setState({ openDialog: false }), 
+        setTimeout(() => this.setState({ openDialog: false }),
             3000
         );
     }
@@ -125,14 +125,14 @@ export default class HomePage extends Component {
                 scanResults: [...this.state.scanResults,newResult]
             });
             this.setState({totalScaned:index+1});
-    
+
             if (result['status'] === 'ok') {
                 this.setState({scanState: true
                     , resultCallBack: true
                     //, startScanCode: false
                 });
                 console.log(this.state.scanResults.length)
-    
+
             } else if (result['status'] === 'checked') {
                 console.log("warning");
                 this.setState({
@@ -198,7 +198,7 @@ export default class HomePage extends Component {
                         <h4 >LỊCH SỬ DUYỆT</h4>
                         <div className="card-scan-result">
                         <Paper style={{maxHeight: 480, overflow: 'auto'}}>
-                            
+
                                 <List>
                                 { scanResults.map(({id,username, seat, message, status }) => (
                                     <ListItem key={id}>
@@ -214,12 +214,12 @@ export default class HomePage extends Component {
                                                                 :
                                                                     <div className="col-md-10 col-sm-10 col-10" style={{color:"#ffffff",size: 24}}>{message}</div>
                                                 }
-                                                
+
                                             </div>
                                     </ListItem>
                                 ))}
                                 </List>
-                            
+
                         </Paper>
                         </div>
                     </div>
@@ -249,7 +249,7 @@ export default class HomePage extends Component {
                     </div>
                 </div>
                 <Dialog
-                    open={openDialog} 
+                    open={openDialog}
                     onClose={this.handleCloseDialog}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -268,16 +268,16 @@ export default class HomePage extends Component {
                         <DialogContentText id="alert-dialog-description">
                         <div className={scanResultOut.status==='ok'? "presented-card row": scanResultOut.status==='error' ? "registered-card row" : "waiting-card row"}>
                                                 {
-                                                    scanResultOut.status==='ok'? 
+                                                    scanResultOut.status==='ok'?
                                                                     <div className="col-12" style={{width:280}}>
-                                                                        <h5 style={{color:"#ffffff"}}>{scanResultOut.message}</h5> 
+                                                                        <h5 style={{color:"#ffffff"}}>{scanResultOut.message}</h5>
                                                                         <h4 style={{color:"#ffffff"}}>{scanResultOut.username}</h4>
                                                                         <h2 style={{color:"#ffffff"}}>{scanResultOut.seat}</h2>
                                                                     </div>
                                                                             :
                                                                     <div className="col-md-10 col-sm-10 col-10" style={{color:"#ffffff"}}><h4>{scanResultOut.message}</h4></div>
                                                 }
-                                                
+
                                             </div>
                         </DialogContentText>
                     </DialogContent>

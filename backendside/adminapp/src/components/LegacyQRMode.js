@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import QrReader from 'react-qr-reader';
-import axios from "axios";
 import { connect } from "react-redux";
-import {checkInUser} from "../store/actions/checkin";
 
 class LegacyQRMode extends Component {
 
@@ -24,7 +22,7 @@ class LegacyQRMode extends Component {
   getUserBookingInfor(result) {
     var pattern = /(\?|\&)([^=]+)\=([^&]+)/g;
     var results = result.match(pattern);
-    fetch("/member/cfmatt/"+results[0]+results[1]+results[2]+results[3]) 
+    fetch("/member/cfmatt/"+results[0]+results[1]+results[2]+results[3])
         .then(res => {
           const data = res.data;
           this.props.handleScanResult(data['content'],true);
@@ -89,7 +87,7 @@ const mapDispatchToProps = dispatch => {
         //handleScanResult: (uid,bid, mid, cd) => dispatch(checkInUser(uid,bid, mid, cd))
     };
   };
-  
+
 export default connect(
     null,
     mapDispatchToProps

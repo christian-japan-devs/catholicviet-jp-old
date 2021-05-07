@@ -2,68 +2,61 @@
 
 Đây là dự án xây dựng cổng thông tin điện tử công giáo của người Việt Nam tại Nhật bản. Mục đích là giúp cho việc truyền đạt thông tin của quý Cha, Thầy, Sơ và các nhóm giới trẻ đến với mọi người một cách dễ dàng nhất. Rất mong sự hiệp lực đóng góp của cộng đồng anh em công giáo tại Nhật.
 
+# Getting started
 
-
-# Hướng dẫn cài đặt dự án ở local.
-
-## Đảm bảo đã cài Python và Node
-
-Hãy đảm bảo rằng bạn đã cài Python 3.6 trở lên.
-
-Kiểm tra như sau:
-
-```
-$ python -V
-Python 3.8.5
+## 1. Cài Python >= 3.6 và Node >= 14.16
+```sh
+brew install mysql python n
+n lts
 ```
 
-Hãy đảm bảo rằng bạn đã cài `node` và `npm`.
+Kiểm tra:
 
-Kiểm tra như sau:
+```sh
+python -V
+# Python 3.8.5
+node -v
+# v14.16.1
 
+npm -v
+# 6.14.12
 ```
-$ node -v
-v12.16.3
 
-$ npm -v
-6.14.4
-```
-## Setting up a new environment
+## 2. Setting up a new environment
 This will make sure our package configuration is kept nicely isolated from any other projects we're working on.
 
-```
+```sh
+cd backendside
 python3 -m venv env
 source env/bin/activate
-
 ```
 
 
-## 4. install package requirements
+## 3. Install package requirements
 Now that we're inside a virtual environment, we can install our package requirements.
 
-```
-$ pip install -r requirements/development.txt
-$ pip install -r requirements/testing.txt
+```sh
+pip install -r requirements/development.txt
+pip install -r requirements/testing.txt
 ```
 
-## 2. install package.json
+## 4. Install node_modules
 
 ```
 cd adminapp
-$ npm install
+npm ci
 ```
 
-## Cài đặt phần frontend
+## 5. Cài đặt phần frontend
 
 ```
-cd frontendside
-npm run install
+cd ../../frontendside
+npm ci
 ```
 ### Truy cập phía người dùng
 
-
 ```
-npm run start
+npm start
 # Truy cập http://localhost:3000
 ```
 
@@ -165,5 +158,3 @@ Về bản chất, lệnh này tương đương với:
 $ cd project
 $ python3 manage.py createsuperuser
 ```
-
-

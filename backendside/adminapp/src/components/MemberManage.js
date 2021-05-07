@@ -1,6 +1,5 @@
 import React , { Component }  from 'react';
 import { forwardRef } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
 import MaterialTable from 'material-table';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -70,7 +69,7 @@ const tableIcons = {
 
 
 export default class Dashboard extends Component {
-  
+
   _isMounted = false;
 
   constructor(props) {
@@ -124,7 +123,7 @@ export default class Dashboard extends Component {
       return (
         <div style={{ height: '100%', width: '100%' }}>
             <br/><br/>
-            <MaterialTable 
+            <MaterialTable
             icons={tableIcons}
             title= {tableAbsentData["title"]}
             data={tableAbsentData["listbooking"]}

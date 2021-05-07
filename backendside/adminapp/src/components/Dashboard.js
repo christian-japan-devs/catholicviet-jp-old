@@ -73,7 +73,7 @@ const tableIcons = {
 
 
 export default class Dashboard extends Component {
-  
+
   _isMounted = false;
 
   constructor(props) {
@@ -272,7 +272,7 @@ export default class Dashboard extends Component {
             </FormControl>
             </div>
           <br/>
-          <MaterialTable 
+          <MaterialTable
             icons={tableIcons}
             title= {tableData["title"]}
             data={tableData["listbooking"]}
@@ -299,7 +299,7 @@ export default class Dashboard extends Component {
                     Từ chối
                 </Button>
                 </DialogActions>
-            </Dialog> 
+            </Dialog>
         </div>
       );
   }
