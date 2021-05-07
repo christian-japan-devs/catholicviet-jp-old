@@ -4,16 +4,16 @@ networks:
   vietcatholicjp-network:
     name: vietcatholicjp-network
     driver: bridge
-  
-services: 
+
+services:
     vietcatholicjp-backend:
-      build: 
+      build:
         context: .
         dockerfile: Dockerfile
       command: 'bash run_server.sh'
       ports:
         - 8000:8000
-      volumes: 
+      volumes:
         - .:/app
       environment:
         - DB_NAME=vietcatholicjp
@@ -21,7 +21,7 @@ services:
         - DB_PASSWORD=Upde5rx_m20813
         - DB_HOSTNAME=vietcatholic-db
         - DB_PORT=3306
-      depends_on: 
+      depends_on:
         - vietcatholic-db
       networks:
         - vietcatholicjp-network
@@ -38,7 +38,7 @@ services:
       volumes:
         - .dbdata:/var/lib/mysql
       command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-      ports: 
+      ports:
         - 33066:3306
       networks:
         - vietcatholicjp-network

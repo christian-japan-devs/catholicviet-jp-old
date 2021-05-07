@@ -139,8 +139,8 @@ export default class CustomLayout extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        <DrawerMenu isOpen={isOpen} 
-                    sidePosition='bottom' 
+        <DrawerMenu isOpen={isOpen}
+                    sidePosition='bottom'
                     handleSideBarOpen={this.handleSideBarOpen}
                     />
         {this.props.children}

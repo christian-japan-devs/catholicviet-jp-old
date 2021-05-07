@@ -2,68 +2,61 @@
 
 Đây là dự án xây dựng cổng thông tin điện tử công giáo của người Việt Nam tại Nhật bản. Mục đích là giúp cho việc truyền đạt thông tin của quý Cha, Thầy, Sơ và các nhóm giới trẻ đến với mọi người một cách dễ dàng nhất. Rất mong sự hiệp lực đóng góp của cộng đồng anh em công giáo tại Nhật.
 
+# Getting started
 
-
-# Hướng dẫn cài đặt dự án ở local.
-
-## Đảm bảo đã cài Python và Node
-
-Hãy đảm bảo rằng bạn đã cài Python 3.6 trở lên.
-
-Kiểm tra như sau:
-
-```
-$ python -V
-Python 3.8.5
+## 1. Cài Python >= 3.6 và Node >= 14.16
+```sh
+brew install mysql python n
+n lts
 ```
 
-Hãy đảm bảo rằng bạn đã cài `node` và `npm`.
+Kiểm tra:
 
-Kiểm tra như sau:
+```sh
+python -V
+# Python 3.8.5
+node -v
+# v14.16.1
 
+npm -v
+# 6.14.12
 ```
-$ node -v
-v12.16.3
 
-$ npm -v
-6.14.4
-```
-## Setting up a new environment
+## 2. Setting up a new environment
 This will make sure our package configuration is kept nicely isolated from any other projects we're working on.
 
-```
+```sh
+cd backendside
 python3 -m venv env
 source env/bin/activate
-
 ```
 
 
-## 4. install package requirements
+## 3. Install package requirements
 Now that we're inside a virtual environment, we can install our package requirements.
 
-```
-$ pip install -r requirements/development.txt
-$ pip install -r requirements/testing.txt
+```sh
+pip install -r requirements/development.txt
+pip install -r requirements/testing.txt
 ```
 
-## 2. install package.json
+## 4. Install node_modules
 
-```
+```sh
 cd adminapp
-$ npm install
+npm ci
 ```
 
-## Cài đặt phần frontend
+## 5. Cài đặt phần frontend
 
-```
-cd frontendside
-npm run install
+```sh
+cd ../../frontendside
+npm ci
 ```
 ### Truy cập phía người dùng
 
-
-```
-npm run start
+```sh
+npm start
 # Truy cập http://localhost:3000
 ```
 
@@ -77,21 +70,21 @@ Cài docker-compose theo hướng dẫn tại [đây](https://docs.docker.com/co
 
 Chạy trên local:
 
-```
+```sh
 cd backendside
 docker-compose up -d --build
 ```
 
 ### Cài đặt database cho lần đầu
 
-```
+```sh
 docker-compose exec vietcatholicjp-backend sh
 bash run_migrate.sh
 bash run_create_admin.sh ## Create with username: `christian`
 ```
 ### Build webpack static files
 
-```
+```sh
 docker-compose exec vietcatholicjp-backend npm run build
 ```
 or
@@ -111,14 +104,16 @@ docker-compose exec vietcatholicjp-backend rs
 ### Mẹo: lệnh thường dùng với docker
 
 Truy cập vào backend container
-```
+
+```sh
 docker-compose exec vietcatholicjp-backend sh
 ```
+
 Truy cập vào db container
-```
+
+```sh
 docker-compose exec vietcatholic-db sh
 mysql -u username -p
-
 ```
 
 ## Cài đặt phần backend không dùng Docker
@@ -130,7 +125,7 @@ Cài docker theo hướng dẫn tại [đây](https://dev.mysql.com/doc/workbenc
 
 Tạo tệp `.env` với nội dung như sau:
 
-```
+```sh
 DB_NAME=my_db
 DB_USER=my_user
 DB_PASSWORD=my_password
@@ -139,31 +134,29 @@ DB_HOSTNAME=localhost
 
 ### 2. Tạo schema
 
-```
-$ bash run_migrate.sh
+```sh
+bash run_migrate.sh
 ```
 
 Về bản chất, lệnh này tương đương với:
 
-```
-$ cd project
-$ python3 manage.py makemigrations
-$ python3 manage.py migrate
+```sh
+cd project
+python3 manage.py makemigrations
+python3 manage.py migrate
 ```
 
 ## 3. Tạo tài khoản admin
 
 Tạo tài khoản `user1` với mật khẩu tùy ý bằng cách chạy:
 
-```
-$ bash run_create_admin.sh
+```sh
+bash run_create_admin.sh
 ```
 
 Về bản chất, lệnh này tương đương với:
 
+```sh
+cd project
+python3 manage.py createsuperuser
 ```
-$ cd project
-$ python3 manage.py createsuperuser
-```
-
-
