@@ -1,34 +1,43 @@
 const path = require("path");
-const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: "./src/index.js",
-  output: {
-    path: path.resolve(__dirname, "./static/staff"),
-    filename: "[name].js",
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        },
-      },
-    ],
-  },
-  optimization: {
-    minimize: true,
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-        PRODUCTION: JSON.stringify(true),
-        VERSION: JSON.stringify('5fa3b9'),
-        BROWSER_SUPPORTS_HTML5: true,
-        TWO: '1+1',
-        'typeof window': JSON.stringify('object'),
-        'process.NODE_ENV': JSON.stringify(process.NODE_ENV)
-    }),
-  ],
+    entry: "./src/index.tsx",
+    output: { path: path.join(__dirname, "static/userapp/js"), filename: "vietcatholic.js" },
+    mode: process.env.NODE_ENV || "development",
+    resolve: {
+        extensions: [".tsx", ".ts", ".js"],
+    },
+    devServer: { contentBase: path.join(__dirname, "src") },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: ["babel-loader"],
+            },
+            {
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                use: ["ts-loader"],
+            },
+            {
+                test: /\.(css|scss)$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
+            },
+            {
+                test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
+                use: ["file-loader"],
+            },
+        ],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, "templates/userapp", "base.html"),
+        }),
+        new MiniCssExtractPlugin({
+    		filename: "[name].css",
+    	})
+        ],
 };
