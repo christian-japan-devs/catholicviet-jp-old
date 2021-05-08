@@ -23,6 +23,7 @@ Cuối cùng, truy cập trang `localhost:8000`.
 ```
 $ docker-compose down --volumes
 ```
+
 ```
 $ docker-compose up -d --build
 ```

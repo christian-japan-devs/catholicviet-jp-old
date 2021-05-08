@@ -22,7 +22,7 @@ type AuthLogoutAction = {
     type:string
 }
 
-type DispatchAuthStartType = (args: AuthStartAction) => AuthStartAction
-type DispatchAuthSuccessType = (args: AuthSuccessAction) => AuthSuccessAction
-type DispatchAuthFailType = (args: AuthFailAction) => AuthFailAction
-type DispatchAuthLogoutType = (args: AuthLogoutAction) => AuthLogoutAction
+type DispatchAuthStartType = (args: AuthStartAction) => AuthStartAction;
+type DispatchAuthSuccessType = (args: AuthSuccessAction) => AuthSuccessAction;
+type DispatchAuthFailType = (args: AuthFailAction) => AuthFailAction;
+type DispatchAuthLogoutType = (args: AuthLogoutAction) => AuthLogoutAction;

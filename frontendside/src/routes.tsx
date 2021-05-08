@@ -7,11 +7,11 @@ import Signup from "./components/auth/Signup";
 import Main from "./main/main";
 
 const BaseRouter = () => (
-    <Hoc>
-        <Route exact path="/" component={Main} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup}/>
-    </Hoc>
+  <Hoc>
+    <Route exact path="/" component={Main} />
+    <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
+  </Hoc>
 );
 
 export default BaseRouter;
