@@ -1,6 +1,29 @@
 import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../utility";
-import {AuthState,AuthStartAction,AuthSuccessAction,AuthFailAction,AuthLogoutAction} from "../types/auth";
+
+type AuthState = {
+  token: string,
+  error: string,
+  loading: boolean
+}
+
+type AuthStartAction = {
+  type: string
+}
+
+type AuthSuccessAction = {
+  type:  string
+  token: string
+}
+
+type AuthFailAction = {
+  type: string
+  error: string
+}
+
+type AuthLogoutAction = {
+  type:string
+}
 
 const initialState:AuthState = {
   token: "",

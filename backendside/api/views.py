@@ -1,27 +1,43 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+from django.conf import settings
+import sys
+
 from rest_framework import viewsets,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authtoken import views
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from django.http import HttpResponse
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-import sys
-import random
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.permissions import AllowAny,IsAuthenticated
+from rest_framework.generics import (
+    ListAPIView, RetrieveAPIView, CreateAPIView,
+    UpdateAPIView, DestroyAPIView
+)
+
+from .serializers import (
+    NewFeedSerializer, ReMassSerializer, RegistrationSerializer, 
+    DailyGospelSerializer,ProvinceSerializer
+)
+from .producer import publish
+from .permissions import IsOwner
 
 from django.contrib.auth.models import User
-from .serializers import NewFeedSerializer, ReMassSerializer, RegistrationSerializer, DailyGospelSerializer,ProvinceSerializer
 from adminapp.models import NewFeed, Mass, DailyGospel, MassTime, Registration, Province
-from .producer import publish
 from VietcatholicJP.constants import *
-from .permissions import IsOwner
 from adminapp.common_messages import *
 
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # Create your viewsets here.
+
+class UserIDView(APIView):
+    def get(self,request, *args, **kwargs):
+        return Response({'userID': request.user.id}, status=HTTP_200_OK)
 
 # API Discription
 # Name: getNewFeed
@@ -33,7 +49,7 @@ from adminapp.common_messages import *
 #
 
 class NewFeedViewSet(viewsets.ViewSet):
-    #permission_classes = [IsOwner]
+    permission_classes = (AllowAny,)
     def getlist(self,request):  #/api/newfeed
         newfeeds = NewFeed.objects.all().order_by('-nf_date_edited')
         serializer = NewFeedSerializer(newfeeds,many=True)
@@ -58,7 +74,7 @@ class NewFeedViewSet(viewsets.ViewSet):
 # Output:
 
 class ReMassListViewSet(viewsets.ModelViewSet):
-
+    permission_classes = (AllowAny,)
     def getlist(self,request):  #/api/getMass
         listmasses = Mass.objects.all().order_by('-mass_date','-mass_last_updated_date')
         serializer = ReMassSerializer(listmasses,many=True)
@@ -83,7 +99,7 @@ class MassRegister(viewsets.ViewSet):
         STATUS:OK,
         CONTENT:BLANK,
     }
-    permission_classes = [IsAuthenticated,IsOwner]
+    permission_classes = (IsAuthenticated,)
     def getlist(self,request,uid=None):  #/api/massregister/  get registration history of a user.
         print("Start get user registration")
         try:
@@ -236,9 +252,4 @@ class ProvinceViewSet(viewsets.ViewSet):
             return Response({"error":"You are not Authorized to do this task"},status=status.HTTP_400_BAD_REQUEST)
 
 class UserAPIView(APIView):
-    def get(self,_):
-        users = User.objects.all()
-        user = random.choice(users)
-        return Response({
-            'id':user.id
-        })
+    pass

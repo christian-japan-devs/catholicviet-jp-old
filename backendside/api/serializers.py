@@ -1,12 +1,37 @@
 from rest_framework import serializers
 from .models import Contact
-from adminapp.models import NewFeed,Mass,DailyGospel,Province,Country,District,MassTime,Registration
+from adminapp.models import (
+    NewFeed,Mass,DailyGospel,MassTime,Registration
+    ,Country,Province,District
+)
+
+class StringSerilaizer(serializers.StringRelatedField):
+    def to_internal_value(self,value):
+        return value
+
 
 class NewFeedSerializer(serializers.ModelSerializer):
     nf_user_created = serializers.ReadOnlyField(source='nf_user_created.userprofile.profile_full_name')
+    nf_language = serializers.SerializerMethodField()
+    
     class Meta:
         model = NewFeed
-        fields = ('id','nf_title','nf_user_created','nf_type','nf_image','nf_brief_content','nf_language','nf_date_created','nf_post_clicked','nf_post_share','nf_post_like')
+        fields = (
+            'id'
+            ,'nf_title'
+            ,'nf_user_created'
+            ,'nf_type'
+            ,'nf_image'
+            ,'nf_brief_content'
+            ,'nf_language'
+            ,'nf_date_created'
+            ,'nf_post_clicked'
+            ,'nf_post_share'
+            ,'nf_post_like'
+        )
+    
+    def get_nf_language(self, obj):
+        return obj.get_nf_language_display()
 
 class ReMassSerializer(serializers.ModelSerializer):
     mass_reading = serializers.ReadOnlyField(source='mass_reading.id')
@@ -14,7 +39,26 @@ class ReMassSerializer(serializers.ModelSerializer):
     mass_church = serializers.ReadOnlyField(source='mass_church.church_name')
     class Meta:
         model = Mass
-        fields = ('id','mass_date','mass_time','mass_title','mass_reading','mass_language','mass_father_celebrant','mass_church','mass_slots','mass_slots_registered','mass_waiting','mass_online_url','mass_image','mass_waiting_flag','mass_active')
+        fields = (
+            'id'
+            ,'mass_date'
+            ,'mass_time'
+            ,'mass_title'
+            ,'mass_reading'
+            ,'mass_language'
+            ,'mass_father_celebrant'
+            ,'mass_church'
+            ,'mass_slots'
+            ,'mass_slots_registered'
+            ,'mass_waiting'
+            ,'mass_online_url'
+            ,'mass_image'
+            ,'mass_waiting_flag'
+            ,'mass_active'
+        )
+    
+    def get_mass_language(self, obj):
+        return obj.get_mass_language_display()
 
 class DetailMassSerializer(serializers.ModelSerializer):
     mass_reading = serializers.ReadOnlyField(source='mass_reading.id')
@@ -22,19 +66,62 @@ class DetailMassSerializer(serializers.ModelSerializer):
     mass_church = serializers.ReadOnlyField(source='mass_church.church_name')
     class Meta:
         model = Mass
-        fields = ('id','mass_date','mass_time','mass_title','mass_reading','mass_language','mass_father_celebrant','mass_church','mass_online_url','mass_image')
+        fields = (
+            'id'
+            ,'mass_date'
+            ,'mass_time'
+            ,'mass_title'
+            ,'mass_reading'
+            ,'mass_language'
+            ,'mass_father_celebrant'
+            ,'mass_church'
+            ,'mass_online_url'
+            ,'mass_image'
+        )
+
+    def get_mass_language(self, obj):
+        return obj.get_mass_language_display()
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
     registration_user = serializers.ReadOnlyField(source='registration_user.userprofile.profile_full_name')
     registration_mass = DetailMassSerializer()
     class Meta:
         model = Registration
-        fields = ('id','registration_mass','registration_date','registration_user','registration_confirm_code','registration_status','registration_approve_status','registration_confirm_status')
+        fields = (
+            'id'
+            ,'registration_mass'
+            ,'registration_date'
+            ,'registration_user'
+            ,'registration_confirm_code'
+            ,'registration_status'
+            ,'registration_approve_status'
+            ,'registration_confirm_status'
+        )
+    
+    def get_registration_status(self, obj):
+        return obj.get_registration_status()
+
+    def get_registration_approve_status(self, obj):
+        return obj.get_registration_approve_status()
+
+    def get_registration_confirm_status(self, obj):
+        return obj.get_registration_confirm_status()
 
 class DailyGospelSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyGospel
-        fields = ('id','daily_gospel_title','daily_gospel_date','daily_gospel_date_ordinary','daily_gosspel_content','daily_gospel_laguage','daily_gospel_like','daily_gospel_share','daily_gospel_clicked')
+        fields = (
+            'id'
+            ,'daily_gospel_title'
+            ,'daily_gospel_date'
+            ,'daily_gospel_date_ordinary'
+            ,'daily_gosspel_content'
+            ,'daily_gospel_laguage'
+            ,'daily_gospel_like'
+            ,'daily_gospel_share'
+            ,'daily_gospel_clicked'
+        )
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
