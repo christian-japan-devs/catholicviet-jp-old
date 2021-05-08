@@ -1,1 +1,1 @@
-python3 VietcatholicJP/manage.py $1
+python3 manage.py $1
