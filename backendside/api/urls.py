@@ -1,5 +1,13 @@
 from django.urls import path
-from .views import NewFeedViewSet,ReMassListViewSet,MassRegister, GospelViewSet, ProvinceViewSet
+from .views import (
+    NewFeedViewSet
+    ,ReMassListViewSet
+    ,MassRegister
+    , GospelViewSet
+    , ProvinceViewSet
+)
+
+app_name = 'api'
 
 urlpatterns = [
     path('newfeed',NewFeedViewSet.as_view({
