@@ -1,27 +1,25 @@
-import * as actionTypes from "../actions/actionTypes";
 
-type AuthState = {
-    token: string,
-    error: string,
-    loading: boolean
-}
+type FormData = {
+    username: string;
+    password: string;
+};
 
 type AuthStartAction = {
-    type:actionTypes.AUTH_START
+    type: string
 }
 
 type AuthSuccessAction = {
-    type: actionTypes.AUTH_SUCCESS
+    type:  string
     token: string
 }
 
 type AuthFailAction = {
-    type:actionTypes.AUTH_FAIL
+    type: string
     error: string
 }
 
 type AuthLogoutAction = {
-    type:actionTypes.AUTH_LOGOUT
+    type:string
 }
 
 type DispatchAuthStartType = (args: AuthStartAction) => AuthStartAction

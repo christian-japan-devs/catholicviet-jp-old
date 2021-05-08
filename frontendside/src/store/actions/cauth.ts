@@ -1,7 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import {VCJTOKEN, EXPIRATION_DATE} from "../../constants";
-import { DispatchAuthLogoutType,DispatchAuthStartType, DispatchAuthSuccessType,DispatchAuthFailType } from "../types/auth";
 
 export const authStart = () => {
   return {
@@ -33,7 +32,7 @@ export const logout = () => {
 
 export const checkAuthTimeout = (expirationTime:number) => {
 
-  return (dispatch:DispatchAuthLogoutType)=> {
+  return (dispatch:any)=> {
     setTimeout(() => {
       dispatch(logout());
     }, expirationTime * 1000);
@@ -50,6 +49,7 @@ export const authLogin = (username:string, password:string) => {
       })
       .then(res => {
         const token = `token ${res.data.key}`;
+        console.log(token);
         const expirationDate = String(new Date(new Date().getTime() + 3600 * 1000));
         localStorage.setItem(VCJTOKEN, token);
         localStorage.setItem(EXPIRATION_DATE, expirationDate);
