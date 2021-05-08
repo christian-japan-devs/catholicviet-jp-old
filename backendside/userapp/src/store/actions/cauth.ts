@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import {VCJTOKEN, EXPIRATION_DATE} from "../../constants";
+import { DispatchAuthLogoutType,DispatchAuthStartType, DispatchAuthSuccessType,DispatchAuthFailType } from "../types/auth";
 
 export const authStart = () => {
   return {
@@ -8,14 +9,14 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = token => {
+export const authSuccess = (token:string) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token
   };
 };
 
-export const authFail = error => {
+export const authFail = (error:string) => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error
@@ -30,16 +31,17 @@ export const logout = () => {
   };
 };
 
-export const checkAuthTimeout = expirationTime => {
-  return dispatch => {
+export const checkAuthTimeout = (expirationTime:number) => {
+
+  return (dispatch:DispatchAuthLogoutType)=> {
     setTimeout(() => {
       dispatch(logout());
     }, expirationTime * 1000);
   };
 };
 
-export const authLogin = (username, password) => {
-  return dispatch => {
+export const authLogin = (username:string, password:string) => {
+  return (dispatch:any) => {
     dispatch(authStart());
     axios
       .post("http://127.0.0.1:8000/rest-auth/login/", {
@@ -47,8 +49,8 @@ export const authLogin = (username, password) => {
         password: password
       })
       .then(res => {
-        const token = res.data.key;
-        const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+        const token = `token ${res.data.key}`;
+        const expirationDate = String(new Date(new Date().getTime() + 3600 * 1000));
         localStorage.setItem(VCJTOKEN, token);
         localStorage.setItem(EXPIRATION_DATE, expirationDate);
         dispatch(authSuccess(token));
@@ -60,8 +62,8 @@ export const authLogin = (username, password) => {
   };
 };
 
-export const authSignup = (username, email, password1, password2) => {
-  return dispatch => {
+export const authSignup = (username:string, email:string, password1:string, password2:string) => {
+  return (dispatch:any) => {
     dispatch(authStart());
     axios
       .post("http://127.0.0.1:8000/rest-auth/registration/", {
@@ -72,8 +74,8 @@ export const authSignup = (username, email, password1, password2) => {
       })
       .then(res => {
         const token = res.data.key;
-        const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        localStorage.setItem(TOKEN, token);
+        const expirationDate = String(new Date(new Date().getTime() + 3600 * 1000));
+        localStorage.setItem(VCJTOKEN, token);
         localStorage.setItem(EXPIRATION_DATE, expirationDate);
         dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
@@ -85,21 +87,24 @@ export const authSignup = (username, email, password1, password2) => {
 };
 
 export const authCheckState = () => {
-  return dispatch => {
-    const token = localStorage.getItem(TOKEN);
-    if (token === undefined) {
+  return (dispatch:any) => {
+    const token = localStorage.getItem(VCJTOKEN);
+    if (token === null) {
       dispatch(logout());
     } else {
-      const expirationDate = new Date(localStorage.getItem(EXPIRATION_DATE));
-      if (expirationDate <= new Date()) {
-        dispatch(logout());
-      } else {
-        dispatch(authSuccess(token));
-        dispatch(
-          checkAuthTimeout(
-            (expirationDate.getTime() - new Date().getTime()) / 1000
-          )
-        );
+      const strExpirationDate = localStorage.getItem(EXPIRATION_DATE)
+      if(strExpirationDate !== null){
+        const expirationDate = new Date(strExpirationDate);
+        if (expirationDate <= new Date()) {
+          dispatch(logout());
+        } else {
+          dispatch(authSuccess(token));
+          dispatch(
+            checkAuthTimeout(
+              (expirationDate.getTime() - new Date().getTime()) / 1000
+            )
+          );
+        }
       }
     }
   };

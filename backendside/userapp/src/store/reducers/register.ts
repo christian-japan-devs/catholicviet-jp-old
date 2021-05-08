@@ -1,20 +1,26 @@
 import { CART_START, CART_SUCCESS, CART_FAIL } from "../actions/actionTypes";
 import { updateObject } from "../utility";
 
-const initialState = {
-  shoppingCart: null,
-  error: null,
+type cartState = {
+  shoppingCart: string,
+  error: string,
+  loading: boolean
+}
+
+const initialState:cartState = {
+  shoppingCart: "",
+  error: "",
   loading: false
 };
 
-const cartStart = (state, action) => {
+const cartStart = (state:cartState, action:any) => {
   return updateObject(state, {
     error: null,
     loading: true
   });
 };
 
-const cartSuccess = (state, action) => {
+const cartSuccess = (state:cartState, action:any) => {
   return updateObject(state, {
     shoppingCart: action.data,
     error: null,
@@ -22,14 +28,14 @@ const cartSuccess = (state, action) => {
   });
 };
 
-const cartFail = (state, action) => {
+const cartFail = (state:cartState, action:any) => {
   return updateObject(state, {
     error: action.error,
     loading: false
   });
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action:any) => {
   switch (action.type) {
     case CART_START:
       return cartStart(state, action);

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Province } from '../interfaces/province';
+import { IProvince } from '../interfaces/province';
 import Wrapper from './Wrapper';
 
 const Provinces = () => {
@@ -53,7 +53,7 @@ const Provinces = () => {
                     </thead>
                     <tbody>
                         {provinces.map(
-                            (p:Province) =>{
+                            (p:IProvince) =>{
                             return (
                                 <tr key={p.id} >
                                     <td>{p.id} </td>
