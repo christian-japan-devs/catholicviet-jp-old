@@ -3,3 +3,4 @@
 .vim
 yarn.lock
 backendside/env
+backendside/userapp/static
