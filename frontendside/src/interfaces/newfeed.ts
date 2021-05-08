@@ -1,4 +1,4 @@
-export interface NewFeed{
+export interface INewFeed{
     id: number,
     nf_title:string;
     nf_type: string;

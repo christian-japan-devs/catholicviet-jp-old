@@ -3,7 +3,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-import { NewFeed } from '../interfaces/newfeed';
+import { INewFeed } from '../interfaces/newfeed';
 import parse from 'html-react-parser';
 import "./newfeed.css"
 
@@ -43,7 +43,7 @@ const NewFeeds = () => {
     return (
         <div className="newfeed-container">
             {newfeeds.map(
-                (nf:NewFeed) =>{
+                (nf:INewFeed) =>{
                 return (
                     <div className="col-md-12">
                         <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
