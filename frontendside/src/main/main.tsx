@@ -1,8 +1,8 @@
-import React from "react";
-import MainFooter from "../components/MainFooter";
-import MainHeader from "../components/MainHeader";
-import NewFeeds from "./NewFeed";
-import "./main.css";
+import React from 'react';
+import MainFooter from '../components/MainFooter';
+import MainHeader from '../components/MainHeader';
+import NewFeeds from './NewFeed';
+import './main.css';
 
 const Main = () => {
   return (
@@ -45,7 +45,7 @@ const Main = () => {
               </p>
 
               <p>
-                I am ready for the road less traveled. Already{" "}
+                I am ready for the road less traveled. Already{' '}
                 <a href="#">brushing off the dust</a>. Yeah, you're lucky if
                 you're on her plane. I used to bite my tongue and hold my
                 breath. Uh, She’s a beast. I call her Karma (come back). Black
@@ -112,7 +112,7 @@ const Main = () => {
               <h4 className="fst-italic">About</h4>
               <p className="mb-0">
                 Saw you downtown singing the Blues. Watch you circle the drain.
-                Why don't you let me stop by? Heavy is the head that{" "}
+                Why don't you let me stop by? Heavy is the head that{' '}
                 <em>wears the crown</em>. Yes, we make angels cry, raining down
                 on earth from up above.
               </p>

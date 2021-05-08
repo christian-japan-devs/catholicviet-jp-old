@@ -5,22 +5,22 @@ type AuthState = {
 };
 
 type AuthStartAction = {
-    type: string
-}
+  type: string;
+};
 
 type AuthSuccessAction = {
-    type:  string
-    token: string
-}
+  type: string;
+  token: string;
+};
 
 type AuthFailAction = {
-    type: string
-    error: string
-}
+  type: string;
+  error: string;
+};
 
 type AuthLogoutAction = {
-    type:string
-}
+  type: string;
+};
 
 type DispatchAuthStartType = (args: AuthStartAction) => AuthStartAction;
 type DispatchAuthSuccessType = (args: AuthSuccessAction) => AuthSuccessAction;

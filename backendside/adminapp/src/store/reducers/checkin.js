@@ -1,5 +1,5 @@
-import * as actionsTypes from "../actions/actionTypes";
-import { updateObject } from "../utility";
+import * as actionsTypes from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
   data: null,
@@ -34,7 +34,7 @@ const reducer = (state = initialState, action) => {
     case actionsTypes.CHECK_START:
       return checkinStart(state, action);
     case actionsTypes.CHECK_SUCCESS:
-      console.log("checkinOK");
+      console.log('checkinOK');
       return checkinSuccess(state, action);
     case actionsTypes.CHECK_FAIL:
       return checkinFail(state, action);

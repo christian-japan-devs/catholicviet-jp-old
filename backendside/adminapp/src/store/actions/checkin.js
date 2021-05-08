@@ -1,5 +1,5 @@
-import axios from "axios";
-import * as actionTypes from "./actionTypes";
+import axios from 'axios';
+import * as actionTypes from './actionTypes';
 
 export const checkStart = () => {
   return {
@@ -25,7 +25,7 @@ export const checkInUser = (uid, bid, mid, cd) => {
   return (dispatch) => {
     dispatch(checkStart());
     axios
-      .get("/member/cfmatt/" + uid + bid + mid + cd)
+      .get('/member/cfmatt/' + uid + bid + mid + cd)
       .then((res) => {
         const data = res.data;
         dispatch(checkSuccess(data));

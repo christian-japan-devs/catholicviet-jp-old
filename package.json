@@ -11,5 +11,8 @@
     "backendside/userapp",
     "backendside/adminapp",
     "frontendside"
-  ]
+  ],
+  "prettier": {
+    "singleQuote": true
+  }
 }

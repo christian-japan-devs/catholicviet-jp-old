@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import QrReader from "react-qr-reader";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import QrReader from 'react-qr-reader';
+import { connect } from 'react-redux';
 
 class LegacyQRMode extends Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class LegacyQRMode extends Component {
 
     this.state = {
       delay: 500,
-      data: "No result",
+      data: 'No result',
       loading: false,
       error: null,
     };
@@ -21,10 +21,10 @@ class LegacyQRMode extends Component {
   getUserBookingInfor(result) {
     var pattern = /(\?|\&)([^=]+)\=([^&]+)/g;
     var results = result.match(pattern);
-    fetch("/member/cfmatt/" + results[0] + results[1] + results[2] + results[3])
+    fetch('/member/cfmatt/' + results[0] + results[1] + results[2] + results[3])
       .then((res) => {
         const data = res.data;
-        this.props.handleScanResult(data["content"], true);
+        this.props.handleScanResult(data['content'], true);
       })
       .catch((err) => {
         this.props.handleScanResult(err, false);
@@ -35,14 +35,14 @@ class LegacyQRMode extends Component {
     if (result) {
       this.setState({ loading: true });
       if (this.state.data == result) {
-        this.props.handleScanResult({ status: "same" });
-        console.log("Onajii scanded data");
+        this.props.handleScanResult({ status: 'same' });
+        console.log('Onajii scanded data');
       } else {
         this.setState({ data: result });
         var pattern = /(\?|\&)([^=]+)\=([^&]+)/g;
         var results = result.match(pattern);
         fetch(
-          "/member/cfmatt/" + results[0] + results[1] + results[2] + results[3]
+          '/member/cfmatt/' + results[0] + results[1] + results[2] + results[3]
         )
           .then((response) => {
             if (!response.ok) {

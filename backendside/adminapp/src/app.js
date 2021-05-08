@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Provider } from "react-redux";
-import thunk from "redux-thunk";
-import { createStore, compose, applyMiddleware, combineReducers } from "redux";
-import checkinReducer from "./store/reducers/checkin";
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
+import checkinReducer from './store/reducers/checkin';
 
-import RootRouters from "./RootRoutes";
-import AppContext from "./appContext";
-import { BrowserRouter as Router } from "react-router-dom";
+import RootRouters from './RootRoutes';
+import AppContext from './appContext';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const rootReducer = combineReducers({
   checkin: checkinReducer,

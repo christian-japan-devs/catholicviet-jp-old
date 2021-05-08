@@ -1,5 +1,5 @@
-import { CART_START, CART_SUCCESS, CART_FAIL } from "../actions/actionTypes";
-import { updateObject } from "../utility";
+import { CART_START, CART_SUCCESS, CART_FAIL } from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 type cartState = {
   shoppingCart: string;
@@ -8,8 +8,8 @@ type cartState = {
 };
 
 const initialState: cartState = {
-  shoppingCart: "",
-  error: "",
+  shoppingCart: '',
+  error: '',
   loading: false,
 };
 

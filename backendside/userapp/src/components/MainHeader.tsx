@@ -1,5 +1,5 @@
-import React from "react";
-import "./MainHeader.css";
+import React from 'react';
+import './MainHeader.css';
 
 const MainHeader = () => {
   return (

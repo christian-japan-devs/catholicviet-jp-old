@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import "axios";
+import React, { useState, useEffect } from 'react';
+import 'axios';
 
 const Acticle = () => {
   return <div>Acticle</div>;

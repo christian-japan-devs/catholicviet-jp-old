@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import Divider from "@material-ui/core/Divider";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import List from "@material-ui/core/List";
-import Paper from "@material-ui/core/Paper";
-import ListItem from "@material-ui/core/ListItem";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import React, { Component } from 'react';
+import Divider from '@material-ui/core/Divider';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
+import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {
   Grid,
@@ -17,8 +17,8 @@ import {
   ButtonGroup,
   Typography,
   TableBody,
-} from "@material-ui/core";
-import LegacyQRMode from "./LegacyQRMode";
+} from '@material-ui/core';
+import LegacyQRMode from './LegacyQRMode';
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -31,17 +31,17 @@ export default class HomePage extends Component {
       openDialog: false,
       scanResults: [],
       register: {
-        title: "",
+        title: '',
         registered: 0,
         presented: 0,
         waiting: 0,
       },
       scanResultOut: {
         id: 0,
-        username: "",
-        seat: "",
-        message: "",
-        status: "error",
+        username: '',
+        seat: '',
+        message: '',
+        status: 'error',
       },
       totalScaned: 0,
     };
@@ -52,7 +52,7 @@ export default class HomePage extends Component {
   }
 
   componentDidMount() {
-    fetch("/member/massInfo")
+    fetch('/member/massInfo')
       .then((response) => {
         if (!response.ok) {
           return {};
@@ -61,7 +61,7 @@ export default class HomePage extends Component {
         }
       })
       .then((data) => {
-        var register = data["register"];
+        var register = data['register'];
         //console.log(register);
         this.setState((state) => ({ ...state.register, register }));
         //console.log(this.state.register);
@@ -78,7 +78,7 @@ export default class HomePage extends Component {
   }
 
   handleResetButton() {
-    fetch("/member/updateStatus?status=AB")
+    fetch('/member/updateStatus?status=AB')
       .then((response) => {
         if (!response.ok) {
           return {};
@@ -107,17 +107,17 @@ export default class HomePage extends Component {
 
   handleScanResult = (result) => {
     //console.log(result);
-    if (result["status"] == "same") {
+    if (result['status'] == 'same') {
       this.openInformDialog();
     } else {
-      if (result["status"] !== "error") {
-        var register = result["content"]["register"];
+      if (result['status'] !== 'error') {
+        var register = result['content']['register'];
         this.setState((state) => ({ ...state.register, register }));
       }
       //console.log(result['content']);
       var index = this.state.totalScaned;
-      var newResult = result["content"]["result"];
-      newResult["id"] = index;
+      var newResult = result['content']['result'];
+      newResult['id'] = index;
       this.setState({
         scanResultOut: newResult,
       });
@@ -127,24 +127,24 @@ export default class HomePage extends Component {
       });
       this.setState({ totalScaned: index + 1 });
 
-      if (result["status"] === "ok") {
+      if (result['status'] === 'ok') {
         this.setState({
           scanState: true,
           resultCallBack: true,
           //, startScanCode: false
         });
         console.log(this.state.scanResults.length);
-      } else if (result["status"] === "checked") {
-        console.log("warning");
+      } else if (result['status'] === 'checked') {
+        console.log('warning');
         this.setState({
-          scanResult: result["content"],
+          scanResult: result['content'],
           scanState: false,
           resultCallBack: true,
           //, startScanCode: false
         });
       } else {
         this.setState({
-          scanResult: result["content"],
+          scanResult: result['content'],
           resultCallBack: true,
           scanState: false,
           //, startScanCode: false
@@ -192,23 +192,23 @@ export default class HomePage extends Component {
           <div className="col-md-6 col-sm-12 col-12 center">
             <h4>LỊCH SỬ DUYỆT</h4>
             <div className="card-scan-result">
-              <Paper style={{ maxHeight: 480, overflow: "auto" }}>
+              <Paper style={{ maxHeight: 480, overflow: 'auto' }}>
                 <List>
                   {scanResults.map(
                     ({ id, username, seat, message, status }) => (
                       <ListItem key={id}>
                         <div
                           className={
-                            status === "ok"
-                              ? "presented-card row"
-                              : status === "error"
-                              ? "registered-card row"
-                              : "waiting-card row"
+                            status === 'ok'
+                              ? 'presented-card row'
+                              : status === 'error'
+                              ? 'registered-card row'
+                              : 'waiting-card row'
                           }
                         >
                           <div className="col-md-2 col-sm-2 col-2">
-                            {" "}
-                            {status === "ok" ? (
+                            {' '}
+                            {status === 'ok' ? (
                               <div className="scan-mark-ok">
                                 <i className="fa fa-2x fa-check-circle"></i>
                               </div>
@@ -218,18 +218,18 @@ export default class HomePage extends Component {
                               </div>
                             )}
                           </div>
-                          {status === "ok" ? (
+                          {status === 'ok' ? (
                             <div className="col-10">
                               <div className="row">
                                 <div
                                   className="col-md-8 col-sm-8 col-8"
-                                  style={{ color: "#ffffff", size: 24 }}
+                                  style={{ color: '#ffffff', size: 24 }}
                                 >
                                   {message} {username}
                                 </div>
                                 <div
                                   className="col-md-4 col-sm-4 col-4"
-                                  style={{ color: "#ffffff", size: 24 }}
+                                  style={{ color: '#ffffff', size: 24 }}
                                 >
                                   {seat}
                                 </div>
@@ -238,7 +238,7 @@ export default class HomePage extends Component {
                           ) : (
                             <div
                               className="col-md-10 col-sm-10 col-10"
-                              style={{ color: "#ffffff", size: 24 }}
+                              style={{ color: '#ffffff', size: 24 }}
                             >
                               {message}
                             </div>
@@ -296,11 +296,11 @@ export default class HomePage extends Component {
           <DialogTitle id="alert-dialog-title">
             <div className="row">
               <div className="col-md-8 col-sm-8 col-8">
-                <h3>{"Kết quả "}</h3>
+                <h3>{'Kết quả '}</h3>
               </div>
               <div className="col-md-4 col-sm-4 col-4">
-                {" "}
-                {scanResultOut.status === "ok" ? (
+                {' '}
+                {scanResultOut.status === 'ok' ? (
                   <div className="confirm-mark-ok">
                     <i className="fa fa-2x fa-check-circle"></i>
                   </div>
@@ -316,27 +316,27 @@ export default class HomePage extends Component {
             <DialogContentText id="alert-dialog-description">
               <div
                 className={
-                  scanResultOut.status === "ok"
-                    ? "presented-card row"
-                    : scanResultOut.status === "error"
-                    ? "registered-card row"
-                    : "waiting-card row"
+                  scanResultOut.status === 'ok'
+                    ? 'presented-card row'
+                    : scanResultOut.status === 'error'
+                    ? 'registered-card row'
+                    : 'waiting-card row'
                 }
               >
-                {scanResultOut.status === "ok" ? (
+                {scanResultOut.status === 'ok' ? (
                   <div className="col-12" style={{ width: 280 }}>
-                    <h5 style={{ color: "#ffffff" }}>
+                    <h5 style={{ color: '#ffffff' }}>
                       {scanResultOut.message}
                     </h5>
-                    <h4 style={{ color: "#ffffff" }}>
+                    <h4 style={{ color: '#ffffff' }}>
                       {scanResultOut.username}
                     </h4>
-                    <h2 style={{ color: "#ffffff" }}>{scanResultOut.seat}</h2>
+                    <h2 style={{ color: '#ffffff' }}>{scanResultOut.seat}</h2>
                   </div>
                 ) : (
                   <div
                     className="col-md-10 col-sm-10 col-10"
-                    style={{ color: "#ffffff" }}
+                    style={{ color: '#ffffff' }}
                   >
                     <h4>{scanResultOut.message}</h4>
                   </div>

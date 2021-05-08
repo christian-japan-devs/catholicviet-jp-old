@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { IProvince } from "../interfaces/province";
-import Wrapper from "./Wrapper";
+import React, { useEffect, useState } from 'react';
+import { IProvince } from '../interfaces/province';
+import Wrapper from './Wrapper';
 
 const Provinces = () => {
   const [provinces, setProvinces] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     const loadProvince = async () => {
@@ -18,9 +18,9 @@ const Provinces = () => {
 
         const result: never[] = await response.json();
         setProvinces([...provinces, ...result]);
-        setErrorMsg("");
+        setErrorMsg('');
       } catch (error) {
-        setErrorMsg("Error while loading data. Try again later.");
+        setErrorMsg('Error while loading data. Try again later.');
       } finally {
         setIsLoading(false);
       }
@@ -36,7 +36,7 @@ const Provinces = () => {
     <Wrapper>
       <div className="load-more">
         <button onClick={loadMore} className="btn-load-more">
-          {isLoading ? "Loading..." : "Load More"}
+          {isLoading ? 'Loading...' : 'Load More'}
         </button>
       </div>
       <div className="table-responsive">

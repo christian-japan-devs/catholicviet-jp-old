@@ -1,14 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import registerServiceWorker from "./registerServiceWorker";
-import { createStore, compose, applyMiddleware, Store } from "redux";
-import { Provider } from "react-redux";
-import thunk from "redux-thunk";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import registerServiceWorker from './registerServiceWorker';
+import { createStore, compose, applyMiddleware, Store } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import rootReducer from "./store/reducers/root";
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import rootReducer from './store/reducers/root';
 
 declare global {
   interface Window {
@@ -23,7 +23,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 );
 
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 
 ReactDOM.render(
   <Provider store={store}>

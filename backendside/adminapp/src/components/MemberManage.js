@@ -1,50 +1,50 @@
-import React, { Component } from "react";
-import { forwardRef } from "react";
-import MaterialTable from "material-table";
-import AddBox from "@material-ui/icons/AddBox";
-import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import Check from "@material-ui/icons/Check";
-import ChevronLeft from "@material-ui/icons/ChevronLeft";
-import ChevronRight from "@material-ui/icons/ChevronRight";
-import Clear from "@material-ui/icons/Clear";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Edit from "@material-ui/icons/Edit";
-import FilterList from "@material-ui/icons/FilterList";
-import FirstPage from "@material-ui/icons/FirstPage";
-import LastPage from "@material-ui/icons/LastPage";
-import Remove from "@material-ui/icons/Remove";
-import SaveAlt from "@material-ui/icons/SaveAlt";
-import Search from "@material-ui/icons/Search";
-import ViewColumn from "@material-ui/icons/ViewColumn";
+import React, { Component } from 'react';
+import { forwardRef } from 'react';
+import MaterialTable from 'material-table';
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
 
 const columns = [
-  { field: "id", title: "ID", hidden: true },
-  { field: "code", title: "code", hidden: true },
-  { field: "bid", title: "bid", hidden: true },
-  { field: "user_name", title: "Tên" },
-  { field: "user_email", title: "Email" },
+  { field: 'id', title: 'ID', hidden: true },
+  { field: 'code', title: 'code', hidden: true },
+  { field: 'bid', title: 'bid', hidden: true },
+  { field: 'user_name', title: 'Tên' },
+  { field: 'user_email', title: 'Email' },
   {
-    field: "seat_no",
-    title: "Số Ghế",
-    defaultSort: "asc",
+    field: 'seat_no',
+    title: 'Số Ghế',
+    defaultSort: 'asc',
   },
   {
-    field: "user_confirm",
-    title: "Tình trạng",
-    description: "Tình trạng xác nhận chắc chắn đi Lễ",
+    field: 'user_confirm',
+    title: 'Tình trạng',
+    description: 'Tình trạng xác nhận chắc chắn đi Lễ',
     sortable: false,
   },
 ];
 
 const colAbsent = [
-  { field: "id", title: "ID", hidden: true },
-  { field: "code", title: "code", hidden: true },
-  { field: "bid", title: "bid", hidden: true },
-  { field: "acc_name", title: "Tài khoản" },
-  { field: "user_name", title: "Tên" },
-  { field: "user_email", title: "Email" },
-  { field: "mass_name", title: "Thánh Lễ" },
-  { field: "mass_date", title: "Ngày" },
+  { field: 'id', title: 'ID', hidden: true },
+  { field: 'code', title: 'code', hidden: true },
+  { field: 'bid', title: 'bid', hidden: true },
+  { field: 'acc_name', title: 'Tài khoản' },
+  { field: 'user_name', title: 'Tên' },
+  { field: 'user_email', title: 'Email' },
+  { field: 'mass_name', title: 'Thánh Lễ' },
+  { field: 'mass_date', title: 'Ngày' },
 ];
 
 const tableIcons = {
@@ -86,7 +86,7 @@ export default class Dashboard extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    fetch("/member/getListRegister?status=AB&max=200")
+    fetch('/member/getListRegister?status=AB&max=200')
       .then((response) => {
         if (!response.ok) {
           return {};
@@ -110,11 +110,11 @@ export default class Dashboard extends Component {
 
   handleRowDataClickedEvent = (event, rowData) => {
     //data = this.state.tableData["listbooking"]
-    alert("You clicked " + rowData.id + " name: " + rowData.user_name);
+    alert('You clicked ' + rowData.id + ' name: ' + rowData.user_name);
   };
 
   handleRowDetail = (evet, selectedRow) => {
-    alert("You clicked " + selectedRow.tableData.id);
+    alert('You clicked ' + selectedRow.tableData.id);
   };
 
   render() {
@@ -122,19 +122,19 @@ export default class Dashboard extends Component {
     const tableAbsentData = this.state.tableAbsentData;
     //console.log(scanResults);
     return (
-      <div style={{ height: "100%", width: "100%" }}>
+      <div style={{ height: '100%', width: '100%' }}>
         <br />
         <br />
         <MaterialTable
           icons={tableIcons}
-          title={tableAbsentData["title"]}
-          data={tableAbsentData["listbooking"]}
+          title={tableAbsentData['title']}
+          data={tableAbsentData['listbooking']}
           columns={colAbsent}
           pageSize={10}
           actions={[
             {
               icon: Edit,
-              tooltip: "Save User",
+              tooltip: 'Save User',
               onClick: this.handleRowDataClickedEvent,
             },
           ]}

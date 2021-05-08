@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import ShareIcon from "@material-ui/icons/Share";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import VisibilityIcon from "@material-ui/icons/Visibility";
+import React, { useEffect, useState } from 'react';
+import ShareIcon from '@material-ui/icons/Share';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
-import { INewFeed } from "../interfaces/newfeed";
-import parse from "html-react-parser";
-import "./newfeed.css";
+import { INewFeed } from '../interfaces/newfeed';
+import parse from 'html-react-parser';
+import './newfeed.css';
 
 const NewFeeds = () => {
   const [newfeeds, setNewfeeds] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     const loadNewFeed = async () => {
@@ -21,9 +21,9 @@ const NewFeeds = () => {
 
         const result: never[] = await response.json();
         setNewfeeds([...newfeeds, ...result]);
-        setErrorMsg("");
+        setErrorMsg('');
       } catch (error) {
-        setErrorMsg("Error while loading data. Try again later.");
+        setErrorMsg('Error while loading data. Try again later.');
       } finally {
         setIsLoading(false);
       }
@@ -46,7 +46,7 @@ const NewFeeds = () => {
                   <div className="media">
                     <div className="media-left media-top">
                       <img
-                        src={"http://localhost:8000" + nf.nf_image}
+                        src={'http://localhost:8000' + nf.nf_image}
                         className="media-object media-user"
                       />
                     </div>
@@ -68,7 +68,7 @@ const NewFeeds = () => {
                 <div className="col-auto">
                   <img
                     className="media-image"
-                    src={"http://localhost:8000" + nf.nf_image}
+                    src={'http://localhost:8000' + nf.nf_image}
                   />
                 </div>
               </div>

@@ -1,9 +1,9 @@
-const localhost = "http://127.0.0.1:8000";
+const localhost = 'http://127.0.0.1:8000';
 
-const apiURL = "/api";
+const apiURL = '/api';
 
-export const VCJTOKEN = "vcj_token";
-export const EXPIRATION_DATE = "vcjexpDate";
+export const VCJTOKEN = 'vcj_token';
+export const EXPIRATION_DATE = 'vcjexpDate';
 
 export const endpoint = `${localhost}${apiURL}`;
 

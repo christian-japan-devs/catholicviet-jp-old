@@ -1,11 +1,11 @@
-const path = require("path");
-const webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "./static/js"),
-    filename: "[name].js",
+    path: path.resolve(__dirname, './static/js'),
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -13,7 +13,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
     ],
@@ -24,11 +24,11 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true),
-      VERSION: JSON.stringify("5fa3b9"),
+      VERSION: JSON.stringify('5fa3b9'),
       BROWSER_SUPPORTS_HTML5: true,
-      TWO: "1+1",
-      "typeof window": JSON.stringify("object"),
-      "process.NODE_ENV": JSON.stringify(process.NODE_ENV),
+      TWO: '1+1',
+      'typeof window': JSON.stringify('object'),
+      'process.NODE_ENV': JSON.stringify(process.NODE_ENV),
     }),
   ],
 };

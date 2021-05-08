@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 networks:
   vietcatholicjp-network:
@@ -10,7 +10,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "bash run_server.sh"
+    command: 'bash run_server.sh'
     ports:
       - 8000:8000
     volumes:
@@ -39,9 +39,9 @@ services:
       - .dbdata:/var/lib/mysql
     command:
       [
-        "mysqld",
-        "--character-set-server=utf8mb4",
-        "--collation-server=utf8mb4_unicode_ci",
+        'mysqld',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
       ]
     ports:
       - 33066:3306
