@@ -1,65 +1,65 @@
-import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../utility";
+import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 type AuthState = {
-  token: string,
-  error: string,
-  loading: boolean
-}
-
-type AuthStartAction = {
-  type: string
-}
-
-type AuthSuccessAction = {
-  type:  string
-  token: string
-}
-
-type AuthFailAction = {
-  type: string
-  error: string
-}
-
-type AuthLogoutAction = {
-  type:string
-}
-
-const initialState:AuthState = {
-  token: "",
-  error: "",
-  loading: false
+  token: string;
+  error: string;
+  loading: boolean;
 };
 
-const authStart = (state:AuthState, action:AuthStartAction) => {
+type AuthStartAction = {
+  type: string;
+};
+
+type AuthSuccessAction = {
+  type: string;
+  token: string;
+};
+
+type AuthFailAction = {
+  type: string;
+  error: string;
+};
+
+type AuthLogoutAction = {
+  type: string;
+};
+
+const initialState: AuthState = {
+  token: '',
+  error: '',
+  loading: false,
+};
+
+const authStart = (state: AuthState, action: AuthStartAction) => {
   return updateObject(state, {
     error: null,
-    loading: true
+    loading: true,
   });
 };
 
-const authSuccess = (state:AuthState, action:AuthSuccessAction) => {
+const authSuccess = (state: AuthState, action: AuthSuccessAction) => {
   return updateObject(state, {
     token: action.token,
     error: null,
-    loading: false
+    loading: false,
   });
 };
 
-const authFail = (state:AuthState, action:AuthFailAction) => {
+const authFail = (state: AuthState, action: AuthFailAction) => {
   return updateObject(state, {
     error: action.error,
-    loading: false
+    loading: false,
   });
 };
 
-const authLogout = (state:AuthState, action:AuthLogoutAction) => {
+const authLogout = (state: AuthState, action: AuthLogoutAction) => {
   return updateObject(state, {
-    token: null
+    token: null,
   });
 };
 
-const reducer = (state:AuthState = initialState, action:any) => {
+const reducer = (state: AuthState = initialState, action: any) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
       return authStart(state, action);

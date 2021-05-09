@@ -8,6 +8,7 @@
 ```sh
 brew install mysql python n
 n lts
+npm i -g yarn
 ```
 
 Kiểm tra:
@@ -17,12 +18,24 @@ python -V
 # Python 3.8.5
 node -v
 # v14.16.1
-
 npm -v
 # 6.14.12
+yarn -v
+# 2.4.1
 ```
 
-## 2. Setting up a new environment
+## 2. Setting up frontend
+
+```sh
+yarn install
+```
+### Add new package
+
+```sh
+yarn workspace fronendside add package-name
+```
+
+## 3. Setting up backend
 This will make sure our package configuration is kept nicely isolated from any other projects we're working on.
 
 ```sh
@@ -32,7 +45,7 @@ source env/bin/activate
 ```
 
 
-## 3. Install package requirements
+### Install python requirements
 Now that we're inside a virtual environment, we can install our package requirements.
 
 ```sh
@@ -40,23 +53,22 @@ pip install -r requirements/development.txt
 pip install -r requirements/testing.txt
 ```
 
-## 4. Install node_modules
+## 4. Setting up database
+
+For quick development we use sqlite3, it will be generated automatically when you run the following command.
 
 ```sh
-cd adminapp
-npm ci
+bash run_migrate.sh
 ```
 
-## 5. Cài đặt phần frontend
 
-```sh
-cd ../../frontendside
-npm ci
-```
+# Old README
+----------------------------------------------------------------
+
 ### Truy cập phía người dùng
 
 ```sh
-npm start
+yarn workspace frontendside run start
 # Truy cập http://localhost:3000
 ```
 

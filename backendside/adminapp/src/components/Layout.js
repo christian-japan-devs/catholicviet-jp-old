@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,20 +7,22 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import {Container
-    ,List
-    ,ListItem
-    ,ListItemIcon
-    ,ListItemText
-    ,Divider
-    ,BottomNavigation
-    ,BottomNavigationAction} from '@material-ui/core';
+import {
+  Container,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  BottomNavigation,
+  BottomNavigationAction,
+} from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
-import DrawerMenu from "../components/DrawerMenu"
+import DrawerMenu from '../components/DrawerMenu';
 
 const classes = makeStyles((theme) => ({
   root: {
@@ -78,35 +80,34 @@ const classes = makeStyles((theme) => ({
 }));
 
 export default class CustomLayout extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       isSideBarOpen: false,
       value: 'recents',
-    }
+    };
     this.handleSideBarOpen = this.handleSideBarOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleSideBarOpen(isOpen) {
-    console.log("clicked");
-    this.setState(state =>({
-      isSideBarOpen: isOpen
+    console.log('clicked');
+    this.setState((state) => ({
+      isSideBarOpen: isOpen,
     }));
     console.log(this.state.isSideBarOpen);
   }
 
-  handleChange = (event,newValue) => {
+  handleChange = (event, newValue) => {
     console.log(newValue);
-    this.setState(state =>({
-      value: newValue
+    this.setState((state) => ({
+      value: newValue,
     }));
-  }
+  };
 
   render() {
     const isOpen = this.state.isSideBarOpen;
-    console.log("rendered");
+    console.log('rendered');
     console.log(isOpen);
     return (
       <div className={classes.root}>
@@ -123,7 +124,7 @@ export default class CustomLayout extends React.Component {
             </IconButton>
             <Typography className={classes.title} variant="h6" noWrap>
               Material-UI
-          </Typography>
+            </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -139,16 +140,37 @@ export default class CustomLayout extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        <DrawerMenu isOpen={isOpen}
-                    sidePosition='bottom'
-                    handleSideBarOpen={this.handleSideBarOpen}
-                    />
+        <DrawerMenu
+          isOpen={isOpen}
+          sidePosition="bottom"
+          handleSideBarOpen={this.handleSideBarOpen}
+        />
         {this.props.children}
-        <BottomNavigation value={this.state.value} fixed="true" onChange={this.handleChange}>
-          <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-          <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
-          <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+        <BottomNavigation
+          value={this.state.value}
+          fixed="true"
+          onChange={this.handleChange}
+        >
+          <BottomNavigationAction
+            label="Recents"
+            value="recents"
+            icon={<RestoreIcon />}
+          />
+          <BottomNavigationAction
+            label="Favorites"
+            value="favorites"
+            icon={<FavoriteIcon />}
+          />
+          <BottomNavigationAction
+            label="Nearby"
+            value="nearby"
+            icon={<LocationOnIcon />}
+          />
+          <BottomNavigationAction
+            label="Folder"
+            value="folder"
+            icon={<FolderIcon />}
+          />
         </BottomNavigation>
       </div>
     );
