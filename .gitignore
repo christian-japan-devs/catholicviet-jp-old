@@ -128,7 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-.yarn/*
+.yarn/
 !.yarn/cache
 !.yarn/patches
 !.yarn/plugins

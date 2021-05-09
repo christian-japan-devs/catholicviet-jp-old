@@ -29,6 +29,11 @@ yarn -v
 ```sh
 yarn install
 ```
+### Add new package
+
+```sh
+yarn workspace fronendside add package-name
+```
 
 ## 3. Setting up backend
 This will make sure our package configuration is kept nicely isolated from any other projects we're working on.
@@ -50,13 +55,20 @@ pip install -r requirements/testing.txt
 
 ## 4. Setting up database
 
+For quick development we use sqlite3, it will be generated automatically when you run the following command.
+
+```sh
+bash run_migrate.sh
+```
+
+
 # Old README
 ----------------------------------------------------------------
 
 ### Truy cập phía người dùng
 
 ```sh
-npm start
+yarn workspace frontendside run start
 # Truy cập http://localhost:3000
 ```
 
