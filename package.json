@@ -8,9 +8,9 @@
     "typescript": "^4.2.4"
   },
   "workspaces": [
-    "backend/userapp",
-    "backend/adminapp",
-    "frontend"
+    "backendside/userapp",
+    "backendside/adminapp",
+    "frontendside"
   ],
   "prettier": {
     "singleQuote": true
