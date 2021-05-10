@@ -45,7 +45,10 @@ const Signup = (props: any) => {
 
   const [values, setValues] = useState({
     username: '',
+    holyname: '',
+    name: '',
     email: '',
+    address:'',
     password1:'',
     password2:''
   });
@@ -54,8 +57,11 @@ const Signup = (props: any) => {
   const { loading, token } = props;
 
   const formDataValid : FormData = {
-    email: '',
     username: '',
+    holyname: '',
+    name:'',
+    email: '',
+    address: '',
     password1: '',
     password2: '',
     message: ''
@@ -114,6 +120,36 @@ const Signup = (props: any) => {
                   autoFocus
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField 
+                  autoComplete='holyname'
+                  name='holyname'
+                  variant='outlined'
+                  value={values.username}
+                  required
+                  fullWidth
+                  id='holyname'
+                  label='Tên Thánh'
+                  onChange={handleChange}
+                  helperText={errors.holyname}
+                  error={errors.holyname ? true : false}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField 
+                  autoComplete='name'
+                  name='name'
+                  variant='outlined'
+                  value={values.username}
+                  required
+                  fullWidth
+                  id='name'
+                  label='Họ và Tên'
+                  onChange={handleChange}
+                  helperText={errors.name}
+                  error={errors.name ? true : false}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField 
                   autoComplete='email'
@@ -126,6 +162,21 @@ const Signup = (props: any) => {
                   label='Địa chỉ email'
                   helperText={errors.email}
                   error={errors.email ? true : false}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField 
+                  autoComplete='address'
+                  name='address'
+                  variant='outlined'
+                  value={values.address}
+                  required
+                  fullWidth
+                  id='address'
+                  label='Địa chỉ chỗ ở hiện tại'
+                  helperText={errors.address}
+                  error={errors.address ? true : false}
                   onChange={handleChange}
                 />
               </Grid>
@@ -163,16 +214,18 @@ const Signup = (props: any) => {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value='allowExtraEmails' color='primary'/>}
-                  label="Tôi muốn nhận thông báo, và tin tức qua email."
+                  control={<Checkbox value='agreewith' color='primary'/>}
+                  label="Tôi đồng ý với các điều khoản của cộng đồng Công Giáo người Việt tại Nhật."
                 />
               </Grid>
             </Grid>
             <Button 
               type='submit'
               variant='contained'
+              fullWidth
               color='primary'
               disabled={loading}
+              className={classes.submit}
             >
               Đăng ký
               {loading && (

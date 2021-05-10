@@ -124,8 +124,10 @@ const LoginForm = (props: any) => {
             <Button
               type='submit'
               variant='contained'
+              fullWidth
               color='primary'
               disabled={loading}
+              className={classes.submit}
             >
               Đăng nhập
             {loading && (
