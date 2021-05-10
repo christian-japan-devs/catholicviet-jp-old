@@ -21,14 +21,13 @@ from django.conf.urls.static import static
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    path('',include('userapp.urls')),
     path('admin/', admin.site.urls),
     path('api/',include('api.urls')),
     path('rest-auth/',include('rest_auth.urls')),
     path('rest-auth/registration/',include('rest_auth.registration.urls')),
     path('api-auth/',include('rest_framework.urls')),
     path('accounts/', include('allauth.urls')),
-    #path('api-token-auth',views.obtain_auth_token,name='api-token-auth'),
+    path('api-token-auth',views.obtain_auth_token,name='api-token-auth'),
     path('i18n/', include('django.conf.urls.i18n')),
     path('tinymce/', include('tinymce.urls')),
     path('chaining/', include('smart_selects.urls')),

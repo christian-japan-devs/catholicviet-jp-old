@@ -18,7 +18,7 @@ class UserProfile(models.Model):
     profile_first_name = models.CharField(_('Họ'),default='',max_length=30,help_text=_('Họ'))
     profile_last_name = models.CharField(_('Tên'),default='',max_length=30,help_text=_('Tên'))
     profile_full_name = models.CharField(_('Họ Tên'),default='',max_length=30,help_text=_('Họ tên đầy đủ'))
-    profile_image = models.ImageField(_('Hình đại diện'),default='default.JPG', upload_to='profile_pics',help_text=_('Không bắt buộc'))
+    profile_image = models.ImageField(_('Hình đại diện'),default='default.JPG', upload_to='media/profile_pics',help_text=_('Không bắt buộc'))
     profile_address = models.CharField(_('Địa chỉ'),default='',max_length=300,help_text=_('Xin nhập địa chỉ hiện tại của bạn'))
     profile_age = models.SmallIntegerField(_('Tuổi'),default=0,help_text=_('Xin nhập độ tuổi của bạn'))
     profile_phone_number = models.CharField(_('Số điện thoại'),default='',blank=True,max_length=12,help_text=_('Xin nhập số điện thoại để liên lạc khi cần'))
