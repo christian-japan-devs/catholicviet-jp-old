@@ -16358,48 +16358,6 @@ resolve@^2.0.0-next.3:
   version: 3.1.1
   resolution: "use@npm:3.1.1"
   checksum: 8dd3bdeeda53864c779e0fa8d799064739708f80b45d06fa48a1a6ba192dc3f9e3266d4556f223cd718d27aedfd957922152e7463c00ac46e185f8331353fb6f
-
-
-"userapp@workspace:backend/userapp":
-  version: 0.0.0-use.local
-  resolution: "userapp@workspace:backend/userapp"
-  dependencies:
-    "@babel/preset-typescript": ^7.13.0
-    "@material-ui/core": ^4.11.4
-    "@material-ui/icons": ^4.11.2
-    "@testing-library/jest-dom": ^4.2.4
-    "@testing-library/react": ^11.1.0
-    "@testing-library/user-event": ^12.1.10
-    "@types/jest": ^26.0.15
-    "@types/mini-css-extract-plugin": ^1.4.2
-    "@types/node": ^12.0.0
-    "@types/react": ^17.0.0
-    "@types/react-dom": ^17.0.0
-    "@types/react-redux": ^7.1.16
-    "@types/react-router-dom": ^5.1.7
-    "@types/redux": ^3.6.0
-    "@types/redux-thunk": ^2.1.0
-    axios: 0.21.1
-    babel-loader: ^8.2.2
-    css-loader: ^5.2.4
-    html-react-parser: ^1.2.6
-    html-webpack-plugin: ^5.3.1
-    mini-css-extract-plugin: ^1.6.0
-    react: ^17.0.2
-    react-dom: ^17.0.2
-    react-redux: ^7.2.4
-    react-router-dom: ^5.2.0
-    react-scripts: 4.0.3
-    redux: ^4.1.0
-    redux-thunk: ^2.3.0
-    style-loader: ^2.0.0
-    ts-loader: ^9.1.2
-    typescript: ^4.1.2
-    typescript-fsa: ^3.0.0
-    typescript-fsa-reducers: ^1.2.2
-    web-vitals: ^1.0.1
-    webpack: ^5.36.2
-    webpack-cli: ^4.7.0
   languageName: unknown
   linkType: soft
 
