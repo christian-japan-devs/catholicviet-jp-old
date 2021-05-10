@@ -98,7 +98,7 @@ const LoginForm = (props: any) => {
               name='username'
               onChange={handleChange}
               helperText={errors.username}
-              error={errors.username ? true : false}
+              error={!!errors.username}
             />
             <TextField
               variant='outlined'
@@ -112,7 +112,7 @@ const LoginForm = (props: any) => {
               type='password'
               onChange={handleChange}
               helperText={errors.password1}
-              error={errors.password1 ? true : false}
+              error={!!errors.password1}    // passowrd1 in type errors is same with password,
             />
             {errors && (
               <Typography variant='body2'>{errors.message}</Typography>

@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
 import TextField from '@material-ui/core/TextField';
@@ -10,12 +10,12 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { authSignup } from '../../store/actions/cauth';
-import {FormData} from '../../store/types/auth';
+import { FormData } from '../../store/types/auth';
 import Copyright from '../other/Copyright';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,18 +48,18 @@ const Signup = (props: any) => {
     holyname: '',
     name: '',
     email: '',
-    address:'',
-    password1:'',
-    password2:''
+    address: '',
+    password1: '',
+    password2: ''
   });
 
   const [errors, setErrors] = useState({} as FormData);
   const { loading, token } = props;
 
-  const formDataValid : FormData = {
+  const formDataValid: FormData = {
     username: '',
     holyname: '',
-    name:'',
+    name: '',
     email: '',
     address: '',
     password1: '',
@@ -67,18 +67,20 @@ const Signup = (props: any) => {
     message: ''
   }
 
-  const handleSignup = (e:any)=>{
+  const handleSignup = (e: any) => {
     e.preventDefault();
-    if(values.username.length <= 8) {         // check valid sign up information here
+    if (values.username.length <= 8) {         // client side validation here
       formDataValid.username = 'Tên đăng nhập phải dài hơn 8 ký tự';
-      setErrors( formDataValid );
-    }else{
-      const {username, email, password1, password2} = values;
+      setErrors(formDataValid);
+    } else {
+      formDataValid.username = '';
+      setErrors(formDataValid);
+      const { username, email, password1, password2 } = values;
       props.signup(username, email, password1, password2);
     }
   }
 
-  const handleChange = (e:any) =>{
+  const handleChange = (e: any) => {
     setValues((values) => ({
       ...values, [e.target.name]: e.target.value,
     }))
@@ -86,12 +88,12 @@ const Signup = (props: any) => {
 
   if (token) {
     return (
-      <Redirect to='/'/> //welcome popup show 
+      <Redirect to='/' /> //welcome popup show here
     )
-  } else{
+  } else {
     return (
       <Container component='main' maxWidth='xs'>
-        <CssBaseline/>
+        <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <AccountCircleIcon fontSize="large" />
@@ -100,12 +102,12 @@ const Signup = (props: any) => {
             Vietcatholic Jp
           </Typography>
           <Typography component='h1' variant='h5'>
-            Đăng ký 
+            Đăng ký
           </Typography>
           <form onSubmit={handleSignup} className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField 
+                <TextField
                   autoComplete='username'
                   name='username'
                   variant='outlined'
@@ -116,42 +118,42 @@ const Signup = (props: any) => {
                   label='Tên đăng nhập'
                   onChange={handleChange}
                   helperText={errors.username}
-                  error={errors.username ? true : false}
+                  error={!!errors.username}
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField 
+                <TextField
                   autoComplete='holyname'
                   name='holyname'
                   variant='outlined'
-                  value={values.username}
+                  value={values.holyname}
                   required
                   fullWidth
                   id='holyname'
                   label='Tên Thánh'
                   onChange={handleChange}
                   helperText={errors.holyname}
-                  error={errors.holyname ? true : false}
+                  error={!!errors.holyname}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField 
+                <TextField
                   autoComplete='name'
                   name='name'
                   variant='outlined'
-                  value={values.username}
+                  value={values.name}
                   required
                   fullWidth
                   id='name'
                   label='Họ và Tên'
                   onChange={handleChange}
                   helperText={errors.name}
-                  error={errors.name ? true : false}
+                  error={!!errors.name}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
+                <TextField
                   autoComplete='email'
                   name='email'
                   variant='outlined'
@@ -161,12 +163,12 @@ const Signup = (props: any) => {
                   id='email'
                   label='Địa chỉ email'
                   helperText={errors.email}
-                  error={errors.email ? true : false}
+                  error={!!errors.email}
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
+                <TextField
                   autoComplete='address'
                   name='address'
                   variant='outlined'
@@ -176,12 +178,12 @@ const Signup = (props: any) => {
                   id='address'
                   label='Địa chỉ chỗ ở hiện tại'
                   helperText={errors.address}
-                  error={errors.address ? true : false}
+                  error={!!errors.address}
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
+                <TextField
                   autoComplete='password1'
                   name='password1'
                   value={values.password1}
@@ -193,11 +195,11 @@ const Signup = (props: any) => {
                   label='Mật khẩu'
                   type="password"
                   helperText={errors.password1}
-                  error={errors.password1 ? true : false}
+                  error={!!errors.password1}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
+                <TextField
                   autoComplete='password2'
                   name='password2'
                   value={values.password2}
@@ -208,18 +210,18 @@ const Signup = (props: any) => {
                   id='password2'
                   label='Nhập lại mật khẩu'
                   helperText={errors.password2}
-                  error={errors.password2 ? true : false}
+                  error={!!errors.password2}
                   type="password"
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value='agreewith' color='primary'/>}
+                  control={<Checkbox value='agreewith' color='primary' />}
                   label="Tôi đồng ý với các điều khoản của cộng đồng Công Giáo người Việt tại Nhật."
                 />
               </Grid>
             </Grid>
-            <Button 
+            <Button
               type='submit'
               variant='contained'
               fullWidth
@@ -243,8 +245,8 @@ const Signup = (props: any) => {
 };
 
 //Map the states to local props
-const mapStateToProps = (state:any) => ({
-  loading : state.auth.loading,
+const mapStateToProps = (state: any) => ({
+  loading: state.auth.loading,
   error: state.auth.error,
   token: state.auth.token,
 });
@@ -254,7 +256,7 @@ const mapStateToProps = (state:any) => ({
 const mapActionsToProps = (dispatch: any) => {
   return {
     signup: (username: string, email: string, password1: string, password2: string) =>
-      dispatch(authSignup(username, email,password1, password2)),
+      dispatch(authSignup(username, email, password1, password2)),
   };
 };
 
