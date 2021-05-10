@@ -100,31 +100,31 @@ class MassRegister(viewsets.ViewSet):
         CONTENT:BLANK,
     }
     permission_classes = (IsAuthenticated,)
-    def getlist(self,request,uid=None):  #/api/massregister/  get registration history of a user.
-        print("Start get user registration")
+    def getlist(self,request,*args, **kwargs):  #/api/massregister/  get registration history of a user.
         try:
             request_user = request.user
-            registers = Registration.objects.get(registration_user=request_user)
+            print("Start get "+request_user.username+" registration")
+            registers = Registration.objects.filter(registration_user=request_user)
+            serializer = RegistrationSerializer(registers,many=True)
+            print("End get "+request_user.username+" registration")
+            return Response(serializer.data)
         except:
-            print("End get user registration error: ",sys.exc_info()[0])
+            print("End get "+request_user.username+" registration error: ",sys.exc_info()[0])
             return Response({ERROR:SYSTEM_QUERY_0001},status=status.HTTP_404_NOT_FOUND)
-        serializer = RegistrationSerializer(registers)
-        print("End get user registration")
-        return Response(serializer.data)
     
     def create(self,request): #/api/massregister/   create a new registration for a mass
         print("Start create new massregister")
         try:
-            from .controller import sigleRegister
-            request_user = request.user            #get requested user
-            mass_id = request.data[MASS_ID]       #get id of the Mass  (mid)
+            from .controller import singleRegister
+            request_user = request.user                     #get requested user
+            mass_id = request.data.get(MASS_ID, None)       #get id of the Mass  (mid)
+            print(request_user.username+" request for registration of the Mass: "+str(mass_id))
             user_condition = request.data[USERCONDITION]    #get user condition confirmation [ucondi]
-            register = sigleRegister(mass_id,user_condition,request_user)
-            if register[STATUS] != ERROR:          
+            register = singleRegister(mass_id,user_condition,request_user)   #get single register of a Mass for an User
+            if register[STATUS] != ERROR:                    # status here maybe approved or waiting         
                 serializer = RegistrationSerializer(register[RESULT])
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                print("End create new error")
+            else:                # Register was error
                 return Response(register, status=status.HTTP_400_BAD_REQUEST)
         except:
             print("End get user registration error: ",sys.exc_info()[0])

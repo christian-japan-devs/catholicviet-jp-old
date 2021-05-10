@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     'tinymce',
     'qr_code',
     'adminapp.apps.AdminappConfig',
-    'userapp.apps.UserappConfig',
     'api.apps.ApiConfig',
 ]
 
@@ -106,6 +105,8 @@ TEMPLATES = [
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
+    #to delegate authentication to your web server, which sets the REMOTE_USER environment variable.
+    #"django.contrib.auth.backends.RemoteUserBackend",
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
 )
