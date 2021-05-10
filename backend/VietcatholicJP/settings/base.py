@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     'tinymce',
     'qr_code',
     'adminapp.apps.AdminappConfig',
-    #'userapp.apps.UserappConfig',
     'api.apps.ApiConfig',
 ]
 
