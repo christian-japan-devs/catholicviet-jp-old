@@ -1,11 +1,16 @@
 const localhost = 'http://127.0.0.1:8000';
 
 const apiURL = '/api';
+const authURL = '/rest-auth';
 
 export const VCJTOKEN = 'vcj_token';
 export const EXPIRATION_DATE = 'vcjexpDate';
 
 export const endpoint = `${localhost}${apiURL}`;
+const authEndPoint = `${localhost}${authURL}`
+
+export const loginEndPoint = `${authEndPoint}/login/`
+export const signUpEndPoint = `${authEndPoint}/registration/`
 
 export const newfeedsListURL = `${endpoint}/products/`;
 export const newfeedDetailURL = (id: number) => `${endpoint}/products/${id}/`;

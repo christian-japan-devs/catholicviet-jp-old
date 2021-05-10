@@ -1,6 +1,9 @@
-type FormData = {
+export type FormData = {
+  email: string;
   username: string;
-  password: string;
+  password1: string;
+  password2: string;
+  message: string;
 };
 
 type AuthStartAction = {

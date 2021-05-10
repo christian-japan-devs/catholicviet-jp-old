@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import { VCJTOKEN, EXPIRATION_DATE } from '../../constants';
+import { VCJTOKEN, EXPIRATION_DATE,loginEndPoint, signUpEndPoint } from '../../constants';
 
 export const authStart = () => {
   return {
@@ -42,7 +42,7 @@ export const authLogin = (username: string, password: string) => {
   return (dispatch: any) => {
     dispatch(authStart());
     axios
-      .post('http://127.0.0.1:8000/rest-auth/login/', {
+      .post(loginEndPoint, {
         username: username,
         password: password,
       })
@@ -72,13 +72,14 @@ export const authSignup = (
   return (dispatch: any) => {
     dispatch(authStart());
     axios
-      .post('http://127.0.0.1:8000/rest-auth/registration/', {
+      .post(signUpEndPoint, {
         username: username,
         email: email,
         password1: password1,
         password2: password2,
       })
       .then((res) => {
+        console.log(res);
         const token = res.data.key;
         const expirationDate = String(
           new Date(new Date().getTime() + 3600 * 1000)
@@ -89,6 +90,7 @@ export const authSignup = (
         dispatch(checkAuthTimeout(3600));
       })
       .catch((err) => {
+        console.log(err);
         dispatch(authFail(err));
       });
   };
