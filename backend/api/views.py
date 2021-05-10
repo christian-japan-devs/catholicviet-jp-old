@@ -115,12 +115,12 @@ class MassRegister(viewsets.ViewSet):
     def create(self,request): #/api/massregister/   create a new registration for a mass
         print("Start create new massregister")
         try:
-            from .controller import sigleRegister
+            from .controller import singleRegister
             request_user = request.user                     #get requested user
             mass_id = request.data.get(MASS_ID, None)       #get id of the Mass  (mid)
             print(request_user.username+" request for registration of the Mass: "+str(mass_id))
             user_condition = request.data[USERCONDITION]    #get user condition confirmation [ucondi]
-            register = sigleRegister(mass_id,user_condition,request_user)   #get single register of a Mass for an User
+            register = singleRegister(mass_id,user_condition,request_user)   #get single register of a Mass for an User
             if register[STATUS] != ERROR:                    # status here maybe approved or waiting         
                 serializer = RegistrationSerializer(register[RESULT])
                 return Response(serializer.data, status=status.HTTP_201_CREATED)

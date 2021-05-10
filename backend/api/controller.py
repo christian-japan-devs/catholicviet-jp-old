@@ -503,7 +503,7 @@ def getSeatNoForGroup(mass_schedule,num_seat):
     return seats
 
 
-def sigleRegister(mass_id,user_condi,user):
+def singleRegister(mass_id,user_condi,user):
     #print("eventid: "+event_id)
     result = {
         STATUS:ERROR,
