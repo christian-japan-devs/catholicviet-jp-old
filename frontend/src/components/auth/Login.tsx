@@ -78,13 +78,13 @@ const LoginForm = (props: any) => {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon fontSize="large"/>
+            <LockOutlinedIcon fontSize="large" />
           </Avatar>
           <Typography component='h1' color='primary' variant='h4'>
-            Vietcatholic Jp 
+            Vietcatholic Jp
           </Typography>
           <Typography component='h1' variant='h5'>
-            Đăng nhập 
+            Đăng nhập
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
