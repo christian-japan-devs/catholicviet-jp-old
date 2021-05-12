@@ -1,6 +1,6 @@
-.yarn/*
-.vscode/*
-.vim/*
+.yarn
+.vscode
+.vim
 yarn.lock
 backend/env
 backend/adminapp/static
