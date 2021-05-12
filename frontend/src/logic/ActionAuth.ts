@@ -1,6 +1,6 @@
 import axios from 'axios';
-import * as actionTypes from './actionTypes';
-import { VCJTOKEN, EXPIRATION_DATE,loginEndPoint, signUpEndPoint } from '../../constants';
+import * as actionTypes from './ActionTypes';
+import { VCJTOKEN, EXPIRATION_DATE,loginEndPoint, signUpEndPoint } from '../constants';
 
 export const authStart = () => {
   return {
@@ -31,7 +31,7 @@ export const logout = () => {
 };
 
 export const checkAuthTimeout = (expirationTime: number) => {
-  return (dispatch: any) => {
+  return (dispatch:any) => {
     setTimeout(() => {
       dispatch(logout());
     }, expirationTime * 1000);

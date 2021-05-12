@@ -7,3 +7,10 @@ export const authAxios = axios.create({
     Authorization: `Token ${localStorage.getItem('token')}`,
   },
 });
+
+export const updateObject = (oldObject: any, updateProperties: any) => {
+  return {
+    ...oldObject,
+    ...updateProperties,
+  };
+};

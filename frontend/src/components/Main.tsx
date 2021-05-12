@@ -1,6 +1,6 @@
 import React from 'react';
-import MainFooter from '../MainFooter';
-import MainHeader from '../MainHeader';
+import MainFooter from './Footer';
+import MainHeader from './Header';
 import NewFeeds from './NewFeed';
 import './main.css';
 

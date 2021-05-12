@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import rootReducer from './store/reducers/root';
+import rootReducer from './logic/ReducerRoot';
 
 declare global {
   interface Window {
