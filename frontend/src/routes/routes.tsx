@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import Hoc from './hoc/hoc';
+import Hoc from '../hoc/hoc';
 
-import Login from './components/auth/Login';
-import Signup from './components/auth/Signup';
-import Main from './main/main';
+import Login from '../components/auth/Login';
+import Signup from '../components/auth/Signup';
+import Main from '../components/main/Main';
 
 const BaseRouter = () => (
   <Hoc>

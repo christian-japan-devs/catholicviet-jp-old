@@ -3,7 +3,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-import { INewFeed } from '../interfaces/newfeed';
+import { INewFeed } from '../../types/interfaces/newfeed';
 import parse from 'html-react-parser';
 import './newfeed.css';
 

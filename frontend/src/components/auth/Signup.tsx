@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { authSignup } from '../../store/actions/cauth';
-import { FormData } from '../../store/types/auth';
+import { FormData } from '../../types/types/auth';
 import Copyright from '../other/Copyright';
 
 const useStyles = makeStyles((theme) => ({

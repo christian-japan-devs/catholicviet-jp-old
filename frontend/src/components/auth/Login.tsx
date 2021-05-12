@@ -16,7 +16,7 @@ import { Link, Redirect } from 'react-router-dom';
 //redux stuff
 import { connect } from 'react-redux';
 import { authLogin } from '../../store/actions/cauth';
-import { FormData } from '../../store/types/auth';
+import { FormData } from '../../types/types/auth';
 import Copyright from '../other/Copyright';
 //import styles from './login.css';
 

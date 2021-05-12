@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './utils/registerServiceWorker';
 import { createStore, compose, applyMiddleware, Store } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
