@@ -52,7 +52,7 @@ const Signup = (props: Props) => {
     }))
   }
 
-  if (authState.token != null) {
+  if (authState.token) {
     return (
       <Redirect to='/' /> //welcome popup show here
     )
