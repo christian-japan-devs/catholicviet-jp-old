@@ -9,7 +9,8 @@
   },
   "workspaces": [
     "backend/adminapp",
-    "frontend"
+    "frontend",
+    "frontend-next"
   ],
   "prettier": {
     "singleQuote": true

@@ -5,6 +5,7 @@
 # Getting started
 
 ## 1. Cài Python >= 3.6 và Node >= 14.16
+
 ```sh
 brew install mysql python n
 n lts
@@ -29,6 +30,7 @@ yarn -v
 ```sh
 yarn install
 ```
+
 ### Add new package
 
 ```sh
@@ -36,6 +38,7 @@ yarn workspace fronendside add package-name
 ```
 
 ## 3. Setting up backend
+
 This will make sure our package configuration is kept nicely isolated from any other projects we're working on.
 
 ```sh
@@ -44,8 +47,8 @@ python3 -m venv env
 source env/bin/activate
 ```
 
-
 ### Install python requirements
+
 Now that we're inside a virtual environment, we can install our package requirements.
 
 ```sh
@@ -61,9 +64,9 @@ For quick development we use sqlite3, it will be generated automatically when yo
 bash run_migrate.sh
 ```
 
-
 # Old README
-----------------------------------------------------------------
+
+---
 
 ### Truy cập phía người dùng
 
@@ -94,11 +97,13 @@ docker-compose exec vietcatholicjp-backend sh
 bash run_migrate.sh
 bash run_create_admin.sh ## Create with username: `christian`
 ```
+
 ### Build webpack static files
 
 ```sh
 docker-compose exec vietcatholicjp-backend npm run build
 ```
+
 or
 
 ```
@@ -131,6 +136,7 @@ mysql -u username -p
 ## Cài đặt phần backend không dùng Docker
 
 ### 1. Database Installation
+
 Cài docker theo hướng dẫn tại [đây](https://dev.mysql.com/doc/workbench/en/wb-installing.html)
 
 ### 2. Chuẩn bị tệp .env
