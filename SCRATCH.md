@@ -1,17 +1,19 @@
 This is a guide to start the frontend projects from scratch:
 
 Install tools
+
 ```sh
 brew install n
 
 # install node, npm
 n lts
 
-# install yarn 
+# install yarn
 npm i -g yarn
 ```
 
 Init repo
+
 ```sh
 yarn init -2 -y
 
