@@ -1,5 +1,4 @@
 import * as actionTypes from './auth.actions';
-import { updateObject } from '../utility';
 
 type AuthState = {
   token: string;
@@ -32,31 +31,35 @@ const initialState: AuthState = {
 };
 
 const authStart = (state: AuthState, action: AuthStartAction) => {
-  return updateObject(state, {
+  return {
+    ...state,
     error: null,
     loading: true,
-  });
+  };
 };
 
 const authSuccess = (state: AuthState, action: AuthSuccessAction) => {
-  return updateObject(state, {
+  return {
+    ...state,
     token: action.token,
     error: null,
     loading: false,
-  });
+  };
 };
 
 const authFail = (state: AuthState, action: AuthFailAction) => {
-  return updateObject(state, {
+  return {
+    ...state,
     error: action.error,
     loading: false,
-  });
+  };
 };
 
 const authLogout = (state: AuthState, action: AuthLogoutAction) => {
-  return updateObject(state, {
+  return {
+    ...state,
     token: null,
-  });
+  };
 };
 
 const reducer = (state: AuthState = initialState, action: any) => {
