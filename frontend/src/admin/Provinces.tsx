@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { IProvince } from '../interfaces/province';
+import { useEffect, useState } from 'react';
 import Wrapper from './Wrapper';
+
+export interface Province {
+  id: number;
+  province_nation: string;
+  province_code: string;
+  province_en_name: string;
+}
 
 const Provinces = () => {
   const [provinces, setProvinces] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [, setErrorMsg] = useState('');
 
   useEffect(() => {
     const loadProvince = async () => {
@@ -50,7 +56,7 @@ const Provinces = () => {
             </tr>
           </thead>
           <tbody>
-            {provinces.map((p: IProvince) => {
+            {provinces.map((p: Province) => {
               return (
                 <tr key={p.id}>
                   <td>{p.id} </td>

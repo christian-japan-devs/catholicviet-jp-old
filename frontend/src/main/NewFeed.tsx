@@ -1,17 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-import { INewFeed } from '../interfaces/newfeed';
 import parse from 'html-react-parser';
 import './newfeed.css';
 
+export interface NewFeed {
+  id: number;
+  nf_title: string;
+  nf_type: string;
+  nf_image: string;
+  nf_brief_content: string;
+  nf_content: string;
+  nf_language: string;
+  nf_date_created: string;
+  nf_post_like: number;
+  nf_post_share: number;
+  nf_post_clicked: number;
+}
+
 const NewFeeds = () => {
   const [newfeeds, setNewfeeds] = useState([]);
-  const [page, setPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [, setIsLoading] = useState(false);
+  const [, setErrorMsg] = useState('');
 
   useEffect(() => {
     const loadNewFeed = async () => {
@@ -31,13 +43,9 @@ const NewFeeds = () => {
     loadNewFeed();
   }, []);
 
-  const loadMore = () => {
-    setPage((page) => page + 1);
-  };
-
   return (
     <div className="newfeed-container">
-      {newfeeds.map((nf: INewFeed) => {
+      {newfeeds.map((nf: NewFeed) => {
         return (
           <div className="col-md-12">
             <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">

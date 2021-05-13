@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './auth.actions';
 import { VCJTOKEN, EXPIRATION_DATE } from '../../constants';
 
 export const authStart = () => {

@@ -3635,18 +3635,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"VietcatholicJP@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "VietcatholicJP@workspace:."
-  dependencies:
-    "@types/eslint": ^7
-    "@types/prettier": ^2
-    eslint: ^7.26.0
-    prettier: ^2.2.1
-    typescript: ^4.2.4
-  languageName: unknown
-  linkType: soft
-
 "abab@npm:^2.0.3, abab@npm:^2.0.5":
   version: 2.0.5
   resolution: "abab@npm:2.0.5"
@@ -8065,9 +8053,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"frontendside@workspace:frontend":
+"frontend@workspace:frontend":
   version: 0.0.0-use.local
-  resolution: "frontendside@workspace:frontend"
+  resolution: "frontend@workspace:frontend"
   dependencies:
     "@material-ui/core": ^4.11.4
     "@material-ui/icons": ^4.11.2
@@ -17195,6 +17183,18 @@ resolve@^2.0.0-next.3:
   checksum: 38ea80312cb42e5e8b4ac562d108d675b2354a79f8f125d363671f692657461b9181fd26f4fc9acdca433f8afee099cb78058806e1303e6b15b8fb022affba94
   languageName: node
   linkType: hard
+
+"viet-catholic-jp@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "viet-catholic-jp@workspace:."
+  dependencies:
+    "@types/eslint": ^7
+    "@types/prettier": ^2
+    eslint: ^7.26.0
+    prettier: ^2.2.1
+    typescript: ^4.2.4
+  languageName: unknown
+  linkType: soft
 
 "vm-browserify@npm:1.1.2, vm-browserify@npm:^1.0.1":
   version: 1.1.2

@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import Menu from '../components/Menu';
 import Nav from '../components/Nav';
 
-const Wrapper = (props: PropsWithChildren<any>) => {
+const Wrapper = (props: PropsWithChildren<unknown>) => {
   return (
     <div className="App">
       <Nav />

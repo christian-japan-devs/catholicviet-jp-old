@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CssBaseLine from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -8,12 +8,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Paper, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //redux stuff
 import { connect } from 'react-redux';
-import { authLogin } from '../../store/actions/cauth';
+import { authLogin } from './cauth';
 //import styles from './login.css';
 
 type FormData = {
@@ -27,8 +26,8 @@ const LoginForm = (props: any) => {
     username: '',
     password: '',
   });
-  const [errors, setErrors] = useState({} as FormData);
-  const { loading, token } = props;
+  const [errors] = useState({} as FormData);
+  const { loading } = props;
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
