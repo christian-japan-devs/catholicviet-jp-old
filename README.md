@@ -45,6 +45,8 @@ This will make sure our package configuration is kept nicely isolated from any o
 cd backendside
 python3 -m venv env
 source env/bin/activate
+-- quit
+deactivate
 ```
 
 ### Install python requirements
@@ -52,6 +54,7 @@ source env/bin/activate
 Now that we're inside a virtual environment, we can install our package requirements.
 
 ```sh
+pip install -r requirements/base.txt
 pip install -r requirements/development.txt
 pip install -r requirements/testing.txt
 ```

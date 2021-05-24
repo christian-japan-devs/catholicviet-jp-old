@@ -17,7 +17,7 @@ const NewFeeds = () => {
     const loadNewFeed = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:8000/api/newfeed`);
+        const response = await fetch(`http://132.226.14.181:8000/api/newfeed`);
 
         const result: never[] = await response.json();
         setNewfeeds([...newfeeds, ...result]);
@@ -46,7 +46,7 @@ const NewFeeds = () => {
                   <div className="media">
                     <div className="media-left media-top">
                       <img
-                        src={'http://localhost:8000' + nf.nf_image}
+                        src={'http://132.226.14.181:8000' + nf.nf_image}
                         className="media-object media-user"
                       />
                     </div>
@@ -68,7 +68,7 @@ const NewFeeds = () => {
                 <div className="col-auto">
                   <img
                     className="media-image"
-                    src={'http://localhost:8000' + nf.nf_image}
+                    src={'http://132.226.14.181:8000' + nf.nf_image}
                   />
                 </div>
               </div>
