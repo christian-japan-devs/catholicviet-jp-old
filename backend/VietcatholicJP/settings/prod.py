@@ -1,9 +1,9 @@
-'''Use this for development'''
+'''Use this for production'''
 
 from .base import *
 
-DEBUG = False
-ALLOWED_HOSTS += ['http://vietcatholicjp.com']
+DEBUG = True
+ALLOWED_HOSTS += ['http://vietcatholicjp.com', '132.226.14.181','localhost']
 WSGI_APPLICATION = 'VietcatholicJP.wsgi.prod.application'
 
 # Database
@@ -39,10 +39,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STRIPE_PUBLIC_KEY = config('STRIPE_TEST_PUBLIC_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_TEST_SECRET_KEY')
 #STATIC_ROOT = "/var/www/example.com/static/"
-#Run $ python3 manage.py collectstatic
-#This will copy all files from your static folders into the STATIC_ROOT directory.
+# Run $ python3 manage.py collectstatic
+# This will copy all files from your static folders into the STATIC_ROOT directory.

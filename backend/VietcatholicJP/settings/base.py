@@ -136,7 +136,7 @@ MEDIA_URL = '/media/'
 # static assets that aren’t tied to a particular app
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
 
-#SITE_ID = 1
+SITE_ID = 2
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
