@@ -11,11 +11,10 @@ from django.conf import settings
 import sys
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
-from main.constants import *
-from common_messages import *
-from .models import Registration
+from core.constants import *
+from .common_messages import *
 from .messages import *
-from .models import Mass, Event
+from .models import Mass, Event, Registration
 
 # Create your views here.
 #Description

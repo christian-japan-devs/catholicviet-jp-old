@@ -6,7 +6,7 @@ from django.utils.crypto import get_random_string
 from django.contrib.auth.models import User
 from adminapp.models import Seat, Mass, Language, Registration
 import sys
-from VietcatholicJP.constants import *
+from core.constants import *
 from adminapp.common_messages import *
 from .messages import *
 #from .linkname import *
@@ -49,7 +49,7 @@ def getRegistrationByUserCode(ruser, code):
 #OUPUT
 # aboutus: Aboutus
 
-def getRegistrationByStatusAndUser(ruser, status):
+def getRegistrationByStatusAndUser(ruser, code, status):
     result = {
         STATUS:OK,
         CONTENT:BLANK,
