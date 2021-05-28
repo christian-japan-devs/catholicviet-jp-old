@@ -52,6 +52,7 @@ source env/bin/activate
 Now that we're inside a virtual environment, we can install our package requirements.
 
 ```sh
+pip install -r requirements/base.txt
 pip install -r requirements/development.txt
 pip install -r requirements/testing.txt
 ```
@@ -63,6 +64,12 @@ For quick development we use sqlite3, it will be generated automatically when yo
 ```sh
 bash run_migrate.sh
 ```
+## 5. Start local server
+
+```sh
+bash run_server.sh
+```
+
 
 # Old README
 
