@@ -27,7 +27,11 @@ if os.getenv('GAE_APPLICATION', None):
     # the unix socket at /cloudsql/<your-cloudsql-connection string>
     DATABASES = {
         'default': {
+<<<<<<< HEAD
             'ENGINE': 'django.db.backends.mysql',
+=======
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+>>>>>>> c4cd70e5ad2a3b9837369d60cdae3917bdc4a69d
             'HOST': env('DB_CLOUD_CONNECTION'),
             'USER': env('DB_USER'),
             'PASSWORD': env('DB_PASSWORD'),
@@ -43,7 +47,11 @@ else:
     # See https://cloud.google.com/sql/docs/mysql-connect-proxy
     DATABASES = {
         'default': {
+<<<<<<< HEAD
             'ENGINE': 'django.db.backends.mysql',
+=======
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+>>>>>>> c4cd70e5ad2a3b9837369d60cdae3917bdc4a69d
             'HOST': env('DB_HOSTNAME'),
             'PORT': env('DB_PORT'),
             'NAME': env('DB_NAME'),
@@ -92,10 +100,15 @@ STATICFILES_DIRS = [
     ('images', os.path.join(BASE_DIR, 'vietcathjp', 'static', 'images'))
 ]
 
+<<<<<<< HEAD
 #STATIC_ROOT = "/var/www/vietcatholicjp.com/static/"
 #MEDIA_ROOT = "/var/www/vietcatholicjp.com/static/"
 #Run $ python3 manage.py collectstatic
 #This will copy all files from your static folders into the ROOT directory.
+=======
+# Run $ python3 manage.py collectstatic
+# This will copy all files from your static folders into the ROOT directory.
+>>>>>>> c4cd70e5ad2a3b9837369d60cdae3917bdc4a69d
 
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
@@ -113,4 +126,8 @@ GS_EXPIRATION = env('GS_EXPIRATION')
 # If GOOGLE_APPLICATION_CREDENTIALS is set there is no need to load OAuth token
 # See https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
 if 'GOOGLE_APPLICATION_CREDENTIALS' not in os.environ:
+<<<<<<< HEAD
     GS_CREDENTIALS = env('GS_CREDENTIALS')
+=======
+    GS_CREDENTIALS = env('GS_CREDENTIALS')
+>>>>>>> c4cd70e5ad2a3b9837369d60cdae3917bdc4a69d
