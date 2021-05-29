@@ -1,5 +1,4 @@
 //Utilities
-import history, { push, getRedirectPath } from '../utils/history'
 import * as R from "ramda";
 import React, { createContext, useReducer } from 'react';
 import { remove, store } from "../utils/localStorage";
@@ -18,28 +17,20 @@ export const useAuth = () => {
 				username,
 				password,
 			});
-
+			console.log(res.data);
 			const isSuccess = res.data.success;
 			if (isSuccess) {
 				store("token", "test-isSuccess");
-
 				dispatch({
 					type: 'loginSuccess',
                     payload: ''
 				});
-
-				const redirectPath = R.pathOr(null, ["query", "redirect"])(history.location);
-				if (redirectPath) {
-					push(redirectPath);
-					return;
-				}
-
-				push("/");
 			} else {
 				// eslint-disable-next-line no-throw-literal
 				throw { message: "Something went wrong" };
 			}
 		} catch (error) {
+			dispatch({ type: 'loginFailed', payload:'Something went wrong' });
 			throw error;
 		}
 	}
@@ -58,7 +49,6 @@ export const useAuth = () => {
 
 		dispatch({ type: 'logout', payload:false });
 
-		push(`/auth/login?redirect=${getRedirectPath()}`);
 	}
 
 	return {

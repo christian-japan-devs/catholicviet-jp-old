@@ -2,7 +2,7 @@
 
 export type AuthAction = { type: 'setUsername', payload: string }
   | { type: 'setPassword', payload: string }
-  | { type: 'setIsAuthenticated', payload: boolean }
+  | { type: 'isAuthenticated', payload: boolean }
   | { type: 'loginSuccess', payload: string }
   | { type: 'loginFailed', payload: string }
   | { type: 'logout', payload: boolean }
@@ -15,6 +15,7 @@ export type AuthState = {
     helperText?: string
     token?: string
     isError: boolean
+    loading?: boolean
 }
 
 export const authInitialState : AuthState = {
@@ -26,6 +27,8 @@ export const authInitialState : AuthState = {
 }
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+    console.log(action.payload)
+    console.log(action.type)
     switch (action.type) {
         case 'setUsername':
             return {
@@ -37,7 +40,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
                 ...state,
                 password: action.payload
             };
-        case 'setIsAuthenticated':
+        case 'isAuthenticated':
             return {
                 ...state,
                 isAuthenticated: action.payload

@@ -1,25 +1,28 @@
-import * as React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import React, { createContext, useReducer } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 // Shared components
 
 // Local components
 
 //Utilities and hooks
-//import history from "helpers/history";
-//import { read } from "helpers/localStorage";
-//import { authReducer, authInitialState } from "state/reducer.auth";
-
+import { read } from "./utils/localStorage";
+import {AuthProvider} from './utils/authState';
 import './App.css';
-import { LoginForm } from './components/Login';
+import Login from './controller/auth';
+import SignupForm from './components/Signup';
 
-function App() {
+
+const App: React.FC = () =>{
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" component={LoginForm} />
-      </Switch>
-    </BrowserRouter>
+    <div className="App">
+      <AuthProvider>
+        <BrowserRouter>
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={SignupForm} />
+        </BrowserRouter>
+      </AuthProvider>
+		</div>
   );
 }
 

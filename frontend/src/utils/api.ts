@@ -1,10 +1,11 @@
 import axios, { AxiosInstance } from 'axios';
 import * as R from 'ramda';
 
-const baseURL = window.location.origin;
 // a new instance of axios with a custom config.
 const instance: AxiosInstance = axios.create({
-	baseURL,
+	baseURL: 'http://localhost:8000/',
+	timeout: 1000,
+	headers: {'X-Custom-Header': 'foobar'}
 });
 
 instance.interceptors.response.use(response => {

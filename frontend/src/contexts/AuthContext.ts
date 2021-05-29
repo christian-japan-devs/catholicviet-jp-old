@@ -5,12 +5,16 @@ import { VCJTOKEN, EXPIRATION_DATE,loginEndPoint, signUpEndPoint } from '../util
 export interface UseAuth {
     isAuthenticated: boolean;
     login: (username:string, password:string) =>  ({data:string , dataError:{error:null}});
+    signup: (username:string, password:string) =>  ({data:string , dataError:{error:null}});
     logout: () => void;
 }
 
 export const authContext = React.createContext<UseAuth>({
     isAuthenticated: false,
     login: (username, password) =>  (
+        {data:"string" , dataError:{error:null}}
+    ),
+    signup:(username, password) =>  (
         {data:"string" , dataError:{error:null}}
     ),
     logout: () => {}
