@@ -11,7 +11,7 @@ export interface Login {
 }
 
 export const login = (user: Login): Promise<BaseRequest<{ success: boolean }>> =>{
-    return api.post('/rest-auth/login',{ password: user.password, username: user.username });
+    return api.post('/rest-auth/login',{ username: user.username, password: user.password });
 }
 
 export const logout = (): Promise<any> => {

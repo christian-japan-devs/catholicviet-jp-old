@@ -1,54 +1,58 @@
-import React, { useState, } from 'react';
+import React, { useState, useReducer } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { Box } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
 
 import Copyright from '../components/Copyright';
-import {LoginForm} from '../components/Login';
+import { LoginForm } from '../components/Login';
 
-import {useAuth} from '../hooks/useAuth';
-import {AuthState, authInitialState} from '../utils/reducer.auth'
+import { useAuth } from '../hooks/useAuth';
+import { AuthState, authInitialState, authReducer } from '../utils/reducer.auth'
 
 export type Props = {
   hiden: boolean;
 };
 
 const Login = (props: Props) => {
-    const { login } = useAuth();
-    const [ data, setData ] = React.useState(authInitialState);
-    const [ loading, setLoading ] = React.useState(false);
-    const [ errors, setErrors ] = React.useState(false);
+  const { login } = useAuth();
+  const [state, dispatch] = useReducer(authReducer, authInitialState)
+  console.log(state);
+  const {
+    isAuthenticated,
+    helperText,
+    isError,
+    loading } = state;
 
-    const handleOnSubmit = async (evt:React.FormEvent) => {
-        evt.preventDefault();
-        setLoading(true);
-        setData({
-            ...data,
-            isError: false
-        });
-        console.log('start login');
-        const { username, password } = data;
-        await login({username, password});
-        setLoading(false);
-        if (data && props.hiden) {
-          setData({
-            ...data,
-            isError: true
-        });
-        }
-    };
+  const handleOnSubmit = async (evt: React.FormEvent) => {
+    evt.preventDefault();
+    console.log('start login');
+    await login(state);
+    console.log(state);
+  };
 
-    const handleChange = (event:any) => {
-        setData((data) => ({
-            ...data,
-            [event.target.name]: event.target.value,
-        }));
-    };
+  const handleChange = (event: any) => {
+    switch (event.target.name) {
+      case 'username': {
+        dispatch({
+          type: 'setUsername',
+          payload: event.target.name
+        });
+        return;
+      }
+      case 'password': {
+        dispatch({
+          type: 'setPassword',
+          payload: event.target.name
+        });
+        return;
+      }
+    }
+  };
 
   //console.log(props);
 
-  if (data.isAuthenticated) {
+  if (isAuthenticated) {
     return (
       <Redirect to='/' />
     )
@@ -57,7 +61,7 @@ const Login = (props: Props) => {
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <LoginForm
-          state={data}
+          state={state}
           handleChange={handleChange}
           handleOnSubmit={handleOnSubmit}
         />

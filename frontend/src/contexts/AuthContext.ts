@@ -1,21 +1,13 @@
-import React from 'react';
-import axios from 'axios';
-import { VCJTOKEN, EXPIRATION_DATE,loginEndPoint, signUpEndPoint } from '../utils/constants';
+import { createContext, useContext } from "react";
+import { AuthAction, authInitialState, AuthState } from "../utils/reducer.auth";
 
-export interface UseAuth {
-    isAuthenticated: boolean;
-    login: (username:string, password:string) =>  ({data:string , dataError:{error:null}});
-    signup: (username:string, password:string) =>  ({data:string , dataError:{error:null}});
-    logout: () => void;
-}
+// Create contexts
+export const AppStateContext = createContext(authInitialState as AuthState);
+export const AppDispatchContext = createContext((() => 0) as React.Dispatch<AuthAction>);
 
-export const authContext = React.createContext<UseAuth>({
-    isAuthenticated: false,
-    login: (username, password) =>  (
-        {data:"string" , dataError:{error:null}}
-    ),
-    signup:(username, password) =>  (
-        {data:"string" , dataError:{error:null}}
-    ),
-    logout: () => {}
-})
+// Use contexts
+export const useAppDispatch = () => useContext(AppDispatchContext);
+export const useAppState = () => {
+	const state: AuthState = useContext(AppStateContext);
+	return state;
+};

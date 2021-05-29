@@ -27,8 +27,6 @@ export const authInitialState : AuthState = {
 }
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-    console.log(action.payload)
-    console.log(action.type)
     switch (action.type) {
         case 'setUsername':
             return {
@@ -43,18 +41,21 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         case 'isAuthenticated':
             return {
                 ...state,
-                isAuthenticated: action.payload
+                isAuthenticated: true,
             };
         case 'loginSuccess':
+            console.log('login ok');
             return {
                 ...state,
-                helperText: action.payload,
+                token: action.payload,
+                isAuthenticated: true,
                 isError: false
             };
         case 'loginFailed':
             return {
                 ...state,
                 helperText: action.payload,
+                isAuthenticated: false,
                 isError: true
             };
         case 'logout':
@@ -65,7 +66,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         case 'setIsError':
             return {
                 ...state,
-                isError: action.payload
+                isError: false
             };
         default:
             return state;
