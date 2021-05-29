@@ -10,14 +10,14 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 //import { authReducer, authInitialState } from "state/reducer.auth";
 
 import './App.css';
-//import { LoginForm } from 'components/LoginForm';
+import { LoginForm } from './components/Login';
 
 function App() {
 
   return (
     <BrowserRouter>
       <Switch>
-        
+        <Route path="/" component={LoginForm} />
       </Switch>
     </BrowserRouter>
   );

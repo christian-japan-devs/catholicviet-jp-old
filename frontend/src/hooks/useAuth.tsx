@@ -1,15 +1,16 @@
 //Utilities
-import history, { push, getRedirectPath } from '@helpers/history'
+import history, { push, getRedirectPath } from '../utils/history'
 import * as R from "ramda";
-import { remove, store } from "@helpers/localStorage";
-import { useAuthDispatch } from "@state/index.auth";
-import { login as LoginUser, Login, logout as LogoutUser } from "@helpers/endpoints";
+import React, { createContext, useReducer } from 'react';
+import { remove, store } from "../utils/localStorage";
+import {authReducer, authInitialState } from '../utils/reducer.auth';
+import { login as LoginUser, Login, logout as LogoutUser } from "../utils/endpoints";
 
 // Hook for child components to get the auth object ...
 // ... and re-render when it changes.
 export const useAuth = () => {
-	
-	const dispatch = useAuthDispatch();
+
+	const [state, dispatch] = useReducer(authReducer, authInitialState)
 
 	async function login({ username, password }: Login) {
 		try {

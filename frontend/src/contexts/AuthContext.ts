@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { VCJTOKEN, EXPIRATION_DATE,loginEndPoint, signUpEndPoint } from '../../helpers/constants';
+import { VCJTOKEN, EXPIRATION_DATE,loginEndPoint, signUpEndPoint } from '../utils/constants';
 
 export interface UseAuth {
     isAuthenticated: boolean;

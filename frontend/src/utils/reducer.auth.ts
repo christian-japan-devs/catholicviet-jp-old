@@ -8,7 +8,7 @@ export type AuthAction = { type: 'setUsername', payload: string }
   | { type: 'logout', payload: boolean }
   | { type: 'setIsError', payload: boolean };
 
-export interface AuthState {
+export type AuthState = {
     username: string
     password: string
     isAuthenticated: boolean

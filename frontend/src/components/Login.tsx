@@ -11,9 +11,8 @@ import { Paper, Box } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 
-import {useAuth} from '@hooks/useAuth';
-import {authInitialState} from '@state/reducer.auth';
-import {authContext} from '@contexts/authContext'
+import {useAuth} from '../hooks/useAuth';
+import {authInitialState} from '../utils/reducer.auth';
 
 interface LoginForm {
     hide?: () => void;
