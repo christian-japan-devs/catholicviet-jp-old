@@ -9,8 +9,8 @@ from smart_selects.db_fields import ChainedForeignKey
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from VietcatholicJP.constants import *
-from VietcatholicJP.constant_choice import *
+from core.constants import *
+from core.constant_choice import *
 
 
 class UserProfile(models.Model):
