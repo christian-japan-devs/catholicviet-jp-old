@@ -23,12 +23,12 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include('api.urls')),
-    path('rest-auth/',include('rest_auth.urls')),
-    path('rest-auth/registration/',include('rest_auth.registration.urls')),
-    path('api-auth/',include('rest_framework.urls')),
+    path('api/', include('api.urls')),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('allauth.urls')),
-    path('api-token-auth',views.obtain_auth_token,name='api-token-auth'),
+    path('api-token-auth', views.obtain_auth_token, name='api-token-auth'),
     path('i18n/', include('django.conf.urls.i18n')),
     path('tinymce/', include('tinymce.urls')),
     path('chaining/', include('smart_selects.urls')),
@@ -36,7 +36,8 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
     urlpatterns += [re_path(r'^.*',
