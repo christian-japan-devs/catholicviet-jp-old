@@ -46,8 +46,6 @@ class UserIDView(APIView):
 # Detail:
 # Requirements:
 # Output:
-#
-#
 
 
 class NewFeedViewSet(viewsets.ViewSet):
@@ -181,8 +179,6 @@ class MassRegister(viewsets.ViewSet):
 # Detail: Get list registration that are available
 # Requirements:
 # Output:
-#
-#
 
 class GospelViewSet(viewsets.ViewSet):
 
@@ -207,8 +203,6 @@ class GospelViewSet(viewsets.ViewSet):
 # Detail: Get list mass schedule
 # Requirements:
 # Output:
-#
-#
 
 
 class MassTimeViewSet(viewsets.ViewSet):
