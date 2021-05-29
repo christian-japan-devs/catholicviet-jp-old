@@ -1,4 +1,3 @@
-import { useAuth } from '../../hooks/useAuth';
 import React, { useState, useEffect } from 'react';
 import CssBaseLine from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -12,39 +11,41 @@ import { Paper, Box } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 
+import {useAuth} from '@hooks/useAuth';
+import {authInitialState} from '@state/reducer.auth';
+import {authContext} from '@contexts/authContext'
 
 interface LoginForm {
     hide?: () => void;
 }
 
 
-const LoginForm: React.FC<LoginForm> = ({ hide }) => {
+export const LoginForm: React.FC<LoginForm> = ({ hide }) => {
     const { login } = useAuth();
-    const [values, setValues] = useState({
-        username: '',
-        password: '',
-    });
-    const [loading, setLoading] = React.useState(false);
-    const [errors, setErrors] = React.useState(null);
+    const [ data, setData ] = React.useState(authInitialState);
+    const [ loading, setLoading ] = React.useState(false);
+    const [ errors, setErrors ] = React.useState(null);
 
     const handleOnSubmit = async (evt:any) => {
         evt.preventDefault();
         setLoading(true);
-        const { username, password } = values;
-        const { data , dataError } = await login(username, password);
+        setData({
+            ...data,
+            isError: false
+        });
+        const { username, password } = data;
+        await login({username, password});
         setLoading(false);
-        if (dataError?.error) {
-            setErrors(dataError.error);
-        } else if (data && hide) {
+        if (data && hide) {
             setErrors(null);
             hide();
         }
     };
 
-    const handleChange = (e: any) => {
-        setValues((values) => ({
-            ...values,
-            [e.target.name]: e.target.value,
+    const handleChange = (event:any) => {
+        setData((data) => ({
+            ...data,
+            [event.target.name]: event.target.value,
         }));
     };
 
@@ -76,7 +77,7 @@ const LoginForm: React.FC<LoginForm> = ({ hide }) => {
                                     <TextField
                                         variant="outlined"
                                         margin="none"
-                                        value={values.username}
+                                        value={data.username}
                                         fullWidth
                                         id="username"
                                         label="User name"
@@ -86,7 +87,7 @@ const LoginForm: React.FC<LoginForm> = ({ hide }) => {
                                     <TextField
                                         variant="outlined"
                                         margin="none"
-                                        value={values.password}
+                                        value={data.password}
                                         fullWidth
                                         id="password"
                                         label="Passowrd"

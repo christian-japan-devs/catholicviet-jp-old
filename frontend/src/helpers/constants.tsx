@@ -9,7 +9,7 @@ export const VCJTOKEN = 'vcj_token';
 export const EXPIRATION_DATE = 'vcjexpDate';
 
 export const endpoint = `${domain}${apiURL}`;
-const authEndPoint = `${domain}${authURL}`
+export const authEndPoint = `${domain}${authURL}`
 
 export const loginEndPoint = `${authEndPoint}/login/`
 export const signUpEndPoint = `${authEndPoint}/registration/`
