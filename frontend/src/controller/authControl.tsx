@@ -160,7 +160,6 @@ export const Signup = (props: Props) => {
       });
       return;
     }
-    console.log('user signup');
     await AuthSignup(dispatch, state);
   };
 
@@ -253,7 +252,6 @@ export const ResetPasswordRequest = (props: Props) => {
       });
       return;
     }
-    console.log('user reset password requeset');
     await AuthResetPasswordRequest(dispatch, state);
   };
 
@@ -336,7 +334,6 @@ export const ResetPassword = (props: Props) => {
       });
       return;
     }
-    console.log('user reset password requeset');
     await AuthResetPassword(dispatch, state);
   };
 

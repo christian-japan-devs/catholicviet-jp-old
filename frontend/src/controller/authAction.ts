@@ -120,7 +120,6 @@ export const useAuth = () => {
           CheckAuthTimeout(3600, dispatch);
         })
         .catch((err) => {
-          console.log(err);
           const payload = {
             helperText: 'Vui lòng kiểm tra lại thông tin đăng nhập.',
             isErrorAt: 'somewhere',
@@ -164,7 +163,6 @@ export const useAuth = () => {
         }),
       })
         .then((res) => {
-          console.log(res);
           if (res.ok) {
             return res.json();
           }
@@ -201,7 +199,6 @@ export const useAuth = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
           const payload = {
             helperText:
               'Vui lòng thử với một tên đăng nhập khác hoặc địa chỉ email khác.',
@@ -267,7 +264,6 @@ export const useAuth = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
           const payload = {
             helperText: 'Địa chỉ email không đúng.',
             isErrorAt: 'somewhere',
@@ -342,7 +338,6 @@ export const useAuth = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
           const payload = {
             helperText: 'Không thể đổi mật khẩu, xin vui lòng liên hệ!',
             isErrorAt: 'somewhere',
