@@ -12,13 +12,13 @@ import Typography from '@material-ui/core/Typography';
 import { AuthStyles } from './Styles';
 import { AuthState } from '../utils/reducer.auth';
 
-interface SignupProps {
+interface ResetProps {
     state: AuthState;
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export const SignupForm: React.FC<SignupProps> = (props: SignupProps) => {
+export const  ResetPasswordForm: React.FC<ResetProps> = (props: ResetProps) => {
     const classes = AuthStyles();
     return (
         <div className={classes.paper}>
@@ -36,37 +36,6 @@ export const SignupForm: React.FC<SignupProps> = (props: SignupProps) => {
             )}
             <form onSubmit={props.handleOnSubmit} className={classes.form} noValidate>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            autoComplete='username'
-                            name='username'
-                            variant='outlined'
-                            value={props.state.username}
-                            required
-                            fullWidth
-                            id='username'
-                            label='Tên đăng nhập'
-                            onChange={props.handleChange}
-                            helperText={props.state.isErrorAt === 'username' ? props.state.helperText : ''}
-                            error={props.state.isErrorAt === 'username'}
-                            autoFocus
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            autoComplete='email'
-                            name='email'
-                            variant='outlined'
-                            value={props.state.email}
-                            required
-                            fullWidth
-                            id='email'
-                            label='Địa chỉ email'
-                            onChange={props.handleChange}
-                            helperText={props.state.isErrorAt === 'email' ? props.state.helperText : ''}
-                            error={props.state.isErrorAt === 'email'}
-                        />
-                    </Grid>
                     <Grid item xs={12}>
                         <TextField
                             autoComplete='password'
@@ -107,22 +76,34 @@ export const SignupForm: React.FC<SignupProps> = (props: SignupProps) => {
                         />
                     </Grid>
                 </Grid>
-                <Button
-                    type='submit'
-                    variant='contained'
-                    fullWidth
-                    color='primary'
-                    disabled={props.state.loading}
-                    className={classes.submit}
-                >
-                    Đăng ký
-              {props.state.loading && (
-                        <CircularProgress size={30} color="secondary" />
-                    )}
-                </Button>
+                <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                        <Button
+                            type='submit'
+                            variant='contained'
+                            fullWidth
+                            color='primary'
+                            disabled={props.state.loading}
+                            className={classes.submit}
+                        >
+                            Cập nhật
+                        {props.state.loading && (
+                                <CircularProgress size={30} color="secondary" />
+                            )}
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button
+                            type='reset'
+                            variant='contained'
+                            fullWidth
+                            color='secondary'
+                        >
+                            Huỷ
+                        </Button>
+                    </Grid>
+                </Grid>
             </form>
         </div>
     );
 };
-
-export default SignupForm;

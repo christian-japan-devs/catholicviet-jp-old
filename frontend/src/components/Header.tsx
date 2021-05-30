@@ -1,36 +1,76 @@
-import * as React from 'react';
-import { Helmet } from 'react-helmet';
+import './header.css';
 
-interface ContentItem {
-    summary: string;
-    smallIconUrl: string;
-    title: string;
-    contentUrl: string;
-}
-
-interface Props {
-    title?: string;
-    description?: string;
-    contentItem?: ContentItem | null;
-}
-
-const PageTitle: React.FC<Props> = ({title, description, contentItem }: Props)=> {
-    return (
-        <Helmet>
-            <title itemProp="name">{title}</title>
-			{description && !contentItem && <meta name="description" content={description} />}
-			{contentItem && [
-				<meta key="description" name="description" content={contentItem.summary} />,
-				<meta key="og:description" property="og:description" content={contentItem.summary} />,
-				<meta key="og:image" property="og:image" content={contentItem.smallIconUrl} />,
-				<meta key="og:title" property="og:title" content={contentItem.title} />,
-				<meta key="og:type" property="og:type" content="website" />,
-				<meta key="twitter:site" name="twitter:site" content="@react-test" />,
-				<meta key="twitter.title" name="twitter:title" content={contentItem.title} />,
-				<meta key="twitter:url" name="twitter:url" content={contentItem.contentUrl} />,
-				<meta key="twitter:description" name="twitter:description" content={contentItem.summary} />,
-				<meta key="twitter:image" name="twitter:image" content={contentItem.smallIconUrl} />,
-			]}
-        </Helmet>
-    )
+const MainHeader = () => {
+  return (
+    <div className="container">
+      <nav
+        className="navbar navbar-expand-lg navbar-light bg-navbar-main text-uppercase fixed-top py-3"
+        id="mainNav"
+      >
+        <div className="container">
+          <a className="navbar-brand" href="#">
+            Vietcatholicjp
+          </a>
+          <button
+            className="navbar-toggler navbar-toggler-right"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarResponsive">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item mx-0 mx-lg-1">
+                <a
+                  className="nav-link py-3 px-0 px-lg-3 js-scroll-trigger active"
+                  href="gospel.html"
+                >
+                  PV LỜI CHÚA
+                </a>
+              </li>
+              <li className="nav-item mx-0 mx-lg-1">
+                <a
+                  className="nav-link py-3 px-0 px-lg-3 js-scroll-trigger"
+                  href="mass.html"
+                >
+                  THÁNH LỄ
+                </a>
+              </li>
+              <li className="nav-item mx-0 mx-lg-1">
+                <a
+                  className="nav-link py-3 px-0 px-lg-3 js-scroll-trigger"
+                  href="mucvu.html"
+                >
+                  MỤC VỤ
+                </a>
+              </li>
+              <li className="nav-item mx-0 mx-lg-1">
+                <a
+                  className="nav-link py-3 px-0 px-lg-3 js-scroll-trigger"
+                  href="about.html"
+                >
+                  GIỚI THIỆU
+                </a>
+              </li>
+              <li className="nav-item mx-0 mx-lg-1">
+                <a
+                  className="nav-link py-3 px-0 px-lg-3  js-scroll-trigger"
+                  href="contact.html"
+                >
+                  LIÊN LẠC
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+      </nav>
+    </div>
+  );
 };
+
+export default MainHeader;

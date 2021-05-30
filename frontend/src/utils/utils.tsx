@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { endpoint } from './utils/constants';
+import { endpoint } from './apiEndpoint';
 
 export const authAxios = axios.create({
   baseURL: endpoint,
