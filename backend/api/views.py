@@ -12,19 +12,17 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.generics import (
-    ListAPIView, RetrieveAPIView, CreateAPIView,
-    UpdateAPIView, DestroyAPIView
-)
 
 from .serializers import (
     NewFeedSerializer, ReMassSerializer, RegistrationSerializer,
-    DailyGospelSerializer, ProvinceSerializer
+    DailyGospelSerializer, ProvinceSerializer, AccountSerializer
 )
 from .producer import publish
 from .permissions import IsOwner
 
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
 from adminapp.models import NewFeed, Mass, DailyGospel, MassTime, Registration, Province
 from core.constants import *
 from adminapp.common_messages import *
@@ -266,6 +264,116 @@ class ProvinceViewSet(viewsets.ViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response({"error": "You are not Authorized to do this task"}, status=status.HTTP_400_BAD_REQUEST)
+
+# API Discription
+# Name: UserCreate
+# Serializer:
+# Url:
+# Detail:
+# Requirements:
+# Output:
+
+
+class UserCreate(viewsets.ViewSet):
+
+    permission_classes = (AllowAny,)
+
+    def create(self, request):  # /api/account/
+        print("Start create new account")
+        serializer = AccountSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            token, created = Token.objects.get_or_create(user=user)
+            res = {'status': 'ok',
+                   'data': {
+                       'token': token.key,
+                       'user_id': user.pk,
+                       'email': user.email
+                   }
+                   }
+            return Response(res, status=status.HTTP_202_ACCEPTED)
+        else:
+            res = {
+                'status': 'error',
+                'message': serializer.errors
+            }
+            return Response(res, status=status.HTTP_226_IM_USED)
+
+    def requestResetPassword(self, request, rid=None):
+        res = {
+            'status': 'error',
+            'data':{
+                'token':'',
+                'user_id': '',
+                'email': ''
+            },
+            'message': ''
+        }
+        try:
+            req_email = request.data.get('email','')
+            user = User.objects.get(email=req_email)
+            if user:
+                from .controller import userRequestResetPass
+                if(userRequestResetPass(user,user.username,req_email)):
+                    res['status'] = 'ok'
+                    res['message'] = 'Vui lòng kiểm tra hộp thư đến trong email của bạn để đổi mật khẩu.'
+                    return Response(res,status=status.HTTP_200_OK)
+                else:
+                    raise Exception('email','Email sending error')
+            else:
+                res['status'] = ERROR
+                res['message'] = 'Email này chưa được đăng ký, xin vui lòng kiểm tra lại'
+                return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except:
+            print("End request reset password error: ", sys.exc_info()[0])
+            res['status'] = ERROR
+            res['message'] = SYSTEM_QUERY_0001
+            return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def resetPassword(self, request, pk=None):  # /api/province/<str:id>
+        res = {
+            'status': 'error',
+            'data':{
+                'token':'',
+                'username': '',
+                'email': ''
+            },
+            'message': ''
+        }
+        try:
+            req_usename = request.data.get('username','')
+            req_pass = request.data.get('password','')
+            re_code = request.data.get('code','')
+            user = User.objects.get(username=req_usename)
+            if user:
+                userprofile = user.userprofile
+                if(userprofile.profile_code == re_code):
+                    user.set_password(req_pass)
+                    user.save()
+                    token, created = Token.objects.get_or_create(user=user)
+                    res['status'] = 'ok'
+                    res['data']['token'] = token.key
+                    res['data']['username'] = req_usename
+                    res['data']['email'] = user.email
+                    res['message'] = 'Đổi mật khẩu thành công'
+                    return Response(res,status=status.HTTP_200_OK)
+                else:
+                    raise Exception('password','Mã bảo mật không đúng')
+            else:
+                raise Exception('password','Tài khoản không đúng')
+        except:
+            print("End request reset password error: ", sys.exc_info()[0])
+            res['status'] = ERROR
+            res['message'] = sys.exc_info()
+            return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# API Discription
+# Name: UserCreate
+# Serializer:
+# Url:
+# Detail:
+# Requirements:
+# Output:
 
 
 class UserAPIView(APIView):

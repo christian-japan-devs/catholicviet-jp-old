@@ -3,8 +3,9 @@ from .views import (
     NewFeedViewSet
     ,ReMassListViewSet
     ,MassRegister
-    , GospelViewSet
-    , ProvinceViewSet
+    ,GospelViewSet
+    ,ProvinceViewSet
+    ,UserCreate
 )
 
 app_name = 'api'
@@ -38,5 +39,14 @@ urlpatterns = [
         'get': 'retrieve',
         'put':'update',
         'delete':'destroy'
+    })),
+    path('account/create',UserCreate.as_view({
+        'post': 'create',
+    })),
+    path('account/requestPassword',UserCreate.as_view({
+        'post': 'requestResetPassword',
+    })),
+    path('account/resetPassword',UserCreate.as_view({
+        'post': 'resetPassword',
     })),
 ]
