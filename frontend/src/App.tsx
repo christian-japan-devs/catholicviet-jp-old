@@ -36,7 +36,7 @@ const App: React.FC = () => {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route
-              path="/account/forgotten-password"
+              path="/account/request-password"
               component={ResetPasswordRequest}
             />
             <Route path="/account/resset-password/" component={ResetPassword} />
