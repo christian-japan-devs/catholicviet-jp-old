@@ -11,8 +11,8 @@ export const authEndPoint = `${apiDomain}${authURL}`;
 //Authentication endpoint Api
 export const loginEndPoint = `${authEndPoint}/login/`;
 export const signUpEndPoint = `${endpoint}/account/create`;
-export const passwordResetRequest = `${endpoint}/account/requestPassword`;
-export const passwordReset = `${endpoint}/account/resetPassword`;
+export const requestPassword = `${endpoint}/account/request-password`;
+export const resetPassword = `${endpoint}/account/reset-password`;
 
 //New Feed endpoint Api
 export const newfeedsListURL = `${endpoint}/newfeed/`;

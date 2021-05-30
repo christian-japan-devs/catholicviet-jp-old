@@ -6,8 +6,8 @@ import { VCJTOKEN, EXPIRATION_DATE } from '../utils/constants';
 import {
   loginEndPoint,
   signUpEndPoint,
-  passwordReset,
-  passwordResetRequest,
+  resetPassword,
+  requestPassword,
 } from '../utils/apiEndpoint';
 
 import { AUTH_SUCCESS, AUTH_FAILED, AUTH_LOGOUT } from '../utils/actionTypes';
@@ -234,7 +234,7 @@ export const useAuth = () => {
     data: AuthState
   ) {
     try {
-      fetch(passwordResetRequest, {
+      fetch(requestPassword, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -304,7 +304,7 @@ export const useAuth = () => {
       var username = url.searchParams.get('username');
       var secretCode = url.searchParams.get('code');
 
-      fetch(passwordReset, {
+      fetch(resetPassword, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
