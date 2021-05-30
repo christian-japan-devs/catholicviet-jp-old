@@ -15,7 +15,7 @@ from .messages import *
 def send_email_to(to_user, subject, text_content, html_content):
     try:
         msg = EmailMultiAlternatives(
-            subject, text_content, NESSEI_EMAIL, [to_user])
+            subject, text_content, FROM_EMAIL, [to_user])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
     except:
