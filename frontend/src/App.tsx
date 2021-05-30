@@ -22,7 +22,7 @@ const App: React.FC = () => {
     if (read("token")) {
       dispatch({
         type: 'isAuthenticated',
-        payload: true             //TODO: true here cannot go to login when isAuthenticated
+        payload: false             //TODO: true here cannot go to login when isAuthenticated
       });
     }
   }, []);
