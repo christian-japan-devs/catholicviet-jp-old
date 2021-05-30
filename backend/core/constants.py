@@ -96,10 +96,10 @@ MONDAY = 0
 
 PAGE_SIZE = 25
 #Email
-NESSEI_EMAIL = "nessei.jp@gmail.com"
+NESSEI_EMAIL = "catholicviet.jp@gmail.com"
 #To Email
 #TO_EMAIL_VN = ["josephnhasj@gmail.com","Jostranquan@gmail.com","gioitreconggiaokanto@gmail.com"]
-TO_EMAIL_VN = ["gioitreconggiaokanto@gmail.com"]
+TO_EMAIL_VN = ["gioitreconggiaokanto@gmail.com","truyenthong.gtcg.japan@gmail.com"]
 TO_EMAIL_IN = [""]
 
 NOTICE_APPROVE = "NA"
