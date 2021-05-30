@@ -22,7 +22,7 @@ const App: React.FC = () => {
     if (read("token")) {
       dispatch({
         type: 'isAuthenticated',
-        payload: false
+        payload: false             //TODO: update true here in production, false for testing
       });
     }
   }, []);
