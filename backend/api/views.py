@@ -302,24 +302,24 @@ class UserCreate(viewsets.ViewSet):
     def requestResetPassword(self, request, rid=None):
         res = {
             'status': 'error',
-            'data':{
-                'token':'',
+            'data': {
+                'token': '',
                 'user_id': '',
                 'email': ''
             },
             'message': ''
         }
         try:
-            req_email = request.data.get('email','')
+            req_email = request.data.get('email', '')
             user = User.objects.get(email=req_email)
             if user:
                 from .controller import userRequestResetPass
-                if(userRequestResetPass(user,user.username,req_email)):
+                if(userRequestResetPass(user, user.username, req_email)):
                     res['status'] = 'ok'
                     res['message'] = 'Vui lòng kiểm tra hộp thư đến trong email của bạn để đổi mật khẩu.'
-                    return Response(res,status=status.HTTP_200_OK)
+                    return Response(res, status=status.HTTP_200_OK)
                 else:
-                    raise Exception('email','Email sending error')
+                    raise Exception('email', 'Email sending error')
             else:
                 res['status'] = ERROR
                 res['message'] = 'Email này chưa được đăng ký, xin vui lòng kiểm tra lại'
@@ -333,17 +333,17 @@ class UserCreate(viewsets.ViewSet):
     def resetPassword(self, request, pk=None):  # /api/province/<str:id>
         res = {
             'status': 'error',
-            'data':{
-                'token':'',
+            'data': {
+                'token': '',
                 'username': '',
                 'email': ''
             },
             'message': ''
         }
         try:
-            req_usename = request.data.get('username','')
-            req_pass = request.data.get('password','')
-            re_code = request.data.get('code','')
+            req_usename = request.data.get('username', '')
+            req_pass = request.data.get('password', '')
+            re_code = request.data.get('code', '')
             user = User.objects.get(username=req_usename)
             if user:
                 userprofile = user.userprofile
@@ -356,11 +356,11 @@ class UserCreate(viewsets.ViewSet):
                     res['data']['username'] = req_usename
                     res['data']['email'] = user.email
                     res['message'] = 'Đổi mật khẩu thành công'
-                    return Response(res,status=status.HTTP_200_OK)
+                    return Response(res, status=status.HTTP_200_OK)
                 else:
-                    raise Exception('password','Mã bảo mật không đúng')
+                    raise Exception('password', 'Mã bảo mật không đúng')
             else:
-                raise Exception('password','Tài khoản không đúng')
+                raise Exception('password', 'Tài khoản không đúng')
         except:
             print("End request reset password error: ", sys.exc_info()[0])
             res['status'] = ERROR

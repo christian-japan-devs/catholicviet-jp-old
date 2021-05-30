@@ -1,19 +1,18 @@
 /**
  * const domain = 'https://catholicviet.jp:8000';*/
-const apiDomain = 'http://localhost:8000'
+const apiDomain = 'http://localhost:8000';
 
-
-const apiURL = '/api';            //custom-api
+const apiURL = '/api'; //custom-api
 export const endpoint = `${apiDomain}${apiURL}`;
 
-const authURL = '/rest-auth';     //rest-framework
-export const authEndPoint = `${apiDomain}${authURL}`
+const authURL = '/rest-auth'; //rest-framework
+export const authEndPoint = `${apiDomain}${authURL}`;
 
 //Authentication endpoint Api
-export const loginEndPoint = `${authEndPoint}/login/`
-export const signUpEndPoint = `${endpoint}/account/create`
-export const passwordResetRequest = `${endpoint}/account/requestPassword`
-export const passwordReset = `${endpoint}/account/resetPassword`
+export const loginEndPoint = `${authEndPoint}/login/`;
+export const signUpEndPoint = `${endpoint}/account/create`;
+export const passwordResetRequest = `${endpoint}/account/requestPassword`;
+export const passwordReset = `${endpoint}/account/resetPassword`;
 
 //New Feed endpoint Api
 export const newfeedsListURL = `${endpoint}/newfeed/`;

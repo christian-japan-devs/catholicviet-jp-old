@@ -31,6 +31,7 @@ def send_email_to(to_user, subject, text_content, html_content):
 # OUPUT
 # aboutus: Aboutus
 
+
 def getRegistrationByUserCode(ruser, code):
     result = {
         STATUS: OK,

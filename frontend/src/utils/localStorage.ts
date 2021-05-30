@@ -7,10 +7,10 @@ type Read<T> = string | {} | T[] | number | boolean | undefined;
  * @returns {any} retrun
  */
 export function store(key: Key, data: any, storage = window.localStorage): any {
-	if (!window.localStorage || !key) {
-		return;
-	}
-	storage.setItem(key, JSON.stringify(data));
+  if (!window.localStorage || !key) {
+    return;
+  }
+  storage.setItem(key, JSON.stringify(data));
 }
 /**
  * Get an item in local storage db
@@ -18,30 +18,29 @@ export function store(key: Key, data: any, storage = window.localStorage): any {
  * @returns {Read<any>}
  */
 export function read(key: Key, storage = window.localStorage): Read<any> {
-	if (!storage || !key) {
-		return;
-	}
-	const item: any = storage.getItem(key);
-	if (!item) {
-		return;
-	}
+  if (!storage || !key) {
+    return;
+  }
+  const item: any = storage.getItem(key);
+  if (!item) {
+    return;
+  }
 
-	const parse = JSON.parse;
-	try {
-		return parse(item);
-	} catch (error) {
-		return parse(`"${item}"`);
-	}
+  try {
+    return JSON.parse(item);
+  } catch (error) {
+    return JSON.parse(`"${item}"`);
+  }
 }
 /**
  * Remove an item in local storage db
  * @param  {Key} key
  * @returns {any}
  */
-export function remove(key: Key, storage = window.localStorage): any {
-	if (!storage || !key) {
-		return;
-	}
+export function remove(key: Key, storage = window.localStorage) {
+  if (!storage || !key) {
+    return;
+  }
 
-	storage.removeItem(key);
+  storage.removeItem(key);
 }

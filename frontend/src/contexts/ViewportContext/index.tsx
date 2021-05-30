@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ViewportContext {
   width: number;
@@ -24,9 +24,9 @@ export const ViewportProvider = ({
   };
 
   React.useEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
+    window.addEventListener('resize', handleWindowResize);
     handleWindowResize();
-    return () => window.removeEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener('resize', handleWindowResize);
   }, []);
 
   return (

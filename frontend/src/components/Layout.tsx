@@ -2,11 +2,11 @@ import React from 'react';
 import MainFooter from './Footer';
 import MainHeader from './Header';
 
-const CustomerLayout = (props:any) => {
+const CustomerLayout = (props: any) => {
   return (
     <div>
       <MainHeader />
-        {props.children}
+      {props.children}
       <MainFooter />
     </div>
   );

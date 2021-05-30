@@ -17,7 +17,7 @@ import {
   AUTH_SET_UPASS,
   AUTH_SET_REUPASS,
   AUTH_SET_EMAIL,
-  AUTH_SET_ERROR_AT
+  AUTH_SET_ERROR_AT,
 } from '../utils/actionTypes';
 import { ValidateEmail, ValidatePassword } from '../utils/formValidation';
 
@@ -26,14 +26,14 @@ export type Props = {
 };
 
 /**
-* Function: AuthLogin
-* Description:
-* 
-* Input:
-* 1) AuthDispatch
-* 2) Data
-* Output:
-*/
+ * Function: AuthLogin
+ * Description:
+ *
+ * Input:
+ * 1) AuthDispatch
+ * 2) Data
+ * Output:
+ */
 export const Login = (props: Props) => {
   const dispatch = useAuthDispatch();
   const state = useAuthState();
@@ -46,35 +46,35 @@ export const Login = (props: Props) => {
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'username',
-          helperText: 'Tên đăng nhập phải dài hơn 5 ký tự'
-        }
-      })
+          helperText: 'Tên đăng nhập phải dài hơn 5 ký tự',
+        },
+      });
     } else if (state.password.length < 8) {
       dispatch({
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'password',
-          helperText: 'Mật khẩu phải dài tối thiểu 8 ký tự'
-        }
-      })
+          helperText: 'Mật khẩu phải dài tối thiểu 8 ký tự',
+        },
+      });
     } else {
       await AuthLogin(dispatch, state);
     }
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
       case 'username': {
         dispatch({
           type: AUTH_SET_UNAME,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
       case 'password': {
         dispatch({
           type: AUTH_SET_UPASS,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
@@ -82,12 +82,10 @@ export const Login = (props: Props) => {
   };
 
   if (state.isAuthenticated) {
-    return (
-      <Redirect to='/' />
-    )
+    return <Redirect to="/" />;
   } else {
     return (
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <LoginForm
           state={state}
@@ -103,14 +101,14 @@ export const Login = (props: Props) => {
 };
 
 /**
-* Function: AuthLogin
-* Description:
-* 
-* Input:
-* 1) AuthDispatch
-* 2) Data
-* Output:
-*/
+ * Function: AuthLogin
+ * Description:
+ *
+ * Input:
+ * 1) AuthDispatch
+ * 2) Data
+ * Output:
+ */
 
 export const Signup = (props: Props) => {
   const dispatch = useAuthDispatch();
@@ -125,31 +123,31 @@ export const Signup = (props: Props) => {
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'username',
-          helperText: 'Tên đăng nhập phải dài hơn 5 ký tự'
-        }
-      })
+          helperText: 'Tên đăng nhập phải dài hơn 5 ký tự',
+        },
+      });
       return;
     }
-    var femail = ValidateEmail(state.email);
+    const femail = ValidateEmail(state.email);
     if (!femail) {
       dispatch({
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'email',
-          helperText: 'Địa chỉ email không hợp lệ'
-        }
-      })
+          helperText: 'Địa chỉ email không hợp lệ',
+        },
+      });
       return;
     }
-    var isPassValid = ValidatePassword(state.password, state.username);
+    const isPassValid = ValidatePassword(state.password, state.username);
     if (!isPassValid.check) {
       dispatch({
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'password',
-          helperText: isPassValid.helperText
-        }
-      })
+          helperText: isPassValid.helperText,
+        },
+      });
       return;
     }
     if (state.rePassword !== state.password) {
@@ -157,9 +155,9 @@ export const Signup = (props: Props) => {
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'rePassword',
-          helperText: 'Mật khẩu xác nhận phải trùng nhau'
-        }
-      })
+          helperText: 'Mật khẩu xác nhận phải trùng nhau',
+        },
+      });
       return;
     }
     console.log('user signup');
@@ -167,40 +165,40 @@ export const Signup = (props: Props) => {
   };
 
   //Handle form input change
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
       case 'username': {
         dispatch({
           type: AUTH_SET_UNAME,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
       case 'email': {
         dispatch({
           type: AUTH_SET_EMAIL,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
       case 'password': {
         dispatch({
           type: AUTH_SET_UPASS,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
       case 'rePassword': {
         dispatch({
           type: AUTH_SET_REUPASS,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
       case 'agree': {
         dispatch({
           type: 'setPassword',
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
@@ -209,12 +207,10 @@ export const Signup = (props: Props) => {
 
   //Load register form
   if (state.isAuthenticated) {
-    return (
-      <Redirect to='/' />
-    )
+    return <Redirect to="/" />;
   } else {
     return (
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <SignupForm
           state={state}
@@ -230,14 +226,14 @@ export const Signup = (props: Props) => {
 };
 
 /**
-* Function: ResetPasswordRequest
-* Description:
-* TODO: check if token is still valid no need to send email.
-* Input:
-* 1) AuthDispatch
-* 2) Data
-* Output:
-*/
+ * Function: ResetPasswordRequest
+ * Description:
+ * TODO: check if token is still valid no need to send email.
+ * Input:
+ * 1) AuthDispatch
+ * 2) Data
+ * Output:
+ */
 export const ResetPasswordRequest = (props: Props) => {
   const dispatch = useAuthDispatch();
   const state = useAuthState();
@@ -246,15 +242,15 @@ export const ResetPasswordRequest = (props: Props) => {
   //Handle Submit change
   const handleOnSubmit = async (evt: React.FormEvent) => {
     evt.preventDefault();
-    var femail = ValidateEmail(state.email);
+    const femail = ValidateEmail(state.email);
     if (!femail) {
       dispatch({
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'email',
-          helperText: 'Địa chỉ email không hợp lệ'
-        }
-      })
+          helperText: 'Địa chỉ email không hợp lệ',
+        },
+      });
       return;
     }
     console.log('user reset password requeset');
@@ -262,19 +258,19 @@ export const ResetPasswordRequest = (props: Props) => {
   };
 
   //Handle form input change
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
       case 'username': {
         dispatch({
           type: AUTH_SET_UNAME,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
       case 'email': {
         dispatch({
           type: AUTH_SET_EMAIL,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
@@ -283,12 +279,10 @@ export const ResetPasswordRequest = (props: Props) => {
 
   //Load register form
   if (state.isAuthenticated) {
-    return (
-      <Redirect to='/' />
-    )
+    return <Redirect to="/" />;
   } else {
     return (
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <ResetPasswordRequestForm
           state={state}
@@ -304,14 +298,14 @@ export const ResetPasswordRequest = (props: Props) => {
 };
 
 /**
-* Function: ResetPassword
-* Description:
-*
-* Input:
-* 1) 
-* 2)
-* Output:
-*/
+ * Function: ResetPassword
+ * Description:
+ *
+ * Input:
+ * 1)
+ * 2)
+ * Output:
+ */
 
 export const ResetPassword = (props: Props) => {
   const dispatch = useAuthDispatch();
@@ -321,15 +315,15 @@ export const ResetPassword = (props: Props) => {
   //Handle Submit change
   const handleOnSubmit = async (evt: React.FormEvent) => {
     evt.preventDefault();
-    var isPassValid = ValidatePassword(state.password);
+    const isPassValid = ValidatePassword(state.password);
     if (!isPassValid.check) {
       dispatch({
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'password',
-          helperText: isPassValid.helperText
-        }
-      })
+          helperText: isPassValid.helperText,
+        },
+      });
       return;
     }
     if (state.rePassword !== state.password) {
@@ -337,9 +331,9 @@ export const ResetPassword = (props: Props) => {
         type: AUTH_SET_ERROR_AT,
         payload: {
           isErrorAt: 'rePassword',
-          helperText: 'Mật khẩu xác nhận phải trùng nhau'
-        }
-      })
+          helperText: 'Mật khẩu xác nhận phải trùng nhau',
+        },
+      });
       return;
     }
     console.log('user reset password requeset');
@@ -347,19 +341,19 @@ export const ResetPassword = (props: Props) => {
   };
 
   //Handle form input change
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
       case 'password': {
         dispatch({
           type: AUTH_SET_UPASS,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
       case 'rePassword': {
         dispatch({
           type: AUTH_SET_REUPASS,
-          payload: event.target.value
+          payload: event.target.value,
         });
         return;
       }
@@ -368,12 +362,10 @@ export const ResetPassword = (props: Props) => {
 
   //Load register form
   if (state.isAuthenticated) {
-    return (
-      <Redirect to='/' />
-    )
+    return <Redirect to="/" />;
   } else {
     return (
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <ResetPasswordForm
           state={state}
