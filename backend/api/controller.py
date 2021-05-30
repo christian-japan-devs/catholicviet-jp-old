@@ -748,10 +748,10 @@ def userRequestResetPass(user, user_name, email):
 
         subject = _('CatholicViet-Jp, đổi mật khẩu.')
         text_content = _("Xin chào bạn. bạn nhận được email này vì đã yêu cầu đặt lại mật khẩu cho tài khoản đăng nhập của bạn tại trang Nessei.com. Xin nhấp vào đường dẫn phía dưới để cập nhật mật khẩu mới. Nếu không phải bạn xin vui lòng bỏ qua.")
-        text_content += '  https://www.catholicviet.jp/account/resetPassword/username=' + \
+        text_content += '  https://www.catholicviet.jp/account/reset-password/username=' + \
             user_name+'?code='+random_code
-        html_content = '<h5>Xin chào bạn.<h5><br><p>Bạn nhận được email này vì đã yêu cầu đặt lại mật khẩu cho tài khoản đăng nhập của bạn tại trang Nessei.com.</p> <p>Xin nhấp vào nút cập nhật mật khẩu mới phía dưới.</p><p>Nếu không phải bạn xin vui lòng bỏ qua.<p><br><h5>Chúc bạn một ngày an lành. Catholicviet-Jp,<h5><br>'
-        html_content += '<a href=" https://www.catholicviet.jp/account/resetPassword/?username='+user_name+'&code='+random_code + \
+        html_content = '<h5>Xin chào bạn.<h5><br><p>Bạn nhận được email này vì đã yêu cầu đặt lại mật khẩu cho tài khoản đăng nhập của bạn tại trang catholicviet.jp.</p> <p>Xin nhấp vào nút cập nhật mật khẩu mới phía dưới.</p><p>Nếu không phải bạn xin vui lòng bỏ qua.<p><br><h5>Chúc bạn một ngày an lành. Catholicviet-Jp,<h5><br>'
+        html_content += '<a href=" https://www.catholicviet.jp/account/reset-password/?username='+user_name+'&code='+random_code + \
             '"><button style="background: #f54642;width: 100%;padding: 1rem 0rem;border: none; color: white;cursor: pointer;border-radius: 30px;font-weight: bolder;font-size: 1rem;">Đổi Mật Khẩu</button></a>'
         send_email_to(email, subject, text_content, html_content)
         return True

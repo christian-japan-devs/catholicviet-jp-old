@@ -39,7 +39,7 @@ urlpatterns = [
         'post': 'create',
     })),
     path('account/request-password', UserCreate.as_view({
-        'post': 'requestResetPassword',
+        'post': 'requestPassword',
     })),
     path('account/reset-password', UserCreate.as_view({
         'post': 'resetPassword',

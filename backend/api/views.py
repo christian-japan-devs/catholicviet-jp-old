@@ -299,7 +299,7 @@ class UserCreate(viewsets.ViewSet):
             }
             return Response(res, status=status.HTTP_226_IM_USED)
 
-    def requestResetPassword(self, request, rid=None):
+    def requestPassword(self, request, rid=None):
         res = {
             'status': 'error',
             'data': {
