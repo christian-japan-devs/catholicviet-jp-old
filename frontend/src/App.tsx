@@ -1,48 +1,37 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 // Shared components
-
-//Utilities and hooks
-import { read } from './utils/localStorage';
 import './App.css';
 import {
   Login,
   Signup,
   ResetPasswordRequest,
   ResetPassword,
-} from './controller/authControl';
+} from './hooks/authControl';
 import Layout from './components/Layout';
-import { authInitialState, authReducer } from './utils/reducer.auth';
-import { AuthDispatchContext, AuthStateContext } from './contexts/AuthContext';
+import NewFeed from './components/NewFeed'
+import { AppProvider } from './contexts/AppContext';
 
 const App: React.FC = () => {
-  const [state, dispatch] = React.useReducer(authReducer, authInitialState);
-
-  React.useEffect(() => {
-    if (read('token')) {
-      dispatch({
-        type: 'isAuthenticated',
-        payload: true, //TODO: true here cannot go to login when isAuthenticated
-      });
-    }
-  }, []);
-
   return (
     <div className="App">
-      <AuthDispatchContext.Provider value={dispatch}>
-        <AuthStateContext.Provider value={state}>
+      <AppProvider>
+        <Layout>
           <BrowserRouter>
-            <Route exact path="/" component={Layout} />
+            <Route exact path="/" component={NewFeed} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route
               path="/account/request-password"
               component={ResetPasswordRequest}
             />
-            <Route path="/account/resset-password/" component={ResetPassword} />
+            <Route
+              path="/account/resset-password/"
+              component={ResetPassword}
+            />
           </BrowserRouter>
-        </AuthStateContext.Provider>
-      </AuthDispatchContext.Provider>
+        </Layout>
+      </AppProvider>
     </div>
   );
 };

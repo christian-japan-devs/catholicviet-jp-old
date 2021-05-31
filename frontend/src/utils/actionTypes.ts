@@ -11,10 +11,8 @@ export const AUTH_LOGOUT = 'logout';
 export const AUTH_SET_ERROR_AT = 'setIsError';
 
 //register
-export const REGISTER_START = 'REG_START';
-export const REGISTER_SUCCESS = 'REG_SUCCESS';
-export const REGISTER_FAIL = 'REG_FAIL';
-export const CANCEL_REGITER_MASS = 'CANCEL_RE_MASS';
-export const CANCEL_REG_START = 'CREG_START';
-export const CANCEL_REG_SUCCESS = 'CREG_SUCCESS';
-export const CANCEL_REG_FAIL = 'CREG_FAIL';
+export enum RegisterActionTypes {
+    register = 'MAKE_REG',
+    cancel = 'CANCEL_REG',
+    confirm = 'CONFIRM_REG'
+}
