@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import ShareIcon from '@material-ui/icons/Share';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import React from 'react';
 
 interface ContentItem {
   summary: string;
@@ -16,10 +13,16 @@ interface Props {
   contentItem?: ContentItem | null;
 }
 
-const PageTitle: React.FC<Props> = ({
+const NewFeed: React.FC<Props> = ({
   title,
   description,
   contentItem,
 }: Props) => {
-  return <>aa</>;
+  return (
+    <div>
+      {description}
+    </div>
+  );
 };
+
+export default NewFeed;

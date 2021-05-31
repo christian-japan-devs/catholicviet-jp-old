@@ -1,4 +1,5 @@
 import React from 'react';
+//Material-Ui
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +11,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 //Custom
 import { AuthStyles } from './Styles';
-import { AuthState } from '../utils/reducer.auth';
+import { AuthState } from '../hooks/reducer.auth';
 
 interface ResetProps {
   state: AuthState;

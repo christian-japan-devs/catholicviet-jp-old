@@ -1,4 +1,5 @@
 import React from 'react';
+//Material-Ui
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 //Customer
-import { AuthState } from '../utils/reducer.auth';
+import { AuthState } from '../hooks/reducer.auth';
 import { AuthStyles } from './Styles';
 
 interface LoginProps {

@@ -1,16 +1,15 @@
 import React from 'react';
+//Material-Ui
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 //Custom
 import { AuthStyles } from './Styles';
-import { AuthState } from '../utils/reducer.auth';
+import { AuthState } from '../hooks/reducer.auth';
 
 interface ResetProps {
   state: AuthState;
