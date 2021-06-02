@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 
 WORKDIR /app
 
@@ -19,13 +19,6 @@ WORKDIR /app/adminapp
 RUN npm install
 
 WORKDIR /app
-# ENV should be configure from outside
-# @see docker-compose.yaml
-ENV DB_NAME vietcatholicjp
-ENV DB_USER administrator
-ENV DB_PASSWORD Upde5rx_m20813
-ENV DB_HOSTNAME localhost
-ENV DB_PORT 3306
 ENV PYTHONUNBUFFERED=1
 
 ADD . /app/

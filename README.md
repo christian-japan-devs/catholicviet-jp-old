@@ -34,7 +34,7 @@ yarn install
 ### Add new package
 
 ```sh
-yarn workspace fronendside add package-name
+yarn workspace fronend add package-name
 ```
 
 ## 3. Setting up backend
@@ -42,7 +42,7 @@ yarn workspace fronendside add package-name
 This will make sure our package configuration is kept nicely isolated from any other projects we're working on.
 
 ```sh
-cd backendside
+cd backend
 python3 -m venv env
 source env/bin/activate
 ```

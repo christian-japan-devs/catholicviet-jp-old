@@ -135,3 +135,7 @@ dmypy.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+**/secrets/*.*
+!**/secrets/*.enc.*
+keys.txt
