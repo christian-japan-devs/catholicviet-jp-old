@@ -64,12 +64,12 @@ For quick development we use sqlite3, it will be generated automatically when yo
 ```sh
 bash run_migrate.sh
 ```
+
 ## 5. Start local server
 
 ```sh
 bash run_server.sh
 ```
-
 
 # Old README
 

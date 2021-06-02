@@ -1,4 +1,7 @@
+from django.db import models
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
+from django.contrib.auth.models import User
 from .models import Contact
 from adminapp.models import (
     NewFeed,Mass,DailyGospel,MassTime,Registration
@@ -8,7 +11,6 @@ from adminapp.models import (
 class StringSerilaizer(serializers.StringRelatedField):
     def to_internal_value(self,value):
         return value
-
 
 class NewFeedSerializer(serializers.ModelSerializer):
     nf_user_created = serializers.ReadOnlyField(source='nf_user_created.userprofile.profile_full_name')
@@ -143,3 +145,19 @@ class MassTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MassTime
         fields = ('id','mass_time_title','mass_date','mass_time','mass_time_church','mass_time_language')
+
+class AccountSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())])
+    email = serializers.EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
+    
+    class Meta:
+        model = User
+        fields = ('username','password','email')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user

@@ -88,10 +88,6 @@ MEDIA_URL = env('MEDIA_URL')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = env('STATIC_URL')
 
-STATICFILES_DIRS = [
-    ('images', os.path.join(BASE_DIR, 'vietcathjp', 'static', 'images'))
-]
-
 # Run $ python3 manage.py collectstatic
 # This will copy all files from your static folders into the ROOT directory.
 
