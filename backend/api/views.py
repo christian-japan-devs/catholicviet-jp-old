@@ -27,10 +27,6 @@ from adminapp.models import NewFeed, Mass, DailyGospel, MassTime, Registration, 
 from core.constants import *
 from adminapp.common_messages import *
 
-import stripe
-
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
 # Create your viewsets here.
 
 
