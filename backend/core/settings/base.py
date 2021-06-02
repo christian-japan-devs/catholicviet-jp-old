@@ -52,8 +52,6 @@ env = environ.Env(
     GS_MEDIA_CUSTOM_ENDPOINT=(str, None),
     GS_EXPIRATION=(str, None),
     GS_CREDENTIALS=(str, None),
-    STRIPE_TEST_PUBLIC_KEY=(str, None),
-    STRIPE_TEST_SECRET_KEY=(str, None)
 )
 
 env.read_env(

@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: (\.enc)?\.(json|yaml|yml|env|ini|bin)$
+    age: age1nzy4papstt9808mstkhm7nlf6u3ddz89sge49zuu6z7zpjz96qssm89gkc

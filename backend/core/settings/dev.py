@@ -39,7 +39,3 @@ MEDIA_URL = '/media/'
 
 # static assets that aren’t tied to a particular app
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
-
-# Stripe
-STRIPE_PUBLIC_KEY = config('STRIPE_TEST_PUBLIC_KEY')
-STRIPE_SECRET_KEY = config('STRIPE_TEST_SECRET_KEY')

@@ -19,7 +19,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     ],
     "dependencyTreeRoots": [
       {
-        "name": "VietcatholicJP",
+        "name": "catholicviet-jp",
         "reference": "workspace:."
       },
       {
@@ -38,8 +38,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "enableTopLevelFallback": true,
     "ignorePatternData": "(^(?:\\.yarn\\/sdks(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$)",
     "fallbackExclusionList": [
-      ["VietcatholicJP", ["workspace:."]],
       ["adminapp", ["workspace:backend/adminapp"]],
+      ["catholicviet-jp", ["workspace:."]],
       ["frontend-next", ["workspace:frontend-next"]],
       ["frontendside", ["workspace:frontend"]]
     ],
@@ -12677,20 +12677,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["VietcatholicJP", [
-        ["workspace:.", {
-          "packageLocation": "./",
-          "packageDependencies": [
-            ["VietcatholicJP", "workspace:."],
-            ["@types/eslint", "npm:7.2.10"],
-            ["@types/prettier", "npm:2.2.3"],
-            ["eslint", "npm:7.26.0"],
-            ["prettier", "npm:2.2.1"],
-            ["typescript", "patch:typescript@npm%3A4.2.4#builtin<compat/typescript>::version=4.2.4&hash=a45b0e"]
-          ],
-          "linkType": "SOFT",
-        }]
-      ]],
       ["abab", [
         ["npm:2.0.5", {
           "packageLocation": "./.yarn/cache/abab-npm-2.0.5-ae8d5b629e-a42b91bd9d.zip/node_modules/abab/",
@@ -14601,6 +14587,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["caseless", "npm:0.12.0"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["catholicviet-jp", [
+        ["workspace:.", {
+          "packageLocation": "./",
+          "packageDependencies": [
+            ["catholicviet-jp", "workspace:."],
+            ["@types/eslint", "npm:7.2.10"],
+            ["@types/prettier", "npm:2.2.3"],
+            ["eslint", "npm:7.26.0"],
+            ["prettier", "npm:2.2.1"],
+            ["typescript", "patch:typescript@npm%3A4.2.4#builtin<compat/typescript>::version=4.2.4&hash=a45b0e"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["chalk", [

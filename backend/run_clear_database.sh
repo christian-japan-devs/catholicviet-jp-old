@@ -1,1 +1,1 @@
-python3 VietcatholicJP/manage.py flush
+python3 manage.py flush
