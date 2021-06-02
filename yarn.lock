@@ -8090,9 +8090,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"frontendside@workspace:frontend":
+"frontend@workspace:frontend":
   version: 0.0.0-use.local
-  resolution: "frontendside@workspace:frontend"
+  resolution: "frontend@workspace:frontend"
   dependencies:
     "@material-ui/core": ^4.11.4
     "@material-ui/icons": ^4.11.2

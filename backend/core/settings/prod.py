@@ -18,6 +18,10 @@ if AH:
 
 WSGI_APPLICATION = 'core.wsgi.prod.application'
 
+INSTALLED_APPS += [
+    'storages',
+]
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -81,8 +85,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 # Google Cloud Storage configuration
 GS_PROJECT_ID = env('GS_PROJECT_ID')
-GS_STORAGE_BUCKET_NAME = env('GS_BUCKET_NAME')
-GS_MEDIA_BUCKET_NAME = env('GS_BUCKET_NAME')
+GS_BUCKET_NAME = env('GS_BUCKET_NAME')
 GS_DEFAULT_ACL = 'publicRead'
 
 # If GOOGLE_APPLICATION_CREDENTIALS is set there is no need to load OAuth token
