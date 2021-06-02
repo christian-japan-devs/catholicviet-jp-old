@@ -8,7 +8,7 @@ from .models import UserProfile
 @receiver(post_save, sender=User)
 def create_auth_token(sender, instance, created, **kwargs):
     if created:
-        #UserProfile.objects.create(profile_user=instance)
+        UserProfile.objects.create(profile_user=instance)
         Token.objects.create(user=instance)
 
 #@receiver(post_save, sender = User)

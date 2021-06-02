@@ -3,10 +3,7 @@
 from .base import *
 
 
-
-ALLOWED_HOSTS += ['127.0.0.1','0.0.0.0','localhost']
-
-INSTALLED_APPS += ['debug_toolbar']
+ALLOWED_HOSTS += ['127.0.0.1', '0.0.0.0', 'localhost']
 
 
 WSGI_APPLICATION = 'core.wsgi.dev.application'
@@ -23,7 +20,16 @@ DATABASES = {
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
+    'http://localhost:3000',
 )
+
+CORS_ALLOWED_ORIGINS = [
+    "https://catholicviet.jp",
+    "https://vietcatholicjp.com",
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

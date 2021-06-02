@@ -1,42 +1,47 @@
 from django.urls import path
 from .views import (
-    NewFeedViewSet
-    ,ReMassListViewSet
-    ,MassRegister
-    , GospelViewSet
-    , ProvinceViewSet
+    NewFeedViewSet, ReMassListViewSet, MassRegister, GospelViewSet, ProvinceViewSet, UserCreate
 )
 
 app_name = 'api'
 
 urlpatterns = [
-    path('newfeed',NewFeedViewSet.as_view({
+    path('newfeed', NewFeedViewSet.as_view({
         'get': 'getlist'
     })),
-    path('newfeed/<str:pk>',NewFeedViewSet.as_view({
+    path('newfeed/<str:pk>', NewFeedViewSet.as_view({
         'get': 'retrieve',
-        'put':'update'
+        'put': 'update'
     })),
-    path('getmass/',ReMassListViewSet.as_view({
+    path('getmass/', ReMassListViewSet.as_view({
         'get': 'getlist'
     })),
-    path('getmass/<str:pk>',ReMassListViewSet.as_view({
+    path('getmass/<str:pk>', ReMassListViewSet.as_view({
         'get': 'retrieve'
     })),
-    path('massregister/',MassRegister.as_view({
+    path('massregister/', MassRegister.as_view({
         'get': 'getlist',
         'post': 'create'
     })),
-    path('massregister/<str:rid>',MassRegister.as_view({
+    path('massregister/<str:rid>', MassRegister.as_view({
         'get': 'retrieve'
     })),
-    path('province',ProvinceViewSet.as_view({
+    path('province', ProvinceViewSet.as_view({
         'get': 'list',
-        'post':'create'
+        'post': 'create'
     })),
-    path('province/<str:pk>',ProvinceViewSet.as_view({
+    path('province/<str:pk>', ProvinceViewSet.as_view({
         'get': 'retrieve',
-        'put':'update',
-        'delete':'destroy'
+        'put': 'update',
+        'delete': 'destroy'
+    })),
+    path('account/create', UserCreate.as_view({
+        'post': 'create',
+    })),
+    path('account/request-password', UserCreate.as_view({
+        'post': 'requestPassword',
+    })),
+    path('account/reset-password', UserCreate.as_view({
+        'post': 'resetPassword',
     })),
 ]

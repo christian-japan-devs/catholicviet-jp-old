@@ -1,19 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Main from './main/main';
-import Provinces from './admin/Provinces';
-import Login from './components/auth/Login';
+// Shared components
+import './App.css';
+import {
+  Login,
+  Signup,
+  ResetPasswordRequest,
+  ResetPassword,
+} from './hooks/authControl';
+import Layout from './components/Layout';
+import NewFeed from './components/NewFeed'
+import { AppProvider } from './contexts/AppContext';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Route exact path="/" component={Main} />
-      <Route path="/login" component={Login} />
-      <Route path="/admin/province" component={Provinces} />
-    </BrowserRouter>
+    <div className="App">
+      <AppProvider>
+        <Layout>
+          <BrowserRouter>
+            <Route exact path="/" component={NewFeed} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route
+              path="/account/request-password"
+              component={ResetPasswordRequest}
+            />
+            <Route
+              path="/account/resset-password/"
+              component={ResetPassword}
+            />
+          </BrowserRouter>
+        </Layout>
+      </AppProvider>
+    </div>
   );
-}
+};
 
 export default App;
