@@ -68,3 +68,5 @@ const PageTitle: React.FC<Props> = ({
     </Helmet>
   );
 };
+
+export default PageTitle;

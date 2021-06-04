@@ -1,13 +1,16 @@
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 
-const Copyright = () => {
+type propsType = {
+  aClasses: string
+}
+
+const Copyright = (props: propsType) => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://catholicviet.jp/">
-        Catholicviet.jp
-      </Link>{' '}
+      {'Dev by © '}
+      <a color="inherit" className={props.aClasses} style={{ textDecoration: 'none' }} target="_blank" rel="noreferrer" href="https://github.com/christian-japan-devs/">
+        Christian-japan-devs
+      </a>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>

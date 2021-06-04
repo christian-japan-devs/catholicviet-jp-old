@@ -25,29 +25,29 @@ export const LoginForm: React.FC<LoginProps> = (props: LoginProps) => {
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
-        <LockOutlinedIcon fontSize="large" />
+        <LockOutlinedIcon fontSize='large' />
       </Avatar>
-      <Typography component="h1" color="primary" variant="h4">
+      <Typography component='h1' color='primary' variant='h4'>
         Công Giáo tại Nhật
       </Typography>
-      <Typography component="h1" variant="h5">
+      <Typography component='h1' variant='h5'>
         Đăng nhập
       </Typography>
       {props.state.isErrorAt === 'somewhere' && (
-        <Typography variant="h6" color="secondary">
+        <Typography variant='h6' color='secondary'>
           {props.state.helperText}
         </Typography>
       )}
       <form className={classes.form} onSubmit={props.handleOnSubmit} noValidate>
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           value={props.state.username}
           fullWidth
-          id="username"
-          label="Tên đăng nhập"
-          name="username"
+          id='username'
+          label='Tên đăng nhập'
+          name='username'
           onChange={props.handleChange}
           helperText={
             props.state.isErrorAt === 'username' ? props.state.helperText : ''
@@ -55,15 +55,15 @@ export const LoginForm: React.FC<LoginProps> = (props: LoginProps) => {
           error={props.state.isErrorAt === 'username'}
         />
         <TextField
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           required
           fullWidth
           value={props.state.password}
-          id="password"
-          label="Mật khẩu"
-          name="password"
-          type="password"
+          id='password'
+          label='Mật khẩu'
+          name='password'
+          type='password'
           onChange={props.handleChange}
           helperText={
             props.state.isErrorAt === 'password' ? props.state.helperText : ''
@@ -71,30 +71,30 @@ export const LoginForm: React.FC<LoginProps> = (props: LoginProps) => {
           error={props.state.isErrorAt === 'password'}
         />
         <FormControlLabel
-          control={<Checkbox value={props.state.remember} color="primary" />}
-          label="Nhớ đăng nhập"
+          control={<Checkbox value={props.state.remember} color='primary' />}
+          label='Nhớ đăng nhập'
         />
         <Button
-          type="submit"
-          variant="contained"
+          type='submit'
+          variant='contained'
           fullWidth
-          color="primary"
+          color='primary'
           disabled={props.state.loading}
           className={classes.submit}
         >
           Đăng nhập
           {props.state.loading && (
-            <CircularProgress size={30} color="secondary" />
+            <CircularProgress size={30} color='secondary' />
           )}
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link to="/resetpw" color="inherit">
+            <Link to='/account/request-password' style={{ textDecoration: 'none', color: 'inherit' }}>
               {`Quên mật khẩu`}
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/signup" color="inherit">
+            <Link to='/signup' style={{ textDecoration: 'none', color: 'inherit' }}>
               {`Chưa có tài khoản? Đăng ký`}
             </Link>
           </Grid>

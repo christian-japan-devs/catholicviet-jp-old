@@ -15,6 +15,7 @@ interface ResetProps {
   state: AuthState;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleOnClear: () => void;
 }
 
 export const ResetPasswordRequestForm: React.FC<ResetProps> = (
@@ -38,7 +39,8 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
         </Typography>
       )}
       <form onSubmit={props.handleOnSubmit} className={classes.form} noValidate>
-        <Grid container spacing={2}>
+
+        <Grid id="top-row" container spacing={2}>
           <Grid item xs={12}>
             <TextField
               autoComplete="email"
@@ -57,8 +59,8 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
             />
           </Grid>
         </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
+        <Grid id="bottom-row" container spacing={2}>
+          <Grid item xs={12} sm={12}>
             <Button
               type="submit"
               variant="contained"
@@ -67,20 +69,23 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
               disabled={props.state.loading}
               className={classes.submit}
             >
-              Gửi yêu cầu
+              {
+                props.state.isErrorAt === 'email' ? 'Gửi lại' : 'Gửi yêu cầu'
+              }
               {props.state.loading && (
                 <CircularProgress size={30} color="secondary" />
               )}
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={12}>
             <Button
               type="reset"
               variant="contained"
+              onClick={props.handleOnClear}
               fullWidth
               color="secondary"
             >
-              Huỷ
+              Xoá
             </Button>
           </Grid>
         </Grid>
