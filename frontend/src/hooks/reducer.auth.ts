@@ -96,7 +96,6 @@ export const authReducer = (
         isErrorAt: '',
       };
     case AUTH_IS_AUTH:
-      console.log(AUTH_IS_AUTH);
       return {
         ...state,
         isAuthenticated: action.payload,

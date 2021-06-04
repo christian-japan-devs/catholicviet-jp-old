@@ -50,7 +50,6 @@ const Header: React.FC<propTypes> = (props: propTypes) => {
         }
     });
     const handleDrawerToggle = () => {
-        console.log(mobileOpen);
         setMobileOpen(!mobileOpen);
     }
     const headerColorChange = () => {
