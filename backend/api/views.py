@@ -42,7 +42,6 @@ class UserIDView(APIView):
 # Output:
 
 
-
 class NewFeedViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
@@ -200,7 +199,6 @@ class GospelViewSet(viewsets.ViewSet):
 # Output:
 
 
-
 class MassTimeViewSet(viewsets.ViewSet):
 
     # /api/gospel   -- get all masstime available by country code, default = JP
@@ -282,13 +280,14 @@ class UserCreate(viewsets.ViewSet):
         if serializer.is_valid():
             user = serializer.save()
             token, created = Token.objects.get_or_create(user=user)
-            res = {'status': 'ok',
-                   'data': {
-                       'token': token.key,
-                       'user_id': user.pk,
-                       'email': user.email
-                   }
-                   }
+            res = {
+                'status': 'ok',
+                'data': {
+                    'token': token.key,
+                    'user_id': user.pk,
+                    'email': user.email
+                }
+            }
             return Response(res, status=status.HTTP_202_ACCEPTED)
         else:
             res = {
