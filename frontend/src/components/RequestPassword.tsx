@@ -28,18 +28,16 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
         <AccountCircleIcon fontSize="large" />
       </Avatar>
       <Typography component="h1" color="primary" variant="h4">
-        Công Giáo tại Nhật
-      </Typography>
-      <Typography component="h1" variant="h5">
         Quên mật khẩu
       </Typography>
+      <br />
       {props.state.isErrorAt === 'somewhere' && (
-        <Typography variant="h6" color="secondary">
+        <Typography variant="body2" color="secondary">
           {props.state.helperText}
         </Typography>
       )}
+      <br />
       <form onSubmit={props.handleOnSubmit} className={classes.form} noValidate>
-
         <Grid id="top-row" container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -53,14 +51,14 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
               label="Địa chỉ email"
               onChange={props.handleChange}
               helperText={
-                props.state.isErrorAt === 'email' ? props.state.helperText : ''
+                props.state.isErrorAt === 'email' ? props.state.helperText : 'Nhập địa chỉ email đã đăng ký để tạo lại mật khẩu'
               }
               error={props.state.isErrorAt === 'email'}
             />
           </Grid>
         </Grid>
         <Grid id="bottom-row" container spacing={2}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
             <Button
               type="submit"
               variant="contained"
@@ -77,13 +75,14 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
               )}
             </Button>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
             <Button
               type="reset"
               variant="contained"
-              onClick={props.handleOnClear}
               fullWidth
               color="secondary"
+              onClick={props.handleOnClear}
+              className={classes.submit}
             >
               Xoá
             </Button>

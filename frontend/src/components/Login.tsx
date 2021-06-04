@@ -27,14 +27,11 @@ export const LoginForm: React.FC<LoginProps> = (props: LoginProps) => {
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon fontSize='large' />
       </Avatar>
-      <Typography component='h1' color='primary' variant='h4'>
-        Công Giáo tại Nhật
-      </Typography>
-      <Typography component='h1' variant='h5'>
-        Đăng nhập
+      <Typography component='h1' color='primary' variant='h5' text-align="center">
+        Công giáo Việt tại nhật <br />Xin chào mừng bạn!
       </Typography>
       {props.state.isErrorAt === 'somewhere' && (
-        <Typography variant='h6' color='secondary'>
+        <Typography variant='body2' color='secondary'>
           {props.state.helperText}
         </Typography>
       )}

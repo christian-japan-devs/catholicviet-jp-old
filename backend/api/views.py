@@ -9,6 +9,7 @@ import sys
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -296,7 +297,7 @@ class UserCreate(viewsets.ViewSet):
             }
             return Response(res, status=status.HTTP_226_IM_USED)
 
-    def requestPassword(self, request, rid=None):
+    def requestPassword(self, request):
         res = {
             'status': 'error',
             'data': {
@@ -315,19 +316,16 @@ class UserCreate(viewsets.ViewSet):
                     res['status'] = 'ok'
                     res['message'] = 'Vui lòng kiểm tra hộp thư đến trong email của bạn để đổi mật khẩu.'
                     return Response(res, status=status.HTTP_200_OK)
-                else:
-                    raise Exception('email', 'Email sending error')
-            else:
-                res['status'] = ERROR
-                res['message'] = 'Email này chưa được đăng ký, xin vui lòng kiểm tra lại'
-                return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            res['status'] = ERROR
+            res['message'] = 'Email này chưa được đăng ký, xin vui lòng kiểm tra lại'
+            return Response(res, status=status.HTTP_200_OK)
         except:
             print("End request reset password error: ", sys.exc_info()[0])
             res['status'] = ERROR
             res['message'] = SYSTEM_QUERY_0001
-            return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(res, status=status.HTTP_200_OK)
 
-    def resetPassword(self, request, pk=None):  # /api/province/<str:id>
+    def resetPassword(self, request):  #
         res = {
             'status': 'error',
             'data': {
@@ -338,31 +336,51 @@ class UserCreate(viewsets.ViewSet):
             'message': ''
         }
         try:
-            req_usename = request.data.get('username', '')
-            req_pass = request.data.get('password', '')
-            re_code = request.data.get('code', '')
-            user = User.objects.get(username=req_usename)
-            if user:
-                userprofile = user.userprofile
-                if(userprofile.profile_code == re_code):
-                    user.set_password(req_pass)
-                    user.save()
-                    token, created = Token.objects.get_or_create(user=user)
+            # If authenticated user request reset password.
+            if(request.auth):
+                auth_user = request.user
+                old_password = request.data.get('oldPassword', '')
+                new_password = request.data.get('newPassword', '')
+                if(auth_user.check_password(old_password)):
+                    auth_user.set_password(new_password)
+                    auth_user.save()
+                    token, created = Token.objects.get_or_create(
+                        user=auth_user)
                     res['status'] = 'ok'
                     res['data']['token'] = token.key
-                    res['data']['username'] = req_usename
-                    res['data']['email'] = user.email
                     res['message'] = 'Đổi mật khẩu thành công'
                     return Response(res, status=status.HTTP_200_OK)
                 else:
-                    raise Exception('password', 'Mã bảo mật không đúng')
+                    res['status'] = ERROR
+                    res['message'] = 'Mật khẩu cũ không đúng.'
+                    return Response(res, status=status.HTTP_200_OK)
             else:
-                raise Exception('password', 'Tài khoản không đúng')
+                # Else Unauthenticated user request for reseting password from email.
+                req_usename = request.data.get('username', '')
+                req_pass = request.data.get('newPassword', '')
+                re_code = request.data.get('code', '')
+                user = User.objects.get(username=req_usename)
+                if user:
+                    userprofile = user.userprofile
+                    if(userprofile.profile_code == re_code):
+                        user.set_password(req_pass)
+                        user.save()
+                        token, created = Token.objects.get_or_create(user=user)
+                        res['status'] = 'ok'
+                        res['data']['token'] = token.key
+                        res['data']['username'] = req_usename
+                        res['data']['email'] = user.email
+                        res['message'] = 'Đổi mật khẩu thành công'
+                        return Response(res, status=status.HTTP_200_OK)
+                    else:
+                        raise Exception('password', 'Mã bảo mật không đúng')
+                else:
+                    raise Exception('password', 'Tài khoản không đúng')
         except:
             print("End request reset password error: ", sys.exc_info()[0])
             res['status'] = ERROR
             res['message'] = sys.exc_info()
-            return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(res, status=status.HTTP_200_OK)
 
 # API Discription
 # Name: UserCreate

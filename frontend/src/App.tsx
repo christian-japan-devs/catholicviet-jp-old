@@ -24,7 +24,7 @@ const App: React.FC = () => {
             component={ResetPasswordRequest}
           />
           <Route
-            path="/account/resset-password/"
+            path="/account/reset-password/"
             component={ResetPassword}
           />
         </BrowserRouter>

@@ -26,11 +26,8 @@ export const SignupForm: React.FC<SignupProps> = (props: SignupProps) => {
       <Avatar className={classes.avatar}>
         <AccountCircleIcon fontSize="large" />
       </Avatar>
-      <Typography component="h1" color="primary" variant="h4">
-        Công Giáo tại Nhật
-      </Typography>
-      <Typography component="h1" variant="h5">
-        Đăng ký
+      <Typography component="h1" variant="h5" color="primary">
+        Đăng ký tài khoản
       </Typography>
       {props.state.isErrorAt === 'somewhere' && (
         <Typography variant="h6" color="secondary">
