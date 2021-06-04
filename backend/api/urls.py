@@ -1,11 +1,18 @@
 from django.urls import path
 from .views import (
-    NewFeedViewSet, ReMassListViewSet, MassRegister, GospelViewSet, ProvinceViewSet, UserCreate
+    MonthlyTopicViewSet, NewFeedViewSet, ReMassListViewSet, MassRegister, GospelViewSet, ProvinceViewSet, UserCreate
 )
 
 app_name = 'api'
 
 urlpatterns = [
+    path('monthly-topic', MonthlyTopicViewSet.as_view({
+        'get': 'topic'
+    })),
+    path('monthly-topic/<str:month>/', MonthlyTopicViewSet.as_view({
+        'get': 'detail',
+        'put': 'update'
+    })),
     path('newfeed', NewFeedViewSet.as_view({
         'get': 'getlist'
     })),
