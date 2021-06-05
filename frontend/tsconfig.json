@@ -16,8 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "references": [
-    { "path": "./src/assets" },
-  ],
   "include": ["src"]
 }

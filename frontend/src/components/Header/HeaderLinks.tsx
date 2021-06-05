@@ -35,10 +35,10 @@ const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
                             <Link to='/thanh-le/nha-tho' className={classes.dropdownLink}>
                                 Nhà thờ
                             </Link>,
-                            <Link to='/thanh-le/gio-le' className={classes.dropdownLink}>
+                            <Link to='/lich/gio-le' className={classes.dropdownLink}>
                                 Giờ Lễ
                             </Link>,
-                            <Link to='/thanh-le/giai-toi' className={classes.dropdownLink}>
+                            <Link to='/lich/gio-giai-toi' className={classes.dropdownLink}>
                                 Giờ giải tội
                             </Link>
                         ]
@@ -64,8 +64,8 @@ const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
                             <Link to='/phung-vu/nghi-thuc' className={classes.dropdownLink}>
                                 Các nghi thức
                             </Link>,
-                            <Link to='/phung-vu/bao-phung-vu' className={classes.dropdownLink}>
-                                Báo phụng vụ
+                            <Link to='/lich/lich-phung-vu' className={classes.dropdownLink}>
+                                Lịch phụng vụ
                             </Link>
                         ]
                     }
@@ -84,11 +84,11 @@ const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
                             <Link to='/lien-lac/quy-cha' className={classes.dropdownLink}>
                                 Quý Cha
                             </Link>,
-                            <Link to='/lien-lac/giao-doan' className={classes.dropdownLink}>
+                            <Link to='/lien-lac/hoi-doan' className={classes.dropdownLink}>
                                 Hội đoàn
                             </Link>,
-                            <Link to='/lien-lac/giao-doan' className={classes.dropdownLink}>
-                                Giáo đoàn
+                            <Link to='/lien-lac/gioi-tre' className={classes.dropdownLink}>
+                                Giới trẻ
                             </Link>
                         ]
                     }
@@ -103,7 +103,7 @@ const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
                             placement={window.innerWidth > 959 ? "top" : "left"}
                             classes={{ tooltip: classes.tooltip }}
                         >
-                            <Link to='/login' className={classes.navLink} style={{ textDecoration: 'none' }}>
+                            <Link to='/account/profile' className={classes.navLink} style={{ textDecoration: 'none' }}>
                                 Cá nhân
                         </Link>
                         </Tooltip>

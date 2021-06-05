@@ -32,8 +32,8 @@ const CustomerLayout: React.FC = ({ children }) => {
         fixed={true}
         color="white"
         changeColorOnScroll={{
-          height: 300,
-          color: "rose",
+          height: 100,
+          color: "white",
         }}
       />
       {children}

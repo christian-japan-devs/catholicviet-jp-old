@@ -27,17 +27,31 @@ export const footerStyle = makeStyles((theme) => ({
     float: "right",
   },
   footer: {
-    marginTop: "2rem",
+    marginBottom: "0px",
     padding: "0.9375rem 0",
     textAlign: "center",
     display: "flex",
     zIndex: 2,
+    bottom: "0px",
     position: "relative",
   },
   a: {
     color: primaryColor,
     textDecoration: "none",
     backgroundColor: "transparent",
+  },
+  link: {
+    "&,&:hover,&:focus": {
+      color: "inherit",
+      fontWeight: 300,
+      fontSize: "14px",
+      borderRadius: "3px",
+      textDecoration: "none",
+    }
+  },
+  footerNav: {
+    textAlign: "center",
+    fontWeight: 300,
   },
   footerWhiteFont: {
     "&,&:hover,&:focus": {
