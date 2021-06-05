@@ -9,7 +9,7 @@ interface ContentItem {
 }
 
 interface Props {
-  title?: string;
+  title: string;
   description?: string;
   contentItem?: ContentItem | null;
 }
@@ -44,26 +44,6 @@ const PageTitle: React.FC<Props> = ({
         <meta key="og:title" property="og:title" content={contentItem.title} />,
         <meta key="og:type" property="og:type" content="website" />,
         <meta key="twitter:site" name="twitter:site" content="@react-test" />,
-        <meta
-          key="twitter.title"
-          name="twitter:title"
-          content={contentItem.title}
-        />,
-        <meta
-          key="twitter:url"
-          name="twitter:url"
-          content={contentItem.contentUrl}
-        />,
-        <meta
-          key="twitter:description"
-          name="twitter:description"
-          content={contentItem.summary}
-        />,
-        <meta
-          key="twitter:image"
-          name="twitter:image"
-          content={contentItem.smallIconUrl}
-        />,
       ]}
     </Helmet>
   );

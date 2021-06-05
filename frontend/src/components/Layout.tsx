@@ -1,4 +1,5 @@
 import React from 'react';
+import Divider from '@material-ui/core/Divider';
 //Share components
 import PageTitle from './PageTitle';
 import Footer from './Footer';
@@ -27,16 +28,18 @@ const CustomerLayout: React.FC = ({ children }) => {
         title='CatholicVietJp'
       />
       <Header
-        brand="CatholicViet.Jp"
+        brand="Công Giáo Việt tại Nhật"
         rightLinks={<HeaderLinks isAuthenticated={state.auth.isAuthenticated} handleLogout={handleLogout} />}
         fixed={true}
         color="white"
         changeColorOnScroll={{
-          height: 100,
-          color: "white",
+          height: 200,
+          color: "transparent",
         }}
       />
       {children}
+      <br />
+      <Divider />
       <Footer whiteFont={false} />
     </>
   );
