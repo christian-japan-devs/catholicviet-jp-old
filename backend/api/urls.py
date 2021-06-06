@@ -45,6 +45,9 @@ urlpatterns = [
     path('account/create', UserCreate.as_view({
         'post': 'create',
     })),
+    path('account/confirm', UserCreate.as_view({
+        'post': 'confirm',
+    })),
     path('account/request-password', UserCreate.as_view({
         'post': 'requestPassword',
     })),
