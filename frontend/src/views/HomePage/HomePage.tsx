@@ -1,11 +1,11 @@
 import React from 'react';
 //@Material-ui/core
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 //Components
-import Layout from '../../components/Layout';
+import Layout from '../Layout';
 import MonthlyTopic, { monthlyTopicPropsTypes } from '../../components/TopicTheme/MonthlyTopic';
 import Sidebar from '../MainSections/Sidebar';
 import MainSection from '../MainSections/MainSection';
@@ -13,7 +13,7 @@ import MainSection from '../MainSections/MainSection';
 import { apiDomain, monthlyTopicEnd } from '../../utils/apiEndpoint';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     mainGrid: {
         marginTop: theme.spacing(3),
     },

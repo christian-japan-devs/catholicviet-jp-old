@@ -9,11 +9,13 @@ import {
   , signUpEndPoint
   , resetPassword
   , requestPassword
+  , confirmEndPoint
 } from '../utils/apiEndpoint';
 import {
   AUTH_SUCCESS
   , AUTH_FAILED
   , AUTH_LOGOUT
+  , AUTH_LOADING
 } from '../utils/actionTypes';
 //Auth's actions and states
 import {
@@ -22,7 +24,7 @@ import {
 } from '../hooks/reducer.auth';
 
 const AuthSuccess = (
-  playload: string,
+  playload: { isAuthenticated: boolean, redirect: string, isConfirmed: boolean },
   dispatch: React.Dispatch<AuthAction>
 ) => {
   dispatch({
@@ -125,7 +127,8 @@ export const useAuth = () => {
           );
           store(VCJTOKEN, token);
           store(EXPIRATION_DATE, expirationDate);
-          AuthSuccess('', dispatch);
+          var isConfirmed = false;   // = res.data.isConfirmed
+          AuthSuccess({ isAuthenticated: true, redirect: data.redirect, isConfirmed: isConfirmed }, dispatch);
           CheckAuthTimeout(3600, dispatch);
         })
         .catch((err) => {
@@ -188,7 +191,11 @@ export const useAuth = () => {
             store(VCJTOKEN, token);
             store(EXPIRATION_DATE, expirationDate);
             AuthSuccess(
-              '/account/profile',
+              {
+                isAuthenticated: true
+                , redirect: '/account/profile'
+                , isConfirmed: false
+              },
               dispatch
             );
             CheckAuthTimeout(3600, dispatch);
@@ -228,7 +235,7 @@ export const useAuth = () => {
   }
 
   /**
-   * Function: AuthLogin
+   * Function: AuthRequestPassword
    * Description:
    *
    * Input:
@@ -236,7 +243,7 @@ export const useAuth = () => {
    * 2) Data
    * Output:
    */
-  async function AuthResetPasswordRequest(
+  async function AuthRequestPassword(
     dispatch: React.Dispatch<AuthAction>,
     data: AuthState
   ) {
@@ -295,7 +302,7 @@ export const useAuth = () => {
   }
 
   /**
-   * Function: AuthLogin
+   * Function: AuthResetPassword
    * Description:
    *
    * Input:
@@ -312,21 +319,16 @@ export const useAuth = () => {
         'Content-Type': 'application/json',
         'Authorization': ''
       };
-      var body = {
-        'username': '',
-        'newPassword': '',
-        'oldPassword': '',
-        'code': ''
-      };
       if (data.isAuthenticated) {
         var token = `Token ${read(VCJTOKEN)}`;
         headers.Authorization = token;
       }
+      //Get params from url when user clicked the link from email.
       var url_string = window.location.href;
       var url = new URL(url_string);
-      body.newPassword = data.password;
       var secretCode = url.searchParams.get('code');
       var username = url.searchParams.get('username');
+
       fetch(resetPassword, {
         method: 'post',
         headers: headers,
@@ -351,7 +353,7 @@ export const useAuth = () => {
             );
             store(VCJTOKEN, token);
             store(EXPIRATION_DATE, expirationDate);
-            AuthSuccess('/account/profile', dispatch);
+            AuthSuccess({ isAuthenticated: true, redirect: '/account/profile', isConfirmed: true }, dispatch);
             CheckAuthTimeout(3600, dispatch);
           } else {
             if (res.message !== undefined) {
@@ -384,24 +386,110 @@ export const useAuth = () => {
   }
 
   /**
+ * Function: AuthResetPassword
+ * Description:
+ *
+ * Input:
+ * 1) AuthDispatch
+ * 2) Data
+ * Output:
+ */
+  async function AccountConfirm(
+    dispatch: React.Dispatch<AuthAction>,
+    data: AuthState
+  ) {
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var url_string = window.location.href;
+      var url = new URL(url_string);
+      var secretCode = url.searchParams.get('code');
+      var username = url.searchParams.get('username');
+      if (username !== null && secretCode !== null) {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(confirmEndPoint, {
+          method: 'post',
+          headers: headers,
+          body: JSON.stringify({
+            username: username,
+            code: secretCode
+          }),
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            throw res;
+          })
+          .then((res) => {
+            if (res.status === 'ok') {
+              const token = res.data.token;
+              const expirationDate = String(
+                new Date(new Date().getTime() + 3600 * 1000)
+              );
+              store(VCJTOKEN, token);
+              store(EXPIRATION_DATE, expirationDate);
+              AuthSuccess({ isAuthenticated: false, redirect: '', isConfirmed: true }, dispatch);
+              CheckAuthTimeout(3600, dispatch);
+            } else {
+              if (res.message !== undefined) {
+                const payload = {
+                  helperText: res.message,
+                  isErrorAt: 'somewhere',
+                };
+                AuthFail(payload, dispatch);
+              }
+            }
+          })
+          .catch((err) => {
+            dispatch({
+              type: AUTH_FAILED,
+              payload: {
+                helperText: 'Đã có lỗi xảy ra vui lòng thử lại sau.',
+                isErrorAt: 'somewhere',
+              },
+            });
+          });
+      } else {
+        dispatch({
+          type: AUTH_FAILED,
+          payload: {
+            helperText: 'Xác thực không đúng!',
+            isErrorAt: 'somewhere',
+          },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: AUTH_FAILED,
+        payload: {
+          helperText: error,
+          isErrorAt: 'somewhere',
+        },
+      });
+    }
+  }
+
+  /**
    * Check the use state
    * Steps:
    * 1) Get the token
    * 2)
    */
   async function AuthCheckState(dispatch: React.Dispatch<AuthAction>) {
-    const token = localStorage.getItem(VCJTOKEN);
-    if (token === null) {
-      localStorage.removeItem(VCJTOKEN);
-      localStorage.removeItem(EXPIRATION_DATE);
+    const token = read(VCJTOKEN);
+    if (token === undefined) {
+      remove(VCJTOKEN);
+      remove(EXPIRATION_DATE);
     } else {
-      const strExpirationDate = localStorage.getItem(EXPIRATION_DATE);
+      const strExpirationDate = read(EXPIRATION_DATE);
       if (strExpirationDate !== null) {
-        const expirationDate = new Date(strExpirationDate);
+        const expirationDate = new Date(String(strExpirationDate));
         if (expirationDate <= new Date()) {
           Logout(dispatch);
         } else {
-          AuthSuccess('', dispatch);
+          AuthSuccess({ isAuthenticated: true, redirect: '', isConfirmed: false }, dispatch);
           CheckAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000,
             dispatch
@@ -417,6 +505,7 @@ export const useAuth = () => {
     AuthSignup,
     AuthCheckState,
     AuthResetPassword,
-    AuthResetPasswordRequest,
+    AuthRequestPassword,
+    AccountConfirm,
   };
 };

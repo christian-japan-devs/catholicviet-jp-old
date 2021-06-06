@@ -65,7 +65,7 @@ const MonthlyTopic: React.FC<monthlyTopicPropsTypes> = (props: monthlyTopicProps
                         <Typography variant="h5" color="inherit" paragraph>
                             {topic.description}
                         </Typography>
-                        <Link variant='subtitle1' color="inherit" href={topic.linkText}>
+                        <Link variant='subtitle1' style={{ textDecoration: 'none', color: 'inherit' }} href={topic.linkText}>
                             {!!topic.image ? 'Xem chi tiết.' : ""}
                         </Link>
                     </div>

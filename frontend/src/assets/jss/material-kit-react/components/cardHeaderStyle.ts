@@ -7,6 +7,7 @@ import {
   dangerCardHeader,
   infoCardHeader,
   primaryCardHeader,
+  roseCardHeader
 } from "../../material-kit-react.js";
 
 export const cardHeaderStyle = makeStyles(() => ({
@@ -28,4 +29,5 @@ export const cardHeaderStyle = makeStyles(() => ({
   dangerCardHeader,
   infoCardHeader,
   primaryCardHeader,
+  roseCardHeader,
 }));

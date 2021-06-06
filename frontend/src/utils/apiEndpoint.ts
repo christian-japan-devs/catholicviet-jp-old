@@ -1,7 +1,7 @@
 /**
  * const domain = 'https://catholicviet.jp:8000';*/
-//export const apiDomain = 'http://localhost:8000';
-export const apiDomain = 'http://192.168.2.149:8000';
+export const apiDomain = 'http://localhost:8000';
+//export const apiDomain = 'http://192.168.2.149:8000';
 
 const apiURL = '/api'; //custom-api
 export const endpoint = `${apiDomain}${apiURL}`;
@@ -14,7 +14,7 @@ export const loginEndPoint = `${authEndPoint}/login/`;
 export const signUpEndPoint = `${endpoint}/account/create`;
 export const requestPassword = `${endpoint}/account/request-password`;
 export const resetPassword = `${endpoint}/account/reset-password`;
-
+export const confirmEndPoint = `${endpoint}/account/confirm`;
 //Monthly Topic endpoint Api
 export const monthlyTopicEnd = `${endpoint}/monthly-topic`;
 export const monthlyTopicDetailEnd = (month: string) => `${endpoint}/monthly-topic/${month}`;

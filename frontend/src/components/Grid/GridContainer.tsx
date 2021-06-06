@@ -1,10 +1,7 @@
 import React from "react";
-// nodejs library to set properties for components
-import PropTypes from "prop-types";
-
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import Grid, { GridJustification } from "@material-ui/core/Grid";
 
 const styles = {
   grid: {
@@ -16,7 +13,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function GridContainer(props) {
+type propTypes = {
+  children: React.ReactNode,
+  className?: string,
+  justify?: GridJustification | undefined
+};
+
+export default function GridContainer(props: propTypes) {
   const classes = useStyles();
   const { children, className, ...rest } = props;
   return (
@@ -26,11 +29,3 @@ export default function GridContainer(props) {
   );
 }
 
-GridContainer.defaultProps = {
-  className: "",
-};
-
-GridContainer.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-};

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 //core components
 import { cardHeaderStyle } from '../../assets/jss/material-kit-react/components/cardHeaderStyle';
 
-type color = 'warning' | 'success' | 'danger' | 'info' | 'primary';
+type color = 'warning' | 'success' | 'danger' | 'info' | 'primary' | 'rose';
 
 type propTypes = {
     className: string,
@@ -13,7 +13,7 @@ type propTypes = {
     plain: boolean,
     children: React.ReactNode
 }
-type colorHeaderType = 'warningCardHeader' | 'successCardHeader' | 'dangerCardHeader' | 'infoCardHeader' | 'primaryCardHeader';
+type colorHeaderType = 'warningCardHeader' | 'successCardHeader' | 'dangerCardHeader' | 'infoCardHeader' | 'primaryCardHeader' | 'roseCardHeader';
 
 function convertColor(color: color): colorHeaderType {
     switch (color) {
@@ -25,6 +25,8 @@ function convertColor(color: color): colorHeaderType {
             return 'dangerCardHeader';
         case 'info':
             return 'infoCardHeader';
+        case 'rose':
+            return 'roseCardHeader';
         default:
             return 'primaryCardHeader'
     }
@@ -47,3 +49,4 @@ const CardHeader: React.FC<propTypes> = (props: propTypes) => {
     )
 
 }
+export default CardHeader;
