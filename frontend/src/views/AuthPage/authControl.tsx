@@ -1,13 +1,15 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+//@material-ui/
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { Redirect } from 'react-router-dom';
+import LinearProgress from '@material-ui/core/LinearProgress';
 // Shared componentss
 import { LoginForm } from '../../components/Login';
 import { SignupForm } from '../../components/Signup';
 import { ResetPasswordRequestForm } from '../../components/RequestPassword';
 import { ResetPasswordForm } from '../../components/ResetPassword';
-import Layout from '../../components/Layout';
+import Layout from '../Layout';
 //Utils
 import {
   ValidateEmail
@@ -83,7 +85,7 @@ export const Login = () => {
       }
     }
   };
-
+  console.log(state.auth.redirect);
   if (state.auth.isAuthenticated) {
     if (state.auth.redirect) {  // return to profile page
       return <Redirect to={state.auth.redirect} />
@@ -240,9 +242,41 @@ export const Signup = () => {
  * 2) Data
  * Output:
  */
+
+export const AccountConfirm = () => {
+  const { state, dispatch } = React.useContext(AppContext);
+  const { AccountConfirm } = useAuth();
+
+  React.useEffect(() => {
+    AccountConfirm(dispatch, state.auth);
+  }, []);
+
+  //Load confirm Page
+  return (
+    <Layout>
+      <Container component="main" maxWidth="xs" style={{ minHeight: '200px', marginTop: '12rem' }}>
+        <h3>Xác thực tài khoản</h3>
+        <hr />
+        {state.auth.isErrorAt === "somewhere" && <h5 style={{ color: '#d31085', marginTop: '1rem' }}>{state.auth.helperText}</h5>}
+        {state.auth.isConfirmed && <h5 style={{ color: '#d31085', marginTop: '1rem' }}>{'Tài khoản đã được xác thực thành công, cảm ơn bạn.'}</h5>}
+        {state.auth.loading ? <LinearProgress color="secondary" /> : <></>}
+      </Container>
+    </Layout>
+  );
+};
+
+/**
+ * Function: ResetPasswordRequest
+ * Description:
+ * TODO: check if token is still valid no need to send email.
+ * Input:
+ * 1) AuthDispatch
+ * 2) Data
+ * Output:
+ */
 export const ResetPasswordRequest = () => {
   const { state, dispatch } = React.useContext(AppContext);
-  const { AuthResetPasswordRequest } = useAuth();
+  const { AuthRequestPassword } = useAuth();
 
   //Handle Submit change
   const handleOnSubmit = async (evt: React.FormEvent) => {
@@ -258,7 +292,7 @@ export const ResetPasswordRequest = () => {
       });
       return;
     }
-    await AuthResetPasswordRequest(dispatch, state.auth);
+    await AuthRequestPassword(dispatch, state.auth);
   };
 
   //Handle form input change
@@ -280,7 +314,6 @@ export const ResetPasswordRequest = () => {
       payload: "",
     });
   }
-
   //Load register form
   if (state.auth.isAuthenticated) {
     return <Redirect to="/account/reset-password" />;
@@ -385,7 +418,8 @@ export const ResetPassword = () => {
       payload: "",
     });
   }
-
+  console.log("resetpass");
+  console.log(state.auth.redirect);
   //Load register form
   if (state.auth.redirect) {
     return <Redirect to={state.auth.redirect} />;
