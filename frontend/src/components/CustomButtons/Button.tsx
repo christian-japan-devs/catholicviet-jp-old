@@ -1,28 +1,15 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-
 // @material-ui/core components
 import Button from "@material-ui/core/Button";
-
 // core components
+import { useStyles } from "../../assets/jss/material-kit-react/components/buttonStyle";
 
-import { buttonStyle } from "../../assets/jss/material-kit-react/components/buttonStyle";
+export type Color = 'warning' | 'success' | 'danger' | 'info' | 'primary' | "rose" | "white" | "transparent";
 
-type propTypes = {
-  color:
-  "primary"
-  | "info"
-  | "success"
-  | "warning"
-  | "danger"
-  | "rose"
-  | "white"
-  | "facebook"
-  | "twitter"
-  | "google"
-  | "github"
-  | "transparent",
+type Props = {
+  color: Color,
   size: "sm" | "lg",
   simple?: boolean,
   round?: boolean,
@@ -34,11 +21,11 @@ type propTypes = {
   href: string,
   target?: string,
   children: React.ReactNode,
-  className: string
-
+  className: string,
+  onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 };
 
-const RegularButton: React.FC<propTypes> = ((props: propTypes) => {
+const RegularButton: React.FC<Props> = (props) => {
   const {
     color,
     round,
@@ -53,10 +40,11 @@ const RegularButton: React.FC<propTypes> = ((props: propTypes) => {
     className,
     href,
     target,
+    onClick,
     ...rest
   } = props;
 
-  const classes = buttonStyle();
+  const classes = useStyles();
 
   const btnClasses = classNames({
     [classes.button]: true,
@@ -72,10 +60,10 @@ const RegularButton: React.FC<propTypes> = ((props: propTypes) => {
     [className]: className,
   });
   return (
-    <Button target={target} href={href} className={btnClasses} {...rest} >
+    <Button onClick={onClick} target={target} href={href} className={btnClasses} {...rest} >
       {children}
     </Button>
   );
-});
+};
 
 export default RegularButton;

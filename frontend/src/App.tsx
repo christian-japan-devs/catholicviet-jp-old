@@ -5,7 +5,7 @@ import './App.css';
 import {
   Login,
   Signup,
-  ResetPasswordRequest,
+  RequestPassword,
   ResetPassword,
   AccountConfirm,
 } from './views/AuthPage/authControl';
@@ -24,7 +24,7 @@ const App: React.FC = () => {
           <Route path="/signup" component={Signup} />
           <Route
             path="/account/request-password"
-            component={ResetPasswordRequest}
+            component={RequestPassword}
           />
           <Route
             path="/account/reset-password/"

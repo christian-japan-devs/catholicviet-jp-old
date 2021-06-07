@@ -5,12 +5,12 @@ import classNames from 'classnames';
 //core components
 import cardFooterStyles from '../../assets/jss/material-kit-react/components/cardFooterStyle';
 
-type propTypes = {
+type Props = {
     className: string,
     children: React.ReactNode
 }
 
-const CardFooter: React.FC<propTypes> = (props: propTypes) => {
+export const CardFooter: React.FC<Props> = (props) => {
     const classes = cardFooterStyles();
     const { className, children, ...rest } = props;
     const cardFooterClasses = classNames({

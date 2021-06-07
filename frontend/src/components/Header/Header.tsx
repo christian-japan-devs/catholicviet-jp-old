@@ -14,29 +14,23 @@ import Drawer from '@material-ui/core/Drawer';
 import Menu from '@material-ui/icons/Menu';
 // core components
 import { headerStyle } from '../../assets/jss/material-kit-react/components/headerStyle';
+import { Color } from '../CustomButtons/Button';
 
 
-
-type propTypes = {
-    color: 'primary' | 'info' | 'success' | 'warning' | 'danger' | 'transparent' | 'white' | 'rose' | 'dark',
+type Props = {
+    color: Color,
     rightLinks?: React.ReactNode,
     leftLinks?: React.ReactNode,
     brand: string,
     fixed?: boolean,
     absolute?: boolean,
-    // this will cause the sidebar to change the color from
-    // props.color (see above) to changeColorOnScroll.color
-    // when the window.pageYOffset is heigher or equal to
-    // changeColorOnScroll.height and then when it is smaller than
-    // changeColorOnScroll.height change it back to
-    // props.color (see above)
     changeColorOnScroll: {
         height: number,
-        color: 'primary' | 'info' | 'success' | 'warning' | 'danger' | 'transparent' | 'white' | 'rose' | 'dark'
+        color: Color
     }
 }
 
-const Header: React.FC<propTypes> = (props: propTypes) => {
+export const Header: React.FC<Props> = (props) => {
     const classes = headerStyle();
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -128,5 +122,3 @@ const Header: React.FC<propTypes> = (props: propTypes) => {
         </Container>
     )
 }
-
-export default Header;

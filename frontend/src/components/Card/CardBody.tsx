@@ -5,12 +5,12 @@ import classNames from 'classnames';
 //core components
 import { cardBodyStyle } from '../../assets/jss/material-kit-react/components/cardBodyStyle';
 
-type propTypes = {
+type Props = {
     className: string,
     children: React.ReactNode,
 };
 
-const Card: React.FC<propTypes> = (props: propTypes) => {
+export const CardBody: React.FC<Props> = (props) => {
     const classes = cardBodyStyle();
     const { className, children, ...rest } = props;
     const cardBodyClasses = classNames({
@@ -23,5 +23,3 @@ const Card: React.FC<propTypes> = (props: propTypes) => {
         </div>
     );
 }
-
-export default Card;

@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core/styles';
 import {
   grayColor,
   roseColor,
@@ -7,10 +8,8 @@ import {
   warningColor,
   dangerColor,
 } from "../../material-kit-react.js";
-import { makeStyles } from '@material-ui/core/styles';
 
-
-export const buttonStyle = makeStyles(() => ({
+export const useStyles = makeStyles(() => ({
   button: {
     minHeight: "auto",
     minWidth: "auto",
@@ -24,7 +23,7 @@ export const buttonStyle = makeStyles(() => ({
     padding: "12px 30px",
     margin: ".3125rem 1px",
     fontSize: "12px",
-    fontWeight: "400",
+    fontWeight: 400,
     textTransform: "uppercase",
     letterSpacing: "0",
     willChange: "box-shadow, transform",

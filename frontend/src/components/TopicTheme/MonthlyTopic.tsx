@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export type monthlyTopicPropsTypes = {
+export type Props = {
     topic: {
         id: number,
         image: string,
@@ -49,7 +49,7 @@ export type monthlyTopicPropsTypes = {
     }
 }
 
-const MonthlyTopic: React.FC<monthlyTopicPropsTypes> = (props: monthlyTopicPropsTypes) => {
+export const MonthlyTopic: React.FC<Props> = (props) => {
     const classes = useStyles();
     const topic = props.topic;
     return (
@@ -74,4 +74,3 @@ const MonthlyTopic: React.FC<monthlyTopicPropsTypes> = (props: monthlyTopicProps
         </Paper>
     )
 }
-export default MonthlyTopic;

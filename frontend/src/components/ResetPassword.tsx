@@ -12,14 +12,14 @@ import Typography from '@material-ui/core/Typography';
 import { AuthStyles } from './Styles';
 import { AuthState } from '../hooks/reducer.auth';
 
-interface ResetProps {
+interface Props {
   state: AuthState;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleOnClear: () => void;
 }
 
-export const ResetPasswordForm: React.FC<ResetProps> = (props: ResetProps) => {
+export const ResetPasswordForm: React.FC<Props> = (props) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const classes = AuthStyles();
 

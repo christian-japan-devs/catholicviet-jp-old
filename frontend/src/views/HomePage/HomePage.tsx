@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 //Components
 import Layout from '../Layout';
-import MonthlyTopic, { monthlyTopicPropsTypes } from '../../components/TopicTheme/MonthlyTopic';
+import { MonthlyTopic, Props as TopicProps } from '../../components/TopicTheme/MonthlyTopic';
 import Sidebar from '../Sections/Sidebar';
 import MainSection from '../Sections/MainSection';
 //Utils
@@ -55,7 +55,7 @@ const featuredPosts = [
 ];
 
 const HomePage: React.FC = () => {
-    const [monthlyTopic, setMonthlyTopicTypes] = React.useState(initTopic as monthlyTopicPropsTypes);
+    const [monthlyTopic, setMonthlyTopicTypes] = React.useState(initTopic as TopicProps);
     const classes = useStyles();
 
     React.useEffect(() => {
@@ -87,7 +87,7 @@ const HomePage: React.FC = () => {
                 })
             }
         })
-    }, []);
+    });
     return (
         <Layout>
             <CssBaseline />

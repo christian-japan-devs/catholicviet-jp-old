@@ -127,7 +127,7 @@ export const useAuth = () => {
           );
           store(VCJTOKEN, token);
           store(EXPIRATION_DATE, expirationDate);
-          var isConfirmed = false;   // = res.data.isConfirmed
+          let isConfirmed = false;   // = res.data.isConfirmed
           AuthSuccess({ isAuthenticated: true, redirect: data.redirect, isConfirmed: isConfirmed }, dispatch);
           CheckAuthTimeout(3600, dispatch);
         })
@@ -315,20 +315,25 @@ export const useAuth = () => {
     data: AuthState
   ) {
     try {
-      var headers = {
+      let headers = {
         'Content-Type': 'application/json',
         'Authorization': ''
       };
+      let body = {
+        'username': '',
+        'newPassword': '',
+        'oldPassword': '',
+        'code': ''
+      };
       if (data.isAuthenticated) {
-        var token = `Token ${read(VCJTOKEN)}`;
+        let token = `Token ${read(VCJTOKEN)}`;
         headers.Authorization = token;
       }
-      //Get params from url when user clicked the link from email.
-      var url_string = window.location.href;
-      var url = new URL(url_string);
-      var secretCode = url.searchParams.get('code');
-      var username = url.searchParams.get('username');
-
+      let url_string = window.location.href;
+      let url = new URL(url_string);
+      body.newPassword = data.password;
+      let secretCode = url.searchParams.get('code');
+      let username = url.searchParams.get('username');
       fetch(resetPassword, {
         method: 'post',
         headers: headers,
@@ -399,13 +404,13 @@ export const useAuth = () => {
     data: AuthState
   ) {
     try {
-      var headers = {
+      let headers = {
         'Content-Type': 'application/json',
       };
-      var url_string = window.location.href;
-      var url = new URL(url_string);
-      var secretCode = url.searchParams.get('code');
-      var username = url.searchParams.get('username');
+      let url_string = window.location.href;
+      let url = new URL(url_string);
+      let secretCode = url.searchParams.get('code');
+      let username = url.searchParams.get('username');
       if (username !== null && secretCode !== null) {
         dispatch({ type: AUTH_LOADING, payload: true });
         fetch(confirmEndPoint, {

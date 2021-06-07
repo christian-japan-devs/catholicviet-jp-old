@@ -249,7 +249,7 @@ export const AccountConfirm = () => {
 
   React.useEffect(() => {
     AccountConfirm(dispatch, state.auth);
-  }, []);
+  });
 
   //Load confirm Page
   return (
@@ -274,7 +274,7 @@ export const AccountConfirm = () => {
  * 2) Data
  * Output:
  */
-export const ResetPasswordRequest = () => {
+export const RequestPassword = () => {
   const { state, dispatch } = React.useContext(AppContext);
   const { AuthRequestPassword } = useAuth();
 

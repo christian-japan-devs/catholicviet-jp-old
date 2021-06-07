@@ -10,8 +10,8 @@ import Build from '@material-ui/icons/Build';
 //Share components
 import Layout from '../Layout';
 import Paralax from '../../components/Parallax/Parallax';
-import GridContainer from '../../components/Grid/GridContainer';
-import GridItem from '../../components/Grid/GridItem';
+import { GridContainer } from '../../components/Grid/GridContainer';
+import { GridItem } from '../../components/Grid/GridItem';
 import CustomTabs from '../../components/CustomTabs/CustomTabs.js';
 import { useStyles } from '../../assets/jss/material-kit-react/views/profilePage';
 //Tabs

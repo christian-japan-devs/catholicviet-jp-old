@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-type propTypes = {
+type Props = {
   children: React.ReactNode,
   className?: string,
   component?: string,
@@ -25,7 +25,7 @@ type propTypes = {
   justify?: GridJustification | undefined,
 };
 
-export default function GridItem(props: propTypes) {
+export const GridItem: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { children, className, ...rest } = props;
   return (

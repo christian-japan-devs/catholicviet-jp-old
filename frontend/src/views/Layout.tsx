@@ -1,10 +1,10 @@
 import React from 'react';
 import Divider from '@material-ui/core/Divider';
 //Share components
-import PageTitle from '../components/PageTitle';
-import Footer from '../components/Footer';
-import Header from '../components/Header/Header';
-import HeaderLinks from '../components/Header/HeaderLinks';
+import { PageTitle } from '../components/PageTitle';
+import { Footer } from '../components/Footer';
+import { Header } from '../components/Header/Header';
+import { HeaderLinks } from '../components/Header/HeaderLinks';
 //App context
 import { AppContext } from '../contexts/AppContext';
 //Auth actions
@@ -17,7 +17,7 @@ const Layout: React.FC = ({ children }) => {
   React.useEffect(() => {
     AuthCheckState(dispatch);
     //TODO: Get init color setting for appbar...
-  }, []);
+  });
 
   const handleLogout = (() => {
     Logout(dispatch);
@@ -28,8 +28,8 @@ const Layout: React.FC = ({ children }) => {
         title='CatholicVietJp'
       />
       <Header
-        brand="Công Giáo Việt tại Nhật"
-        rightLinks={<HeaderLinks isAuthenticated={state.auth.isAuthenticated} handleLogout={handleLogout} />}
+        brand="CatholicViet.Jp"
+        rightLinks={<HeaderLinks color="rose" isAuthenticated={state.auth.isAuthenticated} handleLogout={handleLogout} />}
         fixed={true}
         color="white"
         changeColorOnScroll={{

@@ -1,7 +1,7 @@
 /**
  * const domain = 'https://catholicviet.jp:8000';*/
-export const apiDomain = 'http://localhost:8000';
-//export const apiDomain = 'http://192.168.2.149:8000';
+//export const apiDomain = process.env.API_DOMAIN; 
+export const apiDomain = 'http://192.168.2.149:8000';
 
 const apiURL = '/api'; //custom-api
 export const endpoint = `${apiDomain}${apiURL}`;

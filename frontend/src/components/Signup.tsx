@@ -13,13 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import { AuthStyles } from './Styles';
 import { AuthState } from '../hooks/reducer.auth';
 
-interface SignupProps {
+interface Props {
   state: AuthState;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export const SignupForm: React.FC<SignupProps> = (props: SignupProps) => {
+export const SignupForm: React.FC<Props> = (props) => {
   const classes = AuthStyles();
   return (
     <div className={classes.paper}>
