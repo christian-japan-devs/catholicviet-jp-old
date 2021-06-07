@@ -7,8 +7,8 @@ import Container from '@material-ui/core/Container';
 //Components
 import Layout from '../Layout';
 import MonthlyTopic, { monthlyTopicPropsTypes } from '../../components/TopicTheme/MonthlyTopic';
-import Sidebar from '../MainSections/Sidebar';
-import MainSection from '../MainSections/MainSection';
+import Sidebar from '../Sections/Sidebar';
+import MainSection from '../Sections/MainSection';
 //Utils
 import { apiDomain, monthlyTopicEnd } from '../../utils/apiEndpoint';
 
