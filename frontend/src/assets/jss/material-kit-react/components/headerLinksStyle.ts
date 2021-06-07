@@ -1,6 +1,4 @@
-//@material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-//Custome
 import { defaultFont } from "../../material-kit-react.js";
 import { tooltip } from "../tooltipsStyle";
 
