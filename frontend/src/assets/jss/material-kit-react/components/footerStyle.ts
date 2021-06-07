@@ -1,5 +1,4 @@
 import { container, primaryColor } from "../../material-kit-react.js";
-//@material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 
 export const footerStyle = makeStyles((theme) => ({
