@@ -308,25 +308,25 @@ export const useAuth = () => {
     data: AuthState
   ) {
     try {
-      var headers = {
+      let headers = {
         'Content-Type': 'application/json',
         'Authorization': ''
       };
-      var body = {
+      let body = {
         'username': '',
         'newPassword': '',
         'oldPassword': '',
         'code': ''
       };
       if (data.isAuthenticated) {
-        var token = `Token ${read(VCJTOKEN)}`;
+        let token = `Token ${read(VCJTOKEN)}`;
         headers.Authorization = token;
       }
-      var url_string = window.location.href;
-      var url = new URL(url_string);
+      let url_string = window.location.href;
+      let url = new URL(url_string);
       body.newPassword = data.password;
-      var secretCode = url.searchParams.get('code');
-      var username = url.searchParams.get('username');
+      let secretCode = url.searchParams.get('code');
+      let username = url.searchParams.get('username');
       fetch(resetPassword, {
         method: 'post',
         headers: headers,
