@@ -14,13 +14,13 @@ import { Link } from 'react-router-dom';
 import { AuthState } from '../hooks/reducer.auth';
 import { AuthStyles } from './Styles';
 
-interface LoginProps {
+interface Props {
   state: AuthState;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export const LoginForm: React.FC<LoginProps> = (props: LoginProps) => {
+export const LoginForm: React.FC<Props> = (props) => {
   const classes = AuthStyles();
   return (
     <div className={classes.paper}>

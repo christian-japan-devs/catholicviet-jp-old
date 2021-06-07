@@ -5,14 +5,14 @@ import classNames from 'classnames';
 //core components
 import { cardStyle } from '../../assets/jss/material-kit-react/components/cardStyle';
 
-type propTypes = {
+type Props = {
     className: string,
     plain: boolean,
     carousel: boolean,
     children: React.ReactNode,
 };
 
-const Card: React.FC<propTypes> = (props: propTypes) => {
+const Card: React.FC<Props> = (props) => {
     const classes = cardStyle();
     const { className, children, plain, carousel, ...rest } = props;
     const cardClassess = classNames({

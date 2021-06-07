@@ -1,7 +1,7 @@
 import React from "react";
 //
 import Layout from '../../components/Layout';
-import MonthlyTopic, { monthlyTopicPropsTypes } from '../../components/TopicTheme/MonthlyTopic';
+import { MonthlyTopic, Props as TopicProps } from '../../components/TopicTheme/MonthlyTopic';
 import { apiDomain, monthlyTopicEnd } from '../../utils/apiEndpoint';
 
 var initTopic = {
@@ -16,7 +16,7 @@ var initTopic = {
     }
 }
 const HomePage: React.FC = () => {
-    const [monthlyTopic, setMonthlyTopicTypes] = React.useState(initTopic as monthlyTopicPropsTypes);
+    const [monthlyTopic, setMonthlyTopicTypes] = React.useState(initTopic as TopicProps);
 
     React.useEffect(() => {
         fetch(monthlyTopicEnd, {

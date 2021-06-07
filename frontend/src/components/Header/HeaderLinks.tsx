@@ -4,25 +4,26 @@ import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Tooltip from '@material-ui/core/Tooltip';
-//@material-ui/icons
-
 // core components
-import CustomDropdown from "../CustomDropdown/CustomDropdown.js";
-
+import { CustomDropdown } from "../CustomDropdown/CustomDropdown";
 import { headerLinksStyle } from '../../assets/jss/material-kit-react/components/headerLinksStyle';
+import { Color } from '../CustomButtons/Button';
 
-type propTypes = {
+type Props = {
     isAuthenticated?: boolean,
-    handleLogout: () => void;
+    color: Color,
+    handleLogout: () => void,
 }
-const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
+export const HeaderLinks: React.FC<Props> = (props) => {
     const classes = headerLinksStyle();
     return (
         <List className={classes.list}>
             <ListItem className={classes.listItem}>
                 <CustomDropdown
+                    hoverColor={props.color}
                     noLiPadding
                     buttonText='Thánh Lễ'
+                    caret
                     buttonProps={{
                         className: classes.navLink,
                         color: 'transparent',
@@ -47,8 +48,10 @@ const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
             </ListItem>
             <ListItem className={classes.listItem}>
                 <CustomDropdown
+                    hoverColor={props.color}
                     noLiPadding
                     buttonText='Phụng vụ'
+                    caret
                     buttonProps={{
                         className: classes.navLink,
                         color: 'transparent',
@@ -73,8 +76,10 @@ const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
             </ListItem>
             <ListItem className={classes.listItem}>
                 <CustomDropdown
+                    hoverColor={props.color}
                     noLiPadding
                     buttonText='Liên lạc'
+                    caret
                     buttonProps={{
                         className: classes.navLink,
                         color: 'transparent',
@@ -124,5 +129,3 @@ const HeaderLinks: React.FC<propTypes> = (props: propTypes) => {
         </List>
     );
 }
-
-export default HeaderLinks;

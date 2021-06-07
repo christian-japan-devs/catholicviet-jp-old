@@ -23,6 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 
-#Css
-*.css
-*.css.map
+#css
+/src/assest/css/

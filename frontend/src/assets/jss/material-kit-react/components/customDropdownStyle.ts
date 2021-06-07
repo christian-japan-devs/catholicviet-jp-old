@@ -1,3 +1,5 @@
+import { makeStyles, Theme } from '@material-ui/core/styles';
+
 import {
   defaultFont,
   primaryColor,
@@ -14,7 +16,8 @@ import {
   roseBoxShadow,
 } from "../../material-kit-react.js";
 
-const customDropdownStyle = (theme) => ({
+
+export const useStyles = makeStyles((theme: Theme) => ({
   popperClose: {
     pointerEvents: "none",
   },
@@ -23,7 +26,7 @@ const customDropdownStyle = (theme) => ({
     border: "0",
     boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.26)",
     top: "100%",
-    zIndex: "1000",
+    zIndex: 1000,
     minWidth: "160px",
     padding: "5px 0",
     margin: "2px 0 0",
@@ -37,9 +40,9 @@ const customDropdownStyle = (theme) => ({
     padding: "0",
   },
   popperResponsive: {
-    zIndex: "1200",
+    zIndex: 1200,
     [theme.breakpoints.down("sm")]: {
-      zIndex: "1640",
+      zIndex: 1640,
       position: "static",
       float: "none",
       width: "auto",
@@ -60,7 +63,7 @@ const customDropdownStyle = (theme) => ({
     transition: "all 150ms linear",
     display: "block",
     clear: "both",
-    fontWeight: "400",
+    fontWeight: 400,
     height: "fit-content",
     color: "#333",
     whiteSpace: "nowrap",
@@ -164,6 +167,5 @@ const customDropdownStyle = (theme) => ({
   noLiPadding: {
     padding: "0",
   },
-});
+}));
 
-export default customDropdownStyle;

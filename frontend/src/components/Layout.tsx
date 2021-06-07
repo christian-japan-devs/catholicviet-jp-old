@@ -1,9 +1,9 @@
 import React from 'react';
 //Share components
-import PageTitle from './PageTitle';
-import Footer from './Footer';
-import Header from './Header/Header';
-import HeaderLinks from './Header/HeaderLinks';
+import { PageTitle } from './PageTitle';
+import { Footer } from './Footer';
+import { Header } from './Header/Header';
+import { HeaderLinks } from './Header/HeaderLinks';
 //App context
 import { AppContext } from '../contexts/AppContext';
 //Auth actions
@@ -28,7 +28,7 @@ const CustomerLayout: React.FC = ({ children }) => {
       />
       <Header
         brand="CatholicViet.Jp"
-        rightLinks={<HeaderLinks isAuthenticated={state.auth.isAuthenticated} handleLogout={handleLogout} />}
+        rightLinks={<HeaderLinks color="rose" isAuthenticated={state.auth.isAuthenticated} handleLogout={handleLogout} />}
         fixed={true}
         color="white"
         changeColorOnScroll={{

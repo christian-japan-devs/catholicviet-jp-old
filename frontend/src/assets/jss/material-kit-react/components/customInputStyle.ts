@@ -1,11 +1,13 @@
+import { makeStyles } from '@material-ui/core/styles';
+
 import {
   primaryColor,
   dangerColor,
   successColor,
   defaultFont,
-} from "assets/jss/material-kit-react.js";
+} from "../../material-kit-react.js";
 
-const customInputStyle = {
+export const useStyles = makeStyles(() => ({
   disabled: {
     "&:before": {
       borderColor: "transparent !important",
@@ -41,7 +43,7 @@ const customInputStyle = {
   labelRoot: {
     ...defaultFont,
     color: "#AAAAAA !important",
-    fontWeight: "400",
+    fontWeight: 400,
     fontSize: "14px",
     lineHeight: "1.42857",
     top: "10px",
@@ -70,7 +72,7 @@ const customInputStyle = {
     "&,&::placeholder": {
       fontSize: "14px",
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontWeight: "400",
+      fontWeight: 400,
       lineHeight: "1.42857",
       opacity: "1",
     },
@@ -84,6 +86,4 @@ const customInputStyle = {
       opacity: "1",
     },
   },
-};
-
-export default customInputStyle;
+}));

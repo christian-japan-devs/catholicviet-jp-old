@@ -7,8 +7,8 @@ import { List, ListItem } from '@material-ui/core';
 // @material-ui/icons
 
 // core components
-import GridContainer from "./Grid/GridContainer";
-import GridItem from "./Grid/GridItem";
+import { GridContainer } from "./Grid/GridContainer";
+import { GridItem } from "./Grid/GridItem";
 import { footerStyle } from '../assets/jss/material-kit-react/components/footerStyle';
 import Copyright from './Copyright';
 
@@ -16,7 +16,7 @@ type propTypes = {
   whiteFont?: boolean,
 }
 
-const Footer: React.FC<propTypes> = (props: propTypes) => {
+export const Footer: React.FC<propTypes> = (props: propTypes) => {
   const classes = footerStyle();
 
   React.useEffect(() => {
@@ -204,5 +204,3 @@ const Footer: React.FC<propTypes> = (props: propTypes) => {
     </footer>
   )
 }
-
-export default Footer;
