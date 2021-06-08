@@ -24,3 +24,5 @@ export const CardFooter: React.FC<Props> = (props) => {
     )
 
 }
+
+export default CardFooter;

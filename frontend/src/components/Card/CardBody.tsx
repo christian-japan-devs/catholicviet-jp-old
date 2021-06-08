@@ -10,7 +10,7 @@ type Props = {
     children: React.ReactNode,
 };
 
-export const Card: React.FC<Props> = (props) => {
+export const CardBody: React.FC<Props> = (props) => {
     const classes = cardBodyStyle();
     const { className, children, ...rest } = props;
     const cardBodyClasses = classNames({
@@ -23,3 +23,5 @@ export const Card: React.FC<Props> = (props) => {
         </div>
     );
 }
+
+export default CardBody;

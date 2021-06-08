@@ -44,5 +44,6 @@ export const CardHeader: React.FC<Props> = (props) => {
             {children}
         </div>
     )
-
 }
+
+export default CardHeader;

@@ -100,3 +100,5 @@ export const LoginForm: React.FC<Props> = (props) => {
     </div>
   );
 };
+
+export default LoginForm;

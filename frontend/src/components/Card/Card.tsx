@@ -12,7 +12,7 @@ type Props = {
     children: React.ReactNode,
 };
 
-const Card: React.FC<Props> = (props) => {
+export const Card: React.FC<Props> = (props) => {
     const classes = cardStyle();
     const { className, children, plain, carousel, ...rest } = props;
     const cardClassess = classNames({

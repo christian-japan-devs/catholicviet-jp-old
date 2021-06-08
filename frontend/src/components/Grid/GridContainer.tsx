@@ -25,3 +25,5 @@ export const GridContainer: React.FC<Props> = (props) => {
     </Grid>
   );
 }
+
+export default GridContainer;

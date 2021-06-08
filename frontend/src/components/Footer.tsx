@@ -204,3 +204,5 @@ export const Footer: React.FC<propTypes> = (props: propTypes) => {
     </footer>
   )
 }
+
+export default Footer;

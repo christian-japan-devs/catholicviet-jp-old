@@ -119,3 +119,5 @@ export const Header: React.FC<Props> = (props) => {
         </AppBar>
     )
 }
+
+export default Header;
