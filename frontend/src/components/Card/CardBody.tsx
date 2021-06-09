@@ -23,3 +23,5 @@ export const CardBody: React.FC<Props> = (props) => {
         </div>
     );
 }
+
+export default CardBody;

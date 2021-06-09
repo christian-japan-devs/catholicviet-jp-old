@@ -29,8 +29,6 @@ type Props = {
   caret?: boolean,
   left?: boolean,
   noLiPadding?: boolean,
-  // function that retuns the selected item
-  onClick?: (param: React.ReactNode) => void,
 };
 
 type colorHeader = 'warningHover' | 'successHover' | 'dangerHover' | 'infoHover' | 'primaryHover' | 'roseHover';
@@ -65,9 +63,6 @@ export const CustomDropdown: React.FC<Props> = (props) => {
   };
   const handleClose = (param: React.ReactNode) => {
     setAnchorEl(null);
-    if (props && props.onClick) {
-      props.onClick(param);
-    }
   };
   const handleCloseAway = (event: React.MouseEvent<Document, MouseEvent>) => {
     if (anchorEl && anchorEl.referenceNode === event.target) {
@@ -202,3 +197,4 @@ export const CustomDropdown: React.FC<Props> = (props) => {
   );
 }
 
+export default CustomDropdown;

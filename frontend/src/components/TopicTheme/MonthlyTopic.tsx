@@ -74,3 +74,5 @@ export const MonthlyTopic: React.FC<Props> = (props) => {
         </Paper>
     )
 }
+
+export default MonthlyTopic;

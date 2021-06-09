@@ -122,3 +122,5 @@ export const Header: React.FC<Props> = (props) => {
         </Container>
     )
 }
+
+export default Header;

@@ -129,3 +129,5 @@ export const HeaderLinks: React.FC<Props> = (props) => {
         </List>
     );
 }
+
+export default HeaderLinks;

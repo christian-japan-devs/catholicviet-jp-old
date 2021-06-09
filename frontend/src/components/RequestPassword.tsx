@@ -90,3 +90,5 @@ export const ResetPasswordRequestForm: React.FC<Props> = (props) => {
     </div>
   );
 };
+
+export default ResetPasswordRequestForm;
