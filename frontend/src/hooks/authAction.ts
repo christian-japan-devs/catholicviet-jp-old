@@ -1,5 +1,5 @@
 //Utilities
-import { remove, store } from '../utils/localStorage';
+import { read, remove, store } from '../utils/localStorage';
 import {
   VCJTOKEN
   , EXPIRATION_DATE
@@ -119,27 +119,29 @@ export const useAuth = () => {
           throw res;
         })
         .then((res) => {
-          const token = `token ${res.key}`;
+          const token = res.key;
           const expirationDate = String(
             new Date(new Date().getTime() + 3600 * 1000)
           );
           store(VCJTOKEN, token);
           store(EXPIRATION_DATE, expirationDate);
-          AuthSuccess(token, dispatch);
+          AuthSuccess('', dispatch);
           CheckAuthTimeout(3600, dispatch);
         })
         .catch((err) => {
-          const payload = {
-            helperText: 'Vui lòng kiểm tra lại thông tin đăng nhập.',
-            isErrorAt: 'somewhere',
-          };
-          AuthFail(payload, dispatch);
+          dispatch({
+            type: AUTH_FAILED,
+            payload: {
+              helperText: 'Đăng nhập không thành công, vui lòng kiểm tra lại thông tin đăng nhập.',
+              isErrorAt: 'somewhere',
+            },
+          });
         });
     } catch (error) {
       dispatch({
         type: AUTH_FAILED,
         payload: {
-          helperText: 'Vui lòng kiểm tra lại kết nối mạng',
+          helperText: 'Vui lòng kiểm tra lại kết nối mạng hoặc thử lại sau.',
           isErrorAt: 'somewhere',
         },
       });
@@ -186,7 +188,7 @@ export const useAuth = () => {
             store(VCJTOKEN, token);
             store(EXPIRATION_DATE, expirationDate);
             AuthSuccess(
-              'Đăng ký thành công, vui lòng xác nhận tài khoản bằng email.',
+              '/account/profile',
               dispatch
             );
             CheckAuthTimeout(3600, dispatch);
@@ -208,21 +210,20 @@ export const useAuth = () => {
           }
         })
         .catch((err) => {
-          const payload = {
-            helperText:
-              'Vui lòng thử với một tên đăng nhập khác hoặc địa chỉ email khác.',
-            isErrorAt: 'somewhere',
-          };
-          AuthFail(payload, dispatch);
+          dispatch({
+            type: AUTH_FAILED,
+            payload: {
+              helperText: 'Vui lòng kiểm tra lại kết nối mạng hoặc thử lại sau.',
+              isErrorAt: 'somewhere',
+            },
+          });
         });
     } catch (error) {
-      dispatch({
-        type: AUTH_FAILED,
-        payload: {
-          helperText: 'Vui lòng kiểm tra lại kết nối mạng',
-          isErrorAt: 'somewhere',
-        },
-      });
+      const payload = {
+        helperText: error,
+        isErrorAt: 'somewhere',
+      };
+      AuthFail(payload, dispatch);
     }
   }
 
@@ -258,10 +259,11 @@ export const useAuth = () => {
         })
         .then((res) => {
           if (res.status === 'ok') {
-            AuthSuccess(
-              'Vui lòng kiểm hộp thư đến trong email của bạn để tạo lại mật khẩu mới',
-              dispatch
-            );
+            const payload = {
+              helperText: 'Vui lòng kiểm hộp thư đến trong email của bạn để tạo lại mật khẩu mới',
+              isErrorAt: 'somewhere',
+            };
+            AuthFail(payload, dispatch);
           } else {
             if (res.message.email !== undefined) {
               const payload = {
@@ -273,17 +275,19 @@ export const useAuth = () => {
           }
         })
         .catch((err) => {
-          const payload = {
-            helperText: 'Địa chỉ email không đúng.',
-            isErrorAt: 'somewhere',
-          };
-          AuthFail(payload, dispatch);
+          dispatch({
+            type: AUTH_FAILED,
+            payload: {
+              helperText: 'Vui lòng kiểm tra lại kết nối mạng hoặc thử lại sau.',
+              isErrorAt: 'somewhere',
+            },
+          });
         });
     } catch (error) {
       dispatch({
         type: AUTH_FAILED,
         payload: {
-          helperText: 'Vui lòng kiểm tra lại kết nối mạng',
+          helperText: error,
           isErrorAt: 'somewhere',
         },
       });
@@ -304,20 +308,33 @@ export const useAuth = () => {
     data: AuthState
   ) {
     try {
-      var url_string = window.location.href;
-      var url = new URL(url_string);
-      var username = url.searchParams.get('username');
-      var secretCode = url.searchParams.get('code');
-
+      let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': ''
+      };
+      let body = {
+        'username': '',
+        'newPassword': '',
+        'oldPassword': '',
+        'code': ''
+      };
+      if (data.isAuthenticated) {
+        let token = `Token ${read(VCJTOKEN)}`;
+        headers.Authorization = token;
+      }
+      let url_string = window.location.href;
+      let url = new URL(url_string);
+      body.newPassword = data.password;
+      let secretCode = url.searchParams.get('code');
+      let username = url.searchParams.get('username');
       fetch(resetPassword, {
         method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify({
           username: username,
-          password: data.password,
-          code: secretCode,
+          oldPassword: data.oldPassword,
+          newPassword: data.password,
+          code: secretCode
         }),
       })
         .then((res) => {
@@ -334,7 +351,7 @@ export const useAuth = () => {
             );
             store(VCJTOKEN, token);
             store(EXPIRATION_DATE, expirationDate);
-            AuthSuccess(res.message, dispatch);
+            AuthSuccess('/account/profile', dispatch);
             CheckAuthTimeout(3600, dispatch);
           } else {
             if (res.message !== undefined) {
@@ -347,17 +364,19 @@ export const useAuth = () => {
           }
         })
         .catch((err) => {
-          const payload = {
-            helperText: 'Không thể đổi mật khẩu, xin vui lòng liên hệ!',
-            isErrorAt: 'somewhere',
-          };
-          AuthFail(payload, dispatch);
+          dispatch({
+            type: AUTH_FAILED,
+            payload: {
+              helperText: 'Đã có lỗi xảy ra vui lòng thử lại sau.',
+              isErrorAt: 'somewhere',
+            },
+          });
         });
     } catch (error) {
       dispatch({
         type: AUTH_FAILED,
         payload: {
-          helperText: 'Vui lòng kiểm tra lại kết nối mạng',
+          helperText: error,
           isErrorAt: 'somewhere',
         },
       });

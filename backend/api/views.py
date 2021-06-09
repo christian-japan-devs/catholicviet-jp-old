@@ -9,13 +9,15 @@ import sys
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .serializers import (
     NewFeedSerializer, ReMassSerializer, RegistrationSerializer,
-    DailyGospelSerializer, ProvinceSerializer, AccountSerializer
+    DailyGospelSerializer, ProvinceSerializer, AccountSerializer,
+    MonthlyTopicBrefSerializer, MonthlyTopicSerializer
 )
 from .producer import publish
 from .permissions import IsOwner
@@ -23,7 +25,7 @@ from .permissions import IsOwner
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
-from adminapp.models import NewFeed, Mass, DailyGospel, MassTime, Registration, Province
+from adminapp.models import MonthlyTopic, NewFeed, Mass, DailyGospel, MassTime, Registration, Province
 from core.constants import *
 from adminapp.common_messages import *
 
@@ -33,6 +35,52 @@ from adminapp.common_messages import *
 class UserIDView(APIView):
     def get(self, request, *args, **kwargs):
         return Response({'userID': request.user.id}, status=HTTP_200_OK)
+
+# API Discription
+# Name: MonthlyTopicViewSet
+# Url:
+# Detail:
+# Requirements:
+# Output:
+
+
+class MonthlyTopicViewSet(viewsets.ViewSet):
+    permission_classes = (AllowAny,)
+
+    def topic(self, request):  # /api/monthly-topic
+        monthlyTopic = MonthlyTopic.objects.all().order_by(
+            '-mt_date_edited')[0:1]  # Get the newest post
+        serializer = MonthlyTopicBrefSerializer(monthlyTopic, many=True)
+        return Response(serializer.data)
+
+    # /api/monthly-topic/<str:month> for more detail.
+    def detail(self, request, month=None):
+        try:
+            monthlyTopic = NewFeed.objects.get(mt_month=month, many=True)
+        except:
+            print("End retrieve newfeed error: ", sys.exc_info()[0])
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = MonthlyTopicSerializer(monthlyTopic)
+        return Response(serializer.data)
+    # /api/monthly-topic/<str:month> update like, share ...
+
+    def update(self, request, month=None):
+        try:
+            req_auth = request.auth
+            monthlyTopic = NewFeed.objects.get(mt_month=month)
+            if(req_auth):
+                req_user = request.user
+                req_type = request.data.get('type', '')
+                if(req_type):
+                    if(req_type == 'like'):
+                        monthlyTopic.mt_post_like += 1
+                        monthlyTopic.save()
+            serializer = MonthlyTopicSerializer(monthlyTopic)
+            return Response(serializer.data)
+        except:
+            print("End retrieve newfeed error: ", sys.exc_info()[0])
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # API Discription
 # Name: getNewFeed
@@ -280,13 +328,14 @@ class UserCreate(viewsets.ViewSet):
         if serializer.is_valid():
             user = serializer.save()
             token, created = Token.objects.get_or_create(user=user)
-            res = {'status': 'ok',
-                   'data': {
-                       'token': token.key,
-                       'user_id': user.pk,
-                       'email': user.email
-                   }
-                   }
+            res = {
+                'status': 'ok',
+                'data': {
+                    'token': token.key,
+                    'user_id': user.pk,
+                    'email': user.email
+                }
+            }
             return Response(res, status=status.HTTP_202_ACCEPTED)
         else:
             res = {
@@ -295,7 +344,7 @@ class UserCreate(viewsets.ViewSet):
             }
             return Response(res, status=status.HTTP_226_IM_USED)
 
-    def requestPassword(self, request, rid=None):
+    def requestPassword(self, request):
         res = {
             'status': 'error',
             'data': {
@@ -314,19 +363,16 @@ class UserCreate(viewsets.ViewSet):
                     res['status'] = 'ok'
                     res['message'] = 'Vui lòng kiểm tra hộp thư đến trong email của bạn để đổi mật khẩu.'
                     return Response(res, status=status.HTTP_200_OK)
-                else:
-                    raise Exception('email', 'Email sending error')
-            else:
-                res['status'] = ERROR
-                res['message'] = 'Email này chưa được đăng ký, xin vui lòng kiểm tra lại'
-                return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            res['status'] = ERROR
+            res['message'] = 'Email này chưa được đăng ký, xin vui lòng kiểm tra lại'
+            return Response(res, status=status.HTTP_200_OK)
         except:
             print("End request reset password error: ", sys.exc_info()[0])
             res['status'] = ERROR
             res['message'] = SYSTEM_QUERY_0001
-            return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(res, status=status.HTTP_200_OK)
 
-    def resetPassword(self, request, pk=None):  # /api/province/<str:id>
+    def resetPassword(self, request):  #
         res = {
             'status': 'error',
             'data': {
@@ -337,31 +383,51 @@ class UserCreate(viewsets.ViewSet):
             'message': ''
         }
         try:
-            req_usename = request.data.get('username', '')
-            req_pass = request.data.get('password', '')
-            re_code = request.data.get('code', '')
-            user = User.objects.get(username=req_usename)
-            if user:
-                userprofile = user.userprofile
-                if(userprofile.profile_code == re_code):
-                    user.set_password(req_pass)
-                    user.save()
-                    token, created = Token.objects.get_or_create(user=user)
+            # If authenticated user request reset password.
+            if(request.auth):
+                auth_user = request.user
+                old_password = request.data.get('oldPassword', '')
+                new_password = request.data.get('newPassword', '')
+                if(auth_user.check_password(old_password)):
+                    auth_user.set_password(new_password)
+                    auth_user.save()
+                    token, created = Token.objects.get_or_create(
+                        user=auth_user)
                     res['status'] = 'ok'
                     res['data']['token'] = token.key
-                    res['data']['username'] = req_usename
-                    res['data']['email'] = user.email
                     res['message'] = 'Đổi mật khẩu thành công'
                     return Response(res, status=status.HTTP_200_OK)
                 else:
-                    raise Exception('password', 'Mã bảo mật không đúng')
+                    res['status'] = ERROR
+                    res['message'] = 'Mật khẩu cũ không đúng.'
+                    return Response(res, status=status.HTTP_200_OK)
             else:
-                raise Exception('password', 'Tài khoản không đúng')
+                # Else Unauthenticated user request for reseting password from email.
+                req_usename = request.data.get('username', '')
+                req_pass = request.data.get('newPassword', '')
+                re_code = request.data.get('code', '')
+                user = User.objects.get(username=req_usename)
+                if user:
+                    userprofile = user.userprofile
+                    if(userprofile.profile_code == re_code):
+                        user.set_password(req_pass)
+                        user.save()
+                        token, created = Token.objects.get_or_create(user=user)
+                        res['status'] = 'ok'
+                        res['data']['token'] = token.key
+                        res['data']['username'] = req_usename
+                        res['data']['email'] = user.email
+                        res['message'] = 'Đổi mật khẩu thành công'
+                        return Response(res, status=status.HTTP_200_OK)
+                    else:
+                        raise Exception('password', 'Mã bảo mật không đúng')
+                else:
+                    raise Exception('password', 'Tài khoản không đúng')
         except:
             print("End request reset password error: ", sys.exc_info()[0])
             res['status'] = ERROR
             res['message'] = sys.exc_info()
-            return Response(res, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(res, status=status.HTTP_200_OK)
 
 # API Discription
 # Name: UserCreate

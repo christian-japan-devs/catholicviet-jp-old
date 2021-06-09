@@ -14,11 +14,7 @@ interface Props {
   contentItem?: ContentItem | null;
 }
 
-const PageTitle: React.FC<Props> = ({
-  title,
-  description,
-  contentItem,
-}: Props) => {
+export const PageTitle: React.FC<Props> = ({ title, description, contentItem }) => {
   return (
     <Helmet>
       <title itemProp="name">{title}</title>
@@ -68,3 +64,4 @@ const PageTitle: React.FC<Props> = ({
     </Helmet>
   );
 };
+
