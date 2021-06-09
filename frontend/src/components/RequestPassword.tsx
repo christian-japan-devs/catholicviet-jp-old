@@ -11,15 +11,14 @@ import Typography from '@material-ui/core/Typography';
 import { AuthStyles } from './Styles';
 import { AuthState } from '../hooks/reducer.auth';
 
-interface ResetProps {
+interface Props {
   state: AuthState;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleOnClear: () => void;
 }
 
-export const ResetPasswordRequestForm: React.FC<ResetProps> = (
-  props: ResetProps
-) => {
+export const ResetPasswordRequestForm: React.FC<Props> = (props) => {
   const classes = AuthStyles();
   return (
     <div className={classes.paper}>
@@ -27,18 +26,17 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
         <AccountCircleIcon fontSize="large" />
       </Avatar>
       <Typography component="h1" color="primary" variant="h4">
-        Công Giáo tại Nhật
-      </Typography>
-      <Typography component="h1" variant="h5">
         Quên mật khẩu
       </Typography>
+      <br />
       {props.state.isErrorAt === 'somewhere' && (
-        <Typography variant="h6" color="secondary">
+        <Typography variant="body2" color="secondary">
           {props.state.helperText}
         </Typography>
       )}
+      <br />
       <form onSubmit={props.handleOnSubmit} className={classes.form} noValidate>
-        <Grid container spacing={2}>
+        <Grid id="top-row" container spacing={2}>
           <Grid item xs={12}>
             <TextField
               autoComplete="email"
@@ -51,14 +49,14 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
               label="Địa chỉ email"
               onChange={props.handleChange}
               helperText={
-                props.state.isErrorAt === 'email' ? props.state.helperText : ''
+                props.state.isErrorAt === 'email' ? props.state.helperText : 'Nhập địa chỉ email đã đăng ký để tạo lại mật khẩu'
               }
               error={props.state.isErrorAt === 'email'}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
+        <Grid id="bottom-row" container spacing={2}>
+          <Grid item xs={12} sm={6}>
             <Button
               type="submit"
               variant="contained"
@@ -67,20 +65,24 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
               disabled={props.state.loading}
               className={classes.submit}
             >
-              Gửi yêu cầu
+              {
+                props.state.isErrorAt === 'email' ? 'Gửi lại' : 'Gửi yêu cầu'
+              }
               {props.state.loading && (
                 <CircularProgress size={30} color="secondary" />
               )}
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Button
               type="reset"
               variant="contained"
               fullWidth
               color="secondary"
+              onClick={props.handleOnClear}
+              className={classes.submit}
             >
-              Huỷ
+              Xoá
             </Button>
           </Grid>
         </Grid>
@@ -88,3 +90,5 @@ export const ResetPasswordRequestForm: React.FC<ResetProps> = (
     </div>
   );
 };
+
+export default ResetPasswordRequestForm;

@@ -1,31 +1,30 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { Box } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-// Shared components
-import Copyright from '../components/Copyright';
-import { LoginForm } from '../components/Login';
-import { SignupForm } from '../components/Signup';
-import { ResetPasswordRequestForm } from '../components/RequestPassword';
-import { ResetPasswordForm } from '../components/ResetPassword';
+// Shared componentss
+import { LoginForm } from '../../components/Login';
+import { SignupForm } from '../../components/Signup';
+import { ResetPasswordRequestForm } from '../../components/RequestPassword';
+import { ResetPasswordForm } from '../../components/ResetPassword';
+import Layout from '../../components/Layout';
 //Utils
 import {
   ValidateEmail
   , ValidatePassword
-} from '../utils/formValidation';
+} from '../../utils/formValidation';
 import {
   AUTH_SET_UNAME
   , AUTH_SET_UPASS
+  , AUTH_SET_OLDPASS
   , AUTH_SET_REUPASS
   , AUTH_SET_EMAIL
   , AUTH_SET_ERROR_AT
-  , AUTH_IS_AUTH
-} from '../utils/actionTypes';
+} from '../../utils/actionTypes';
 //App context
-import { AppContext } from '../contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 //Auth actions
-import { useAuth } from './authAction';
+import { useAuth } from '../../hooks/authAction';
 
 export type Props = {
   hiden: boolean;
@@ -86,20 +85,23 @@ export const Login = () => {
   };
 
   if (state.auth.isAuthenticated) {
-    return <Redirect to="/" />;
+    if (state.auth.redirect) {  // return to profile page
+      return <Redirect to={state.auth.redirect} />
+    } else {
+      return <Redirect to="/" />;
+    }
   } else {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <LoginForm
-          state={state.auth}
-          handleChange={handleChange}
-          handleOnSubmit={handleOnSubmit}
-        />
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+      <Layout>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <LoginForm
+            state={state.auth}
+            handleChange={handleChange}
+            handleOnSubmit={handleOnSubmit}
+          />
+        </Container>
+      </Layout>
     );
   }
 };
@@ -208,20 +210,23 @@ export const Signup = () => {
 
   //Load register form
   if (state.auth.isAuthenticated) {
-    return <Redirect to="/" />;
+    if (state.auth.redirect) {  // return to profile page
+      return <Redirect to={state.auth.redirect} />
+    } else {
+      return <Redirect to="/" />;
+    }
   } else {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <SignupForm
-          state={state.auth}
-          handleChange={handleChange}
-          handleOnSubmit={handleOnSubmit}
-        />
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+      <Layout>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <SignupForm
+            state={state.auth}
+            handleChange={handleChange}
+            handleOnSubmit={handleOnSubmit}
+          />
+        </Container>
+      </Layout>
     );
   }
 };
@@ -259,13 +264,6 @@ export const ResetPasswordRequest = () => {
   //Handle form input change
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
-      case 'username': {
-        dispatch({
-          type: AUTH_SET_UNAME,
-          payload: event.target.value,
-        });
-        return;
-      }
       case 'email': {
         dispatch({
           type: AUTH_SET_EMAIL,
@@ -276,22 +274,29 @@ export const ResetPasswordRequest = () => {
     }
   };
 
+  const handleOnClear = () => {
+    dispatch({
+      type: AUTH_SET_EMAIL,
+      payload: "",
+    });
+  }
+
   //Load register form
   if (state.auth.isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/account/reset-password" />;
   } else {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <ResetPasswordRequestForm
-          state={state.auth}
-          handleChange={handleChange}
-          handleOnSubmit={handleOnSubmit}
-        />
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+      <Layout>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <ResetPasswordRequestForm
+            state={state.auth}
+            handleChange={handleChange}
+            handleOnSubmit={handleOnSubmit}
+            handleOnClear={handleOnClear}
+          />
+        </Container>
+      </Layout>
     );
   }
 };
@@ -313,6 +318,17 @@ export const ResetPassword = () => {
   //Handle Submit change
   const handleOnSubmit = async (evt: React.FormEvent) => {
     evt.preventDefault();
+    const isoldPassValid = ValidatePassword(state.auth.password);
+    if (!isoldPassValid.check) {
+      dispatch({
+        type: AUTH_SET_ERROR_AT,
+        payload: {
+          isErrorAt: 'oldPassword',
+          helperText: isoldPassValid.helperText,
+        },
+      });
+      return;
+    }
     const isPassValid = ValidatePassword(state.auth.password);
     if (!isPassValid.check) {
       dispatch({
@@ -354,25 +370,38 @@ export const ResetPassword = () => {
         });
         return;
       }
+      case 'oldPassword': {
+        dispatch({
+          type: AUTH_SET_OLDPASS,
+          payload: event.target.value,
+        })
+      }
     }
   };
 
+  const handleOnClear = () => {
+    dispatch({
+      type: AUTH_SET_OLDPASS,
+      payload: "",
+    });
+  }
+
   //Load register form
-  if (state.auth.isAuthenticated) {
-    return <Redirect to="/" />;
+  if (state.auth.redirect) {
+    return <Redirect to={state.auth.redirect} />;
   } else {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <ResetPasswordForm
-          state={state.auth}
-          handleChange={handleChange}
-          handleOnSubmit={handleOnSubmit}
-        />
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+      <Layout>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <ResetPasswordForm
+            state={state.auth}
+            handleChange={handleChange}
+            handleOnSubmit={handleOnSubmit}
+            handleOnClear={handleOnClear}
+          />
+        </Container>
+      </Layout>
     );
   }
 };

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const AuthStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(16),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -20,6 +20,12 @@ export const AuthStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  link: {
+    textDecoration: 'none'
+    , color: 'inherit'
+    , backgroundColor: 'transparent'
+  }
+  ,
 }));
 
 export const HeaderStyles = makeStyles((theme) => ({

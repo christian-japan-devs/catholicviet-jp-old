@@ -13,24 +13,21 @@ import Typography from '@material-ui/core/Typography';
 import { AuthStyles } from './Styles';
 import { AuthState } from '../hooks/reducer.auth';
 
-interface SignupProps {
+interface Props {
   state: AuthState;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export const SignupForm: React.FC<SignupProps> = (props: SignupProps) => {
+export const SignupForm: React.FC<Props> = (props) => {
   const classes = AuthStyles();
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
         <AccountCircleIcon fontSize="large" />
       </Avatar>
-      <Typography component="h1" color="primary" variant="h4">
-        Công Giáo tại Nhật
-      </Typography>
-      <Typography component="h1" variant="h5">
-        Đăng ký
+      <Typography component="h1" variant="h5" color="primary">
+        Đăng ký tài khoản
       </Typography>
       {props.state.isErrorAt === 'somewhere' && (
         <Typography variant="h6" color="secondary">

@@ -1,6 +1,7 @@
 import {
   AUTH_SET_UNAME,
   AUTH_SET_UPASS,
+  AUTH_SET_OLDPASS,
   AUTH_SET_REUPASS,
   AUTH_SET_EMAIL,
   AUTH_IS_AUTH,
@@ -14,6 +15,7 @@ import { RegisterAction } from './reducer.app';
 export type AuthAction =
   | { type: typeof AUTH_SET_UNAME; payload: string }
   | { type: typeof AUTH_SET_UPASS; payload: string }
+  | { type: typeof AUTH_SET_OLDPASS; payload: string }
   | { type: typeof AUTH_SET_REUPASS; payload: string }
   | { type: typeof AUTH_SET_EMAIL; payload: string }
   | { type: typeof AUTH_IS_AUTH; payload: boolean }
@@ -31,6 +33,7 @@ export type AuthAction =
 export type AuthState = {
   username: string;
   password: string;
+  oldPassword: string;
   holyname?: string;
   fullname?: string;
   email: string;
@@ -41,17 +44,20 @@ export type AuthState = {
   isErrorAt?: string;
   loading?: boolean;
   remember?: boolean;
+  redirect: string;
 };
 
 export const authInitialState: AuthState = {
   username: '',
   password: '',
-  email: '',
+  oldPassword: '',
   rePassword: '',
+  email: '',
   isAuthenticated: false,
   isErrorAt: '',
   loading: false,
   remember: false,
+  redirect: ''
 };
 
 export const authReducer = (
@@ -71,6 +77,12 @@ export const authReducer = (
         password: action.payload,
         isErrorAt: '',
       };
+    case AUTH_SET_OLDPASS:
+      return {
+        ...state,
+        oldPassword: action.payload,
+        isErrorAt: '',
+      }
     case AUTH_SET_REUPASS:
       return {
         ...state,
@@ -84,35 +96,35 @@ export const authReducer = (
         isErrorAt: '',
       };
     case AUTH_IS_AUTH:
-      console.log(AUTH_IS_AUTH);
       return {
         ...state,
         isAuthenticated: action.payload,
+        redirect: '/account/profile',
         isErrorAt: '',
       };
     case AUTH_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
+        redirect: action.payload,
         isErrorAt: '',
       };
     case AUTH_FAILED:
       return {
         ...state,
         helperText: action.payload.helperText,
-        isAuthenticated: false,
         isErrorAt: action.payload.isErrorAt,
       };
     case AUTH_LOGOUT:
       return {
         ...state,
+        redirect: '/',
         isAuthenticated: false,
       };
     case AUTH_SET_ERROR_AT:
       return {
         ...state,
         helperText: action.payload.helperText,
-        isAuthenticated: false,
         isErrorAt: action.payload.isErrorAt,
       };
     default:

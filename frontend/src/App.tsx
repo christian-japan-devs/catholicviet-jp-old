@@ -7,30 +7,27 @@ import {
   Signup,
   ResetPasswordRequest,
   ResetPassword,
-} from './hooks/authControl';
-import Layout from './components/Layout';
-import NewFeed from './components/NewFeed'
+} from './views/AuthPage/authControl';
+import HomePage from './views/HomePage/HomePage';
 import { AppProvider } from './contexts/AppContext';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <AppProvider>
-        <Layout>
-          <BrowserRouter>
-            <Route exact path="/" component={NewFeed} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route
-              path="/account/request-password"
-              component={ResetPasswordRequest}
-            />
-            <Route
-              path="/account/resset-password/"
-              component={ResetPassword}
-            />
-          </BrowserRouter>
-        </Layout>
+        <BrowserRouter>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route
+            path="/account/request-password"
+            component={ResetPasswordRequest}
+          />
+          <Route
+            path="/account/reset-password/"
+            component={ResetPassword}
+          />
+        </BrowserRouter>
       </AppProvider>
     </div>
   );
