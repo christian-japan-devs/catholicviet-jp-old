@@ -12,7 +12,3 @@ def create_auth_token(sender, instance, created, **kwargs):
         UserProfile.objects.create(profile_user=instance)
         Token.objects.create(user=instance)
         sendConfirmEmailToUser(instance)
-
-# @receiver(post_save, sender = User)
-# def save_profile(sender, instance, **kwargs):
-#    instance.profile.save()
