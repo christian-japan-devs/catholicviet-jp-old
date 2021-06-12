@@ -6,7 +6,7 @@ import classNames from "classnames";
 import useStyles from '../../assets/jss/material-kit-react/components/parallaxStyle';
 
 type Props = {
-  className: string | '',
+  className?: string,
   filter?: boolean,
   children?: React.ReactNode,
   style?: {},
@@ -45,7 +45,7 @@ export const Parallax: React.FC<Props> = (props) => {
     [classes.parallax]: true,
     [classes.filter]: filter,
     [classes.small]: small,
-    [className]: className,
+    [(className !== undefined ? className : "")]: className,
   });
   return (
     <div

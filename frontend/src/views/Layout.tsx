@@ -28,7 +28,7 @@ const Layout: React.FC = ({ children }) => {
         title='CatholicVietJp'
       />
       <Header
-        brand="CatholicViet.Jp"
+        brand="Công Giáo Tại Nhật"
         rightLinks={<HeaderLinks color="rose" isAuthenticated={state.auth.isAuthenticated} handleLogout={handleLogout} />}
         fixed={true}
         color="white"

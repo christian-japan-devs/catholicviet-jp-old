@@ -1,7 +1,8 @@
 /**
  * const domain = 'https://catholicviet.jp:8000';*/
 //export const apiDomain = process.env.API_DOMAIN; 
-export const apiDomain = 'http://admin.vietcatholicjp.com';
+//export const apiDomain = 'http://192.168.2.149:8000';
+export const apiDomain = 'http://admin.vietcatholicjp.com'
 
 const apiURL = '/api'; //custom-api
 export const endpoint = `${apiDomain}${apiURL}`;
@@ -20,14 +21,14 @@ export const monthlyTopicEnd = `${endpoint}/monthly-topic`;
 export const monthlyTopicDetailEnd = (month: string) => `${endpoint}/monthly-topic/${month}`;
 
 //New Feed endpoint Api
-export const newfeedsListURL = `${endpoint}/newfeed/`;
-export const newfeedDetailURL = (id: number) => `${endpoint}/newfeed/${id}/`;
+export const newfeedsURL = `${endpoint}/newfeed`;
+export const newfeedDetailURL = (id: number) => `${endpoint}/newfeed/${id}`;
 export const updateNewFeedURL = (id: number, update_type: string) =>
   `${endpoint}/newfeed/${id}/update/?type=${update_type}`;
 
 //Mass registration endpoint Api
 export const myregisterURL = (churchId: number) =>
   `${endpoint}/massregister/?churchId=${churchId}`;
-export const massregisterCreateURL = `${endpoint}/massregister/create/`;
+export const massregisterCreateURL = `${endpoint}/massregister/create`;
 export const registerUpdateURL = (id: number) =>
-  `${endpoint}/massregister/${id}/update/`;
+  `${endpoint}/massregister/${id}/update`;

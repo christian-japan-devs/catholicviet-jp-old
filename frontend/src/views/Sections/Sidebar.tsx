@@ -1,13 +1,14 @@
 import React from 'react';
 // Mateiral-ui/core
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
+import { NewFeed } from '../../components/NewFeed';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     markdown: {
         ...theme.typography.body2,
         padding: theme.spacing(3, 0),
@@ -24,21 +25,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type post = {
-    title: string,
-    auth?: string,
-    date: string,
-    description: string,
-    image?: string,
-    imageTitle?: string,
-    detail?: string,
-}
-type propTypes = {
-    posts: post[],
+type Props = {
+    posts: NewFeed[],
     title: string,
 }
 
-const Sidebar: React.FC<propTypes> = (props: propTypes) => {
+const Sidebar: React.FC<Props> = (props) => {
     const classes = useStyles();
     const { posts, title } = props;
     return (
@@ -48,7 +40,7 @@ const Sidebar: React.FC<propTypes> = (props: propTypes) => {
             </Typography>
             <Divider />
             {posts.map((post) => (
-                <CardActionArea component='a' style={{ textDecoration: 'none' }} href={post.detail}>
+                <CardActionArea component='a' style={{ textDecoration: 'none' }} href={post.detailUrl}>
                     <Card className={classes.card}>
                         <div className={classes.cardDetails}>
                             <CardContent>
@@ -62,7 +54,7 @@ const Sidebar: React.FC<propTypes> = (props: propTypes) => {
                                     {post.date}
                                 </Typography>
                                 <Typography variant='subtitle1' paragraph>
-                                    {post.description}
+                                    <div dangerouslySetInnerHTML={post.description}></div>
                                 </Typography>
                                 <Typography variant='subtitle1' color='textSecondary'>
                                     {'Đọc tiếp'}
