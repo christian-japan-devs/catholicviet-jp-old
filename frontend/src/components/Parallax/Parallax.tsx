@@ -1,18 +1,21 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-// nodejs library to set properties for components
-import PropTypes from "prop-types";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
 
 // core components
-import styles from '../../assets/jss/material-kit-react/components/parallaxStyle.js'
+import useStyles from '../../assets/jss/material-kit-react/components/parallaxStyle';
 
-const useStyles = makeStyles(styles);
+type Props = {
+  className: string | '',
+  filter?: boolean,
+  children?: React.ReactNode,
+  style?: {},
+  image: string,
+  small: boolean,
+};
 
 
-export default function Parallax(props) {
+export const Parallax: React.FC<Props> = (props) => {
   let windowScrollTop;
   if (window.innerWidth >= 768) {
     windowScrollTop = window.pageYOffset / 3;
@@ -42,7 +45,7 @@ export default function Parallax(props) {
     [classes.parallax]: true,
     [classes.filter]: filter,
     [classes.small]: small,
-    [className]: className !== undefined,
+    [className]: className,
   });
   return (
     <div
@@ -58,11 +61,4 @@ export default function Parallax(props) {
   );
 }
 
-Parallax.propTypes = {
-  className: PropTypes.string,
-  filter: PropTypes.bool,
-  children: PropTypes.node,
-  style: PropTypes.string,
-  image: PropTypes.string,
-  small: PropTypes.bool,
-};
+export default Parallax;

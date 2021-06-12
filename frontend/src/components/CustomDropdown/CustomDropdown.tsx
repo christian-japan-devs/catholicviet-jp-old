@@ -18,7 +18,7 @@ import { useStyles } from '../../assets/jss/material-kit-react/components/custom
 import { Color } from '../CustomButtons/Button';
 
 type Props = {
-  hoverColor: Color
+  hoverColor?: Color
   buttonText?: React.ReactNode,
   buttonIcon?: object | string,
   dropdownList?: React.ReactNode[],
@@ -34,7 +34,7 @@ type Props = {
 type colorHeader = 'warningHover' | 'successHover' | 'dangerHover' | 'infoHover' | 'primaryHover' | 'roseHover';
 
 
-function convertColor(color: Color): colorHeader {
+function convertColor(color: Color | undefined): colorHeader {
   switch (color) {
     case 'warning':
       return 'warningHover';

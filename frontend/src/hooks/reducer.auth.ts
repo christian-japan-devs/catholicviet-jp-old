@@ -110,6 +110,7 @@ export const authReducer = (
         loading: false,
       };
     case AUTH_SUCCESS:
+      console.log(action.payload.redirect)
       return {
         ...state,
         isAuthenticated: action.payload.isAuthenticated,

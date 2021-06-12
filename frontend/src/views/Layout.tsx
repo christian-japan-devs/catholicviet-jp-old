@@ -15,9 +15,9 @@ const Layout: React.FC = ({ children }) => {
   const { Logout, AuthCheckState } = useAuth();
 
   React.useEffect(() => {
-    AuthCheckState(dispatch);
+    AuthCheckState(dispatch, state.auth);
     //TODO: Get init color setting for appbar...
-  });
+  }, []);
 
   const handleLogout = (() => {
     Logout(dispatch);

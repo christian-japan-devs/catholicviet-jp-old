@@ -12,7 +12,7 @@ import Layout from '../Layout';
 import Paralax from '../../components/Parallax/Parallax';
 import { GridContainer } from '../../components/Grid/GridContainer';
 import { GridItem } from '../../components/Grid/GridItem';
-import CustomTabs from '../../components/CustomTabs/CustomTabs.js';
+import CustomTabs from '../../components/CustomTabs/CustomTabs';
 import { useStyles } from '../../assets/jss/material-kit-react/views/profilePage';
 //Tabs
 import { PersonalInforTab } from './PersonalInforTab';
@@ -37,15 +37,11 @@ export const Profile = () => {
         classes.imgFluid,
     )
     const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
-    React.useEffect(() => {
-        AuthCheckState(dispatch);
-        //TODO: Get init color setting for appbar...
-    }, []);
-    console.log(state.auth.isAuthenticated);
     if (state.auth.isAuthenticated) {
         return (
             <Layout>
                 <Paralax
+                    className={''}
                     small
                     filter
                     image={'/static/media/default/profile-bg.jpg'}

@@ -9,6 +9,8 @@ import {
   ResetPassword,
   AccountConfirm,
 } from './views/AuthPage/authControl';
+
+import Layout from './views/Layout';
 //Pages
 import HomePage from './views/HomePage/HomePage';
 import { Profile } from './views/ProfilePage/Profile';

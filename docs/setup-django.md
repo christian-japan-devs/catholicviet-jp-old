@@ -80,7 +80,6 @@ SECRET_KEY=<django secret key>
 DB_NAME=users
 DB_USER=django
 DB_PASSWORD=
-DB_HOSTNAME=132.226.14.181
 DB_PORT=
 ALLOWED_HOSTS='localhost catholicviet.jp'
 EOF

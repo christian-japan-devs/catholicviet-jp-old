@@ -482,7 +482,7 @@ export const useAuth = () => {
    * 1) Get the token
    * 2)
    */
-  async function AuthCheckState(dispatch: React.Dispatch<AuthAction>) {
+  async function AuthCheckState(dispatch: React.Dispatch<AuthAction>, state: AuthState) {
     const token = read(VCJTOKEN);
     if (token === undefined) {
       remove(VCJTOKEN);
@@ -494,7 +494,7 @@ export const useAuth = () => {
         if (expirationDate <= new Date()) {
           Logout(dispatch);
         } else {
-          AuthSuccess({ isAuthenticated: true, redirect: '', isConfirmed: false }, dispatch);
+          AuthSuccess({ isAuthenticated: true, redirect: state.redirect, isConfirmed: false }, dispatch);
           CheckAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000,
             dispatch

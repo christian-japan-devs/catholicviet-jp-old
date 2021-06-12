@@ -45,3 +45,4 @@ export const PageTitle: React.FC<Props> = ({ title, description, contentItem }) 
   );
 };
 
+export default PageTitle;

@@ -85,7 +85,6 @@ export const Login = () => {
       }
     }
   };
-  console.log(state.auth.redirect);
   if (state.auth.isAuthenticated) {
     if (state.auth.redirect) {  // return to profile page
       return <Redirect to={state.auth.redirect} />
@@ -418,8 +417,6 @@ export const ResetPassword = () => {
       payload: "",
     });
   }
-  console.log("resetpass");
-  console.log(state.auth.redirect);
   //Load register form
   if (state.auth.redirect) {
     return <Redirect to={state.auth.redirect} />;

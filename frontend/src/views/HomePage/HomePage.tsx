@@ -87,7 +87,7 @@ const HomePage: React.FC = () => {
                 })
             }
         })
-    });
+    }, []);
     return (
         <Layout>
             <CssBaseline />

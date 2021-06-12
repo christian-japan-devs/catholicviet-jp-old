@@ -51,7 +51,7 @@ const MainSection: React.FC<propTypes> = (props: propTypes) => {
             <Divider />
             {
                 posts.map((post) => (
-                    <CardActionArea component='a' style={{ textDecoration: 'none' }} href={post.detail}>
+                    <CardActionArea key={post.title} component='a' style={{ textDecoration: 'none' }} href={post.detail}>
                         <Card className={classes.card}>
                             <div className={classes.cardDetails}>
                                 <CardContent>

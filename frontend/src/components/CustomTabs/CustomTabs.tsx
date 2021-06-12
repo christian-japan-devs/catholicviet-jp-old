@@ -1,11 +1,7 @@
 import React from 'react';
 // nodejs library that concatenates classes
 import classNames from 'classnames';
-// nodejs library to set properties for components
-import PropTypes from 'prop-types';
-
-// material-ui components
-import { makeStyles } from '@material-ui/core/styles';
+//@Material-ui/core
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Icon from '@material-ui/core/Icon';
@@ -14,14 +10,26 @@ import { Card } from '../Card/Card';
 import { CardBody } from '../Card/CardBody';
 import { CardHeader } from '../Card/CardHeader';
 
-import styles from '../../assets/jss/material-kit-react/components/customTabsStyle.js';
+import useStyles from '../../assets/jss/material-kit-react/components/customTabsStyle';
+import { Color } from '../CustomButtons/Button';
 
-const useStyles = makeStyles(styles);
+type Shape = {
+  tabName: string,
+  tabIcon?: React.ReactNode,
+  tabContent: React.ReactNode,
+}
+type Props = {
+  headerColor?: Color,
+  title?: string,
+  tabs?: Shape[],
+  rtlActive?: boolean,
+  plainTabs?: boolean,
+};
 
-export default function CustomTabs(props) {
+export const CustomTabs: React.FC<Props> = (props) => {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, value) => {
+  const handleChange = (event: React.ChangeEvent<{}>, value: any) => {
     setValue(value);
   };
   const classes = useStyles();
@@ -42,23 +50,21 @@ export default function CustomTabs(props) {
             indicator: classes.displayNone,
           }}
         >
-          {tabs.map((prop, key) => {
+          {tabs && tabs.map((prop, key) => {
             var icon = {};
             if (prop.tabIcon) {
               icon = {
                 icon:
                   typeof prop.tabIcon === 'string' ? (
                     <Icon>{prop.tabIcon}</Icon>
-                  ) : (
-                    <prop.tabIcon />
-                  ),
+                  ) : ''
               };
             }
             return (
               <Tab
                 classes={{
                   root: classes.tabRootButton,
-                  label: classes.tabLabel,
+                  /*label: classes.tabLabel,*/
                   selected: classes.tabSelected,
                   wrapper: classes.tabWrapper,
                 }}
@@ -71,7 +77,7 @@ export default function CustomTabs(props) {
         </Tabs>
       </CardHeader>
       <CardBody>
-        {tabs.map((prop, key) => {
+        {tabs && tabs.map((prop, key) => {
           if (key === value) {
             return <div key={key}>{prop.tabContent}</div>;
           }
@@ -82,23 +88,4 @@ export default function CustomTabs(props) {
   );
 }
 
-CustomTabs.propTypes = {
-  headerColor: PropTypes.oneOf([
-    'warning',
-    'success',
-    'danger',
-    'info',
-    'primary',
-    'rose',
-  ]),
-  title: PropTypes.string,
-  tabs: PropTypes.arrayOf(
-    PropTypes.shape({
-      tabName: PropTypes.string.isRequired,
-      tabIcon: PropTypes.object,
-      tabContent: PropTypes.node.isRequired,
-    })
-  ),
-  rtlActive: PropTypes.bool,
-  plainTabs: PropTypes.bool,
-};
+export default CustomTabs;
