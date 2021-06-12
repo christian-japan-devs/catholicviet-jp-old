@@ -405,7 +405,8 @@ class Mass(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.mass_image = self.compressImage(self.mass_image)
+            if(self.mmass_imagea):
+                self.mass_image = self.compressImage(self.mass_image)
         super(Mass, self).save(*args, **kwargs)
 
     def compressImage(self, mass_image):
@@ -486,7 +487,8 @@ class MonthlyTopic(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.mt_image_main = self.compressImage(self.mt_image_main)
+            if(self.mt_image_main):
+                self.mt_image_main = self.compressImage(self.mt_image_main)
         super(MonthlyTopic, self).save(*args, **kwargs)
 
     def compressImage(self, mt_image_main):
@@ -546,7 +548,8 @@ class NewFeed(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.nf_image = self.compressImage(self.nf_image)
+            if(self.nf_image):
+                self.nf_image = self.compressImage(self.nf_image)
         super(NewFeed, self).save(*args, **kwargs)
 
     def compressImage(self, nf_image):
@@ -686,7 +689,8 @@ class Event(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.event_image = self.compressImage(self.event_image)
+            if(self.event_image):
+                self.event_image = self.compressImage(self.event_image)
         super(Event, self).save(*args, **kwargs)
 
     def compressImage(self, event_image):
