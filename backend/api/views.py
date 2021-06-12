@@ -477,8 +477,7 @@ class UserCreate(viewsets.ViewSet):
                         res['message'] = 'Đổi mật khẩu thành công'
                         return Response(res, status=status.HTTP_200_OK)
                     else:
-                        raise Exception('password', str(
-                            _('Mã bảo mật không đúng')))
+                        raise Exception('password', 'Mã bảo mật không đúng')
                 else:
                     raise Exception('password', 'Tài khoản không đúng')
         except:
