@@ -27,14 +27,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-type propTypes = {
+type Props = {
     posts: NewFeed[],
     title?: string
 }
 
-const MainSection: React.FC<propTypes> = (props: propTypes) => {
+const MainSection: React.FC<Props> = ({ posts, title }) => {
     const classes = useStyles();
-    const { posts, title } = props;
     return (
         <div className={classes.markdown}>
             <Typography variant='h4'>

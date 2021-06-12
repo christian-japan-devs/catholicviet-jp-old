@@ -9,6 +9,7 @@ import Layout from '../Layout';
 import { MonthlyTopic, Props as TopicProps } from '../../components/TopicTheme/MonthlyTopic';
 import Sidebar from '../Sections/Sidebar';
 import MainSection from '../Sections/MainSection';
+import Letter from '../Sections/Letter';
 //Utils
 import { apiDomain, monthlyTopicEnd, newfeedsURL } from '../../utils/apiEndpoint';
 import { NewFeed } from '../../components/NewFeed';
@@ -104,13 +105,20 @@ const HomePage: React.FC = () => {
                 <MonthlyTopic topic={monthlyTopic.topic} />
                 <Grid container spacing={5} className={classes.mainGrid}>
                     <Grid item xs={12} md={8}>
-
-                        <MainSection title='Thư mục vụ' posts={newFeeds} />
-                        <MainSection title='Tin tức' posts={newFeeds} />
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Letter')[0] !== undefined ?
+                            <Letter post={newFeeds.filter(newFeeds => newFeeds.type === 'Letter')[0]} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Gospel')[0] !== undefined ?
+                            <MainSection title='Suy niệm' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Gospel')} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'News')[0] !== undefined ?
+                            <MainSection title='Tin Tức' posts={newFeeds.filter(newFeeds => newFeeds.type === 'News')} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Event')[0] !== undefined ?
+                            <MainSection title='Sự Kiện sắp tới' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Event')} /> : null}
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Sidebar title='Giới trẻ' posts={newFeeds} />
-                        <Sidebar title='Văn hoá Nhật' posts={newFeeds} />
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Inform')[0] !== undefined ?
+                            <Sidebar title='Thông Báo' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Inform')} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Youth')[0] !== undefined ?
+                            <Sidebar title='Giới Trẻ' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Youth')} /> : null}
                     </Grid>
                 </Grid>
             </Container>

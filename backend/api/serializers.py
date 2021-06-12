@@ -49,7 +49,22 @@ class NewFeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewFeed
         fields = (
-            'id', 'nf_title', 'nf_user_created', 'nf_type', 'nf_image', 'nf_brief_content', 'nf_language', 'nf_date_created', 'nf_post_clicked', 'nf_post_share', 'nf_post_like'
+            'id', 'nf_title', 'nf_user_created', 'nf_type', 'nf_image', 'nf_brief_content', 'nf_language', 'nf_date_created'
+        )
+
+    def get_nf_language(self, obj):
+        return obj.get_nf_language_display()
+
+
+class DetailNewFeedSerializer(serializers.ModelSerializer):
+    nf_user_created = serializers.ReadOnlyField(
+        source='nf_user_created.userprofile.profile_full_name')
+    nf_language = serializers.SerializerMethodField()
+
+    class Meta:
+        model = NewFeed
+        fields = (
+            'id', 'nf_title', 'nf_user_created', 'nf_type', 'nf_image', 'nf_content', 'nf_language', 'nf_date_created', 'nf_post_clicked', 'nf_post_share', 'nf_post_like'
         )
 
     def get_nf_language(self, obj):

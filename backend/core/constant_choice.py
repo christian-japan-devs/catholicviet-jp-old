@@ -70,7 +70,7 @@ health_choice = (
 
 new_feed_type = (
     ('Letter', _('Thư')),
-    ('Reflection', _('Gospel Reflection')),
+    ('Gospel', _('Gospel Reflection')),
     ('Event', _('Event')),
     ('Inform', _('Inform')),
     ('News', _('News')),
