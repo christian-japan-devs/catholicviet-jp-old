@@ -30,9 +30,8 @@ type Props = {
     title: string,
 }
 
-const Sidebar: React.FC<Props> = (props) => {
+const Sidebar: React.FC<Props> = ({ posts, title }) => {
     const classes = useStyles();
-    const { posts, title } = props;
     return (
         <div className={classes.markdown}>
             <Typography variant='h6'>
@@ -55,9 +54,6 @@ const Sidebar: React.FC<Props> = (props) => {
                                 </Typography>
                                 <Typography variant='subtitle1' paragraph>
                                     <div dangerouslySetInnerHTML={post.description}></div>
-                                </Typography>
-                                <Typography variant='subtitle1' color='textSecondary'>
-                                    {'Đọc tiếp'}
                                 </Typography>
                             </CardContent>
                         </div>

@@ -15,9 +15,7 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .serializers import (
-    NewFeedSerializer, ReMassSerializer, RegistrationSerializer,
-    DailyGospelSerializer, ProvinceSerializer, AccountSerializer,
-    MonthlyTopicBrefSerializer, MonthlyTopicSerializer
+    NewFeedSerializer, DetailNewFeedSerializer, ReMassSerializer, RegistrationSerializer, DailyGospelSerializer, ProvinceSerializer, AccountSerializer, MonthlyTopicBrefSerializer, MonthlyTopicSerializer
 )
 from .producer import publish
 from .permissions import IsOwner
@@ -153,10 +151,20 @@ class NewFeedViewSet(viewsets.ViewSet):
         except:
             print("End retrieve newfeed error: ", sys.exc_info()[0])
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = NewFeedSerializer(newfeed)
+        serializer = DetailNewFeedSerializer(newfeed)
         return Response(serializer.data)
 
+    def update(self, request, pk=None):  # /api/newfeed/<str:id>
+        print("Start update newfeed")
+        newfeed = NewFeed.objects.get(id=pk)
+        serializer = NewFeedSerializer(instance=newfeed, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            print("End update newfeed Successful")
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print("End update newfeed error")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # API Discription
 # Name: ReMassListViewSet
 # Serializer: ListRegistrationMassSerializer
@@ -180,7 +188,6 @@ class ReMassListViewSet(viewsets.ModelViewSet):
         mass = Mass.objects.get(id=pk)
         serializer = ReMassSerializer(mass)
         return Response(serializer.data)
-
 # API Discription
 # Name: ReMassListViewSet
 # Serializer: ListRegistrationMassSerializer
