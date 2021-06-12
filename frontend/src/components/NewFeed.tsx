@@ -24,12 +24,12 @@ export type NewFeed = {
   title: string,
   date: string,
   auth?: string,
-  description: { __html: string; } | undefined,
-  image: string,
+  description?: { __html: string; } | undefined,
+  image?: string,
   imageText?: string,
-  detailUrl: string,
+  detailUrl?: string,
   content?: { __html: string; } | undefined,
-  type: string,
+  type?: string,
 }
 
 type Props = {

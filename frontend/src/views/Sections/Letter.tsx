@@ -2,13 +2,11 @@ import React from 'react';
 // Mateiral-ui/core
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import { NewFeed } from '../../components/NewFeed';
+
+import { apiDomain, newfeedDetailURL, newfeedsURL } from '../../utils/apiEndpoint';
 
 const useStyles = makeStyles((theme: Theme) => ({
     markdown: {
@@ -26,20 +24,54 @@ type Props = {
 
 const Letter: React.FC<Props> = ({ post }) => {
     const classes = useStyles();
+    var initNewFeed: NewFeed = {
+        id: 0,
+        title: '',
+        date: '',
+        content: { __html: '' },
+        type: ''
+    };
+    const [newFeed, setNewFeed] = React.useState(initNewFeed);
+    React.useEffect(() => {
+        fetch(newfeedDetailURL(post.id), {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+            throw res;
+        }).then((res) => {
+            var newFeed: NewFeed = {
+                id: res.id,
+                title: res.nf_title,
+                date: res.nf_date_created,
+                image: apiDomain + res.nf_image,
+                imageText: res.nf_title,
+                content: {
+                    __html: res.nf_content
+                },
+                type: res.nf_type,
+            }
+            setNewFeed(newFeed);
+        })
+    }, []);
     return (
         <div className={classes.markdown}>
             <Typography component='h3' variant='h4'>
-                {post.title}
+                {newFeed.title}
             </Typography>
             <Typography variant='subtitle1' color='textSecondary'>
-                {post.auth}
+                {newFeed.auth}
             </Typography>
             <Typography variant='subtitle1' color='textSecondary'>
-                {post.date}
+                {newFeed.date}
             </Typography>
-            <CardMedia className={classes.cardMedia} image={post.image} title={post.imageText} />
+            <CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />
             <Typography variant='subtitle1' paragraph>
-                <div dangerouslySetInnerHTML={post.content}></div>
+                <div dangerouslySetInnerHTML={newFeed.content}></div>
             </Typography>
             <Divider />
         </div>
