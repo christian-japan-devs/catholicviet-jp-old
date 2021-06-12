@@ -36,8 +36,56 @@ class UserIDView(APIView):
     def get(self, request, *args, **kwargs):
         return Response({'userID': request.user.id}, status=HTTP_200_OK)
 
+
 # API Discription
 # Name: MonthlyTopicViewSet
+# Url:
+# Detail:
+# Requirements:
+# Output:
+
+
+class MonthlyTopicViewSet(viewsets.ViewSet):
+    permission_classes = (AllowAny,)
+
+    def topic(self, request):  # /api/monthly-topic
+        monthlyTopic = MonthlyTopic.objects.all().order_by(
+            '-mt_date_edited')[0:1]  # Get the newest post
+        serializer = MonthlyTopicBrefSerializer(monthlyTopic, many=True)
+        return Response(serializer.data)
+
+    # /api/monthly-topic/<str:month> for more detail.
+    def detail(self, request, month=None):
+        try:
+            monthlyTopic = NewFeed.objects.get(mt_month=month, many=True)
+        except:
+            print("End retrieve newfeed error: ", sys.exc_info()[0])
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = MonthlyTopicSerializer(monthlyTopic)
+        return Response(serializer.data)
+    # /api/monthly-topic/<str:month> update like, share ...
+
+    def update(self, request, month=None):
+        try:
+            req_auth = request.auth
+            monthlyTopic = NewFeed.objects.get(mt_month=month)
+            if(req_auth):
+                req_user = request.user
+                req_type = request.data.get('type', '')
+                if(req_type):
+                    if(req_type == 'like'):
+                        monthlyTopic.mt_post_like += 1
+                        monthlyTopic.save()
+            serializer = MonthlyTopicSerializer(monthlyTopic)
+            return Response(serializer.data)
+        except:
+            print("End retrieve newfeed error: ", sys.exc_info()[0])
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# API Discription
+# Name: getNewFeed
 # Url:
 # Detail:
 # Requirements:
@@ -333,6 +381,7 @@ class UserCreate(viewsets.ViewSet):
                 'data': {
                     'token': token.key,
                     'user_id': user.pk,
+                    'confirm': 0,
                     'email': user.email
                 }
             }
@@ -391,6 +440,10 @@ class UserCreate(viewsets.ViewSet):
                 if(auth_user.check_password(old_password)):
                     auth_user.set_password(new_password)
                     auth_user.save()
+                    # Remove security code
+                    userprofile = auth_user.userprofile
+                    userprofile.profile_code = ''
+                    userprofile.save()
                     token, created = Token.objects.get_or_create(
                         user=auth_user)
                     res['status'] = 'ok'
@@ -412,6 +465,10 @@ class UserCreate(viewsets.ViewSet):
                     if(userprofile.profile_code == re_code):
                         user.set_password(req_pass)
                         user.save()
+                        # Remove security code
+                        userprofile = user.userprofile
+                        userprofile.profile_code = ''
+                        userprofile.save()
                         token, created = Token.objects.get_or_create(user=user)
                         res['status'] = 'ok'
                         res['data']['token'] = token.key
@@ -420,9 +477,52 @@ class UserCreate(viewsets.ViewSet):
                         res['message'] = 'Đổi mật khẩu thành công'
                         return Response(res, status=status.HTTP_200_OK)
                     else:
-                        raise Exception('password', 'Mã bảo mật không đúng')
+                        raise Exception('password', str(
+                            _('Mã bảo mật không đúng')))
                 else:
                     raise Exception('password', 'Tài khoản không đúng')
+        except:
+            print("End request reset password error: ", sys.exc_info()[0])
+            res['status'] = ERROR
+            res['message'] = sys.exc_info()
+            return Response(res, status=status.HTTP_200_OK)
+
+    # confirm request api
+    def confirm(self, request):  # /api/account/confirm
+        res = {
+            'status': 'error',
+            'data': {
+                'token': '',
+                'username': '',
+                'confirm': '',
+                'redirect': ''
+            },
+            'message': ''
+        }
+        try:
+            req_usename = request.data.get('username', '')
+            re_code = request.data.get('code', '')
+            user = User.objects.get(username=req_usename)
+            if user:
+                userprofile = user.userprofile
+                if(userprofile.profile_code == re_code):
+                    # Remove security code
+                    userprofile = user.userprofile
+                    userprofile.profile_code = ''
+                    userprofile.profile_account_confimred = True
+                    userprofile.save()
+                    token, created = Token.objects.get_or_create(user=user)
+                    res['status'] = 'ok'
+                    res['data']['token'] = token.key
+                    res['data']['username'] = req_usename
+                    res['data']['confirm'] = 1
+                    res['data']['redirect'] = '/account/profile'
+                    res['message'] = 'Xác nhận tài khoản thành công.'
+                    return Response(res, status=status.HTTP_200_OK)
+                else:
+                    raise Exception('code', 'Mã bảo mật không đúng')
+            else:
+                raise Exception('code', 'Tài khoản không đúng')
         except:
             print("End request reset password error: ", sys.exc_info()[0])
             res['status'] = ERROR

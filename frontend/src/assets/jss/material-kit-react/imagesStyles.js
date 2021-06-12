@@ -31,14 +31,14 @@ const imagesStyles = {
     width: "100%",
     borderRadius: "calc(.25rem - 1px)",
   },
-  imgCardOverlay: {
+  /**imgCardOverlay: {
     position: "absolute",
     top: "0",
     right: "0",
     bottom: "0",
     left: "0",
     padding: "1.25rem",
-  },
+  },*/
 };
 
 export default imagesStyles;

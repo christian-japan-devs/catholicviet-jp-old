@@ -5,10 +5,15 @@ import './App.css';
 import {
   Login,
   Signup,
-  ResetPasswordRequest,
+  RequestPassword,
   ResetPassword,
+  AccountConfirm,
 } from './views/AuthPage/authControl';
+
+import Layout from './views/Layout';
+//Pages
 import HomePage from './views/HomePage/HomePage';
+import { Profile } from './views/ProfilePage/Profile';
 import { AppProvider } from './contexts/AppContext';
 
 const App: React.FC = () => {
@@ -21,11 +26,20 @@ const App: React.FC = () => {
           <Route path="/signup" component={Signup} />
           <Route
             path="/account/request-password"
-            component={ResetPasswordRequest}
+            component={RequestPassword}
           />
           <Route
             path="/account/reset-password/"
             component={ResetPassword}
+          />
+          <Route
+            exact
+            path='/account/profile'
+            component={Profile}
+          />
+          <Route
+            path="/account/confirm/"
+            component={AccountConfirm}
           />
         </BrowserRouter>
       </AppProvider>

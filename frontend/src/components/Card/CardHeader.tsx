@@ -7,14 +7,14 @@ import { cardHeaderStyle } from '../../assets/jss/material-kit-react/components/
 import { Color } from '../CustomButtons/Button';
 
 type Props = {
-    className: string,
-    color: Color,
-    plain: boolean,
+    className?: string,
+    color?: Color,
+    plain?: boolean,
     children: React.ReactNode
 }
-type colorHeaderType = 'warningCardHeader' | 'successCardHeader' | 'dangerCardHeader' | 'infoCardHeader' | 'primaryCardHeader';
+type colorHeaderType = 'warningCardHeader' | 'successCardHeader' | 'dangerCardHeader' | 'infoCardHeader' | 'primaryCardHeader' | 'roseCardHeader';
 
-function convertColor(color: Color): colorHeaderType {
+function convertColor(color: Color | undefined): colorHeaderType {
     switch (color) {
         case 'warning':
             return 'warningCardHeader';
@@ -24,6 +24,8 @@ function convertColor(color: Color): colorHeaderType {
             return 'dangerCardHeader';
         case 'info':
             return 'infoCardHeader';
+        case 'rose':
+            return 'roseCardHeader';
         default:
             return 'primaryCardHeader'
     }
@@ -37,7 +39,7 @@ export const CardHeader: React.FC<Props> = (props) => {
         [classes.cardHeader]: true,
         [classes[colorHeader]]: color,
         [classes.cardHeaderPlain]: plain,
-        [className]: className !== undefined,
+        [(className !== undefined ? className : "")]: className,
     });
     return (
         <div className={cardFooterClasses} {...rest}>
