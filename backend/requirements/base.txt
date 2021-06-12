@@ -10,8 +10,9 @@ django-admin-list-filter-dropdown==1.0.3
 django-admin-numeric-filter==0.1.6
 django-admin-rangefilter==0.6.3
 django-cors-headers==3.5.0
+setuptools_rust==0.12.1
 django-allauth==0.44.0
-
+python-decouple==3.4
 django-tinymce==3.3.0
 django-qr-code==2.1.0
 django-mysql==3.9
@@ -22,7 +23,7 @@ django-webpack-loader==0.7.0
 django-storages==1.11.1
 lazy-object-proxy==1.4.1
 
-psycopg2==2.8.6
+mysqlclient==2.0.1
 oauthlib==3.0.1
 requests==2.22.0
 requests-oauthlib==1.2.0
