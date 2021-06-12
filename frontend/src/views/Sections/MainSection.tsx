@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
+import { NewFeed } from '../../components/NewFeed';
 
 const useStyles = makeStyles((theme: Theme) => ({
     markdown: {
@@ -26,17 +27,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-type post = {
-    title: string,
-    auth?: string,
-    date: string,
-    description: string,
-    image?: string,
-    imageTitle?: string,
-    detail: string
-}
 type propTypes = {
-    posts: post[],
+    posts: NewFeed[],
     title?: string
 }
 
@@ -51,7 +43,7 @@ const MainSection: React.FC<propTypes> = (props: propTypes) => {
             <Divider />
             {
                 posts.map((post) => (
-                    <CardActionArea key={post.title} component='a' style={{ textDecoration: 'none' }} href={post.detail}>
+                    <CardActionArea key={post.title} component='a' style={{ textDecoration: 'none' }} href={post.detailUrl}>
                         <Card className={classes.card}>
                             <div className={classes.cardDetails}>
                                 <CardContent>
@@ -65,12 +57,12 @@ const MainSection: React.FC<propTypes> = (props: propTypes) => {
                                         {post.date}
                                     </Typography>
                                     <Typography variant='subtitle1' paragraph>
-                                        {post.description}
+                                        <div dangerouslySetInnerHTML={post.description}></div>
                                     </Typography>
                                 </CardContent>
                             </div>
                             <Hidden smDown>
-                                <CardMedia className={classes.cardMedia} image={post.image} title={post.imageTitle} />
+                                <CardMedia className={classes.cardMedia} image={post.image} title={post.imageText} />
                             </Hidden>
                         </Card>
                     </CardActionArea>

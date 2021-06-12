@@ -11,4 +11,5 @@ def create_auth_token(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(profile_user=instance)
         Token.objects.create(user=instance)
+        # send account confirmation to user when account is created.
         sendConfirmEmailToUser(instance)

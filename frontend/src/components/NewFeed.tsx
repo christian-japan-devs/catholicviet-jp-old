@@ -19,21 +19,24 @@ const useStyles = makeStyles({
 
 });
 
-interface Props {
-  newFeed: {
-    id: number;
-    title: string;
-    auth: string;
-    date: string;
-    description?: string;
-    content?: string;
-    image?: string;
-    detailUrl?: string;
-    type?: string;
-  }
+export type NewFeed = {
+  id: number,
+  title: string,
+  date: string,
+  auth?: string,
+  description: { __html: string; } | undefined,
+  image: string,
+  imageText?: string,
+  detailUrl: string,
+  content?: { __html: string; } | undefined,
+  type: string,
 }
 
-const NewFeed: React.FC<Props> = (props: Props) => {
+type Props = {
+  newFeed: NewFeed
+}
+
+export const NewFeedCard: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   return (
@@ -41,4 +44,4 @@ const NewFeed: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default NewFeed;
+export default NewFeedCard;
