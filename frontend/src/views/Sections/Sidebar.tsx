@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import { NewFeed } from '../../components/NewFeed';
+import { last } from 'ramda';
 
 const useStyles = makeStyles((theme: Theme) => ({
     markdown: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     card: {
         display: 'flex',
         marginTop: '2rem',
+        padding: '0.5rem',
     },
     cardDetails: {
         flex: 1,

@@ -11,7 +11,7 @@ interface ContentItem {
 interface Props {
   title: string;
   description?: string;
-  contentItem?: ContentItem | null;
+  contentItem?: ContentItem;
 }
 
 export const PageTitle: React.FC<Props> = ({ title, description, contentItem }) => {

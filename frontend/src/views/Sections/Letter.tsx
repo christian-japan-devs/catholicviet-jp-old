@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'moment';
 // Mateiral-ui/core
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -47,7 +48,7 @@ const Letter: React.FC<Props> = ({ post }) => {
             var newFeed: NewFeed = {
                 id: res.id,
                 title: res.nf_title,
-                date: res.nf_date_created,
+                date: Moment(res.nf_date_created).format('H:m YYYY-MM-DD'),
                 image: apiDomain + res.nf_image,
                 imageText: res.nf_title,
                 content: {

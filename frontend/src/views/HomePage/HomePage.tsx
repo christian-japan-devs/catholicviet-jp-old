@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'moment';
 //@Material-ui/core
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -54,8 +55,8 @@ const HomePage: React.FC = () => {
                 var newFeed = {
                     id: data.id,
                     title: data.nf_title,
-                    date: data.nf_date_created,
-                    image: apiDomain + data.nf_image,
+                    date: Moment(data.nf_date_created).format('H:m YYYY-MM-DD'),
+                    image: data.nf_image && (apiDomain + data.nf_image),
                     imageText: data.nf_title,
                     description: {
                         __html: data.nf_brief_content
