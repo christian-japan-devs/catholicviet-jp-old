@@ -17,9 +17,7 @@ import { NewFeed } from '../../components/NewFeed';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        margin: 2,
         padding: theme.spacing(2),
-        minWidth: "300px",
     },
     modal: {
         borderRadius: "6px",
@@ -74,6 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     cardMedia: {
         width: '100%',
+        height: '100%'
     }
 }));
 
@@ -94,7 +93,16 @@ type props = {
 }
 const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) => {
     const classes = useStyles();
-
+    const [fullScreen, setFullScreen] = React.useState(false);
+    React.useEffect(() =>{
+        const width = window.innerWidth;
+        console.log(width);
+        if(width <= 900){
+            setFullScreen(true);
+        } else{
+            setFullScreen(false);
+        }
+    },[]);
     return (
         <Dialog
             classes={{
@@ -103,6 +111,7 @@ const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) 
             }}
             open={openDetail}
             //TransitionComponent={Transition}
+            fullScreen={fullScreen}
             keepMounted
             onClose={onCloseDetail}
             aria-labelledby="classic-modal-slide-title"
@@ -128,13 +137,13 @@ const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) 
                 id="classic-modal-slide-description"
                 className={classes.modalBody}
             >
+                <CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />
                 <Typography variant='subtitle1' color='textSecondary'>
                     {newFeed.auth}
                 </Typography>
                 <Typography variant='subtitle1' color='textSecondary'>
                     {newFeed.date}
                 </Typography>
-                <CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />
                 <Typography variant='subtitle1' paragraph>
                     <div dangerouslySetInnerHTML={newFeed.content}></div>
                 </Typography>
