@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const HomePage: React.FC = () => {
+    const classes = useStyles();
     var initTopic: TopicProps = {
         topic: {
             id: 1,
@@ -37,7 +38,6 @@ const HomePage: React.FC = () => {
     var initNewFeed: NewFeed[] = [];
     const [monthlyTopic, setMonthlyTopicTypes] = React.useState(initTopic);
     const [newFeeds, setNewFeeds] = React.useState(initNewFeed);
-    const classes = useStyles();
 
     React.useEffect(() => {
         fetch(newfeedsURL, {
