@@ -15,7 +15,7 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .serializers import (
-    NewFeedSerializer, DetailNewFeedSerializer, ReMassSerializer, RegistrationSerializer, DailyGospelSerializer, ProvinceSerializer, AccountSerializer, MonthlyTopicBrefSerializer, MonthlyTopicSerializer
+    NewFeedSerializer, DetailNewFeedSerializer, ReMassSerializer, RegistrationSerializer, DailyGospelSerializer, ProvinceSerializer, AccountSerializer, MonthlyTopicBrefSerializer, MonthlyTopicSerializer, ChurchSerializer
 )
 from .producer import publish
 from .permissions import IsOwner
@@ -23,7 +23,7 @@ from .permissions import IsOwner
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
-from adminapp.models import MonthlyTopic, NewFeed, Mass, DailyGospel, MassTime, Registration, Province
+from adminapp.models import MonthlyTopic, NewFeed, Mass, DailyGospel, MassTime, Registration, Church, Province
 from core.constants import *
 from adminapp.common_messages import *
 
@@ -165,6 +165,46 @@ class NewFeedViewSet(viewsets.ViewSet):
         else:
             print("End update newfeed error")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# API Discription
+# Name: getChurch
+# Url:
+# Detail:
+# Requirements:
+# Output:
+
+
+class ChurchViewSet(viewsets.ViewSet):
+    permission_classes = (AllowAny,)
+
+    def getlist(self, request):  # /api/church
+        churchs = Church.objects.all()
+        serializer = ChurchSerializer(churchs, many=True)
+        return Response(serializer.data)
+
+    # /api/church/<str:pk>/detail for more detail.
+    def retrieve(self, request, pk=None):
+        try:
+            church = Church.objects.get(id=pk)
+            serializer = ChurchSerializer(church)
+            return Response(serializer.data)
+        except:
+            print("End retrieve newfeed error: ", sys.exc_info()[0])
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, pk=None):  # /api/newfeed/<str:id>
+        print("Start update newfeed")
+        newfeed = NewFeed.objects.get(id=pk)
+        serializer = NewFeedSerializer(instance=newfeed, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            print("End update newfeed Successful")
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print("End update newfeed error")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # API Discription
 # Name: ReMassListViewSet
 # Serializer: ListRegistrationMassSerializer

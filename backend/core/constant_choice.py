@@ -18,8 +18,8 @@ cf_status_choice = (
 
 language_choice = (
     (EN, _('English')),
-    (JA, _('日本語')),
-    (VI, _('Tiếng Việt')),
+    (JA, _('Japanese')),
+    (VI, _('Vietnamese')),
     (ES, _('Spanish'))
 )
 

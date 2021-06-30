@@ -158,12 +158,18 @@ class Church(models.Model):
 
     church_name = models.CharField(verbose_name=_(
         'Church Name'), help_text=_('Church Name'), max_length=120)
-    church_brief_description = HTMLField(verbose_name=_(
-        'Brief discription'), help_text=_('Brief discription'), blank=True)
+    church_sub_name = models.CharField(verbose_name=_(
+        'Church Sub Name'), help_text=_('Church Sub Name'), max_length=120)
+    church_brief_description = models.CharField(verbose_name=_(
+        'Brief discription'), help_text=_('Brief discription'), default='', blank=True, max_length=500)
     church_image = models.ImageField(verbose_name=_('Profile image'), help_text=_(
         'Profile Image'), null=True, blank=True, upload_to='church_images')
+    church_external_image = models.CharField(verbose_name=_('Image Link'), help_text=_(
+        'External Image Link'), blank=True, default="", max_length=200)
     church_address = models.CharField(verbose_name=_(
         'Address'), help_text=_('Address'), max_length=255)
+    church_map_link = models.CharField(verbose_name=_(
+        'Map Link'), help_text=_('Map Link'), max_length=255)
     church_url = models.CharField(verbose_name=_('Web adress'), help_text=_(
         'Website adress'), max_length=100, default='', blank=True)
     church_phone = models.CharField(verbose_name=_('Phone number'), help_text=_(
@@ -172,6 +178,8 @@ class Church(models.Model):
         'Email address'), max_length=50, default='', blank=True)
     church_language_main = models.CharField(_('Ngôn ngữ'), help_text=_(
         'Ngôn ngữ'), max_length=15, choices=language_choice)
+    church_total_seats = models.SmallIntegerField(
+        _('Total seats'), help_text=_('Chapel total seats capable'), default=50)
     church_country = models.ForeignKey(
         Country, blank=True, null=True,
         verbose_name=_('Country'),
@@ -204,8 +212,8 @@ class Church(models.Model):
         null=True,
         related_name="church_reversed",
         on_delete=models.CASCADE)
-    church_notice_on_map = HTMLField(verbose_name=_('Brief inform on map'), help_text=_(
-        'Brief inform on map'), blank=True, default="")
+    church_notice_on_map = models.CharField(verbose_name=_('Brief inform on map'), help_text=_(
+        'Brief inform on map'), blank=True, default="", max_length=500)
     church_lon = models.FloatField(verbose_name=_('Churchs longtitue'), help_text=_(
         'Churchs longtitue acorrding Google'), default=0.0, blank=True, null=True)
     church_lat = models.FloatField(verbose_name=_('Churchs latitue'), help_text=_(
@@ -222,12 +230,28 @@ class Church(models.Model):
     def __str__(self):
         return self.church_name
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            if(self.church_image):
+                self.church_image = self.compressImage(self.church_image)
+        super(Church, self).save(*args, **kwargs)
+
+    def compressImage(self, church_image):
+        imageTemproary = Image.open(church_image)
+        outputIoStream = BytesIO()
+        imageTemproaryResized = imageTemproary.resize((720, 420))
+        imageTemproaryResized.save(outputIoStream, format='PNG', quality=60)
+        outputIoStream.seek(0)
+        mass_image = InMemoryUploadedFile(outputIoStream, 'ImageField', "%s.png" % church_image.name.split(
+            '.')[0], 'image/png', sys.getsizeof(outputIoStream), None)
+        return mass_image
+
 
 class ChurchImages(models.Model):
     church_image_title = models.CharField(
         _('Image title'), help_text=_('Title for the image'), max_length=120)
-    church_image_title = models.CharField(_('Image title'), help_text=_(
-        'Brief discription for the image'), max_length=120)
+    church_image_discription = models.CharField(_('Image discription'), help_text=_(
+        'Brief discription for the image'), max_length=400)
     church_image = models.ImageField(_('Hình ảnh'), help_text=_(
         'Hình ảnh đại diện'), null=True, blank=True, upload_to='church_images')
     church_image_church = models.ForeignKey(Church, on_delete=models.CASCADE)
@@ -242,6 +266,22 @@ class ChurchImages(models.Model):
 
     def __str__(self):
         return f'{self.church_image_title} : {self.id}'
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            if(self.church_image):
+                self.church_image = self.compressImage(self.church_image)
+        super(ChurchImages, self).save(*args, **kwargs)
+
+    def compressImage(self, church_image):
+        imageTemproary = Image.open(church_image)
+        outputIoStream = BytesIO()
+        imageTemproaryResized = imageTemproary.resize((720, 420))
+        imageTemproaryResized.save(outputIoStream, format='PNG', quality=60)
+        outputIoStream.seek(0)
+        mass_image = InMemoryUploadedFile(outputIoStream, 'ImageField', "%s.png" % church_image.name.split(
+            '.')[0], 'image/png', sys.getsizeof(outputIoStream), None)
+        return mass_image
 
 
 class ChurchPost(models.Model):
@@ -283,41 +323,51 @@ class ChurchPost(models.Model):
         ordering = ('church_post_date',)
 
 
-class ChurchChapel(models.Model):
-    church_chapel_name = models.CharField(
-        _('Chapel name'), help_text=_('Chapel name'), max_length=50)
-    church_chapel_church = models.ForeignKey(
-        Church, on_delete=models.CASCADE, help_text=_('Select Church'))
-    church_chapel_discrible = HTMLField(
-        _('Chapel discription'), help_text=_('Chapel discription'))
-    church_chapel_total_seats = models.SmallIntegerField(
-        _('Chapel total seats'), help_text=_('Chapel total seats capable'), default=1)
-
-    def __str__(self):
-        return f'{self.church_chapel_church.church_name} : {self.church_chapel_name}'
-
-
-class ChurchChapelSeat(models.Model):
+class ChurchSeat(models.Model):
     chapel_seat_no = models.CharField(
         _('Số ghế'), help_text=_('Số ghế'), max_length=4)
     chapel_seat_type = models.CharField(_('Kiểu ghế'), help_text=_(
         'Kiểu ghế'), max_length=30, choices=seat_choice, blank=False)
     chapel_seat_chapel = models.ForeignKey(
-        ChurchChapel, on_delete=models.SET_NULL, null=True, help_text=_('Select Church'))
+        Church, on_delete=models.SET_NULL, null=True, help_text=_('Select Church'))
 
     def __str__(self):
         return f'{self.chapel_seat_chapel.church_chapel_name} : {self.chapel_seat_no}'
 
 
 class MassSchedule(models.Model):
-    mass_schedule_chapel = models.ForeignKey(
-        ChurchChapel, on_delete=models.SET_NULL, null=True, help_text=_('Select Church'))
+    mass_church = models.ForeignKey(
+        Church, on_delete=models.SET_NULL, null=True, help_text=_('Select Church'), related_name='massSchedules')
     mass_week_day = models.CharField(_('Ngày trong tuần'), help_text=_(
-        'Ngày trong tuần ra Thánh Lễ (0-6)'), choices=week_day_choice, max_length=10)
+        'Ngày trong tuần (Mon-Sun)=(0-6)'), choices=week_day_choice, max_length=10)
     mass_time = models.TimeField(_('Giờ'), help_text=_('thời gian'))
+    mass_language = models.CharField(_('Ngôn ngữ'), help_text=_(
+        'Ngôn ngữ'), max_length=15, choices=language_choice)
 
     def __str__(self):
-        return f'{self.mass_schedule_chapel.church_chapel_church.church_name}:{self.mass_schedule_chapel.church_chapel_name} : {week_day_choice[int(self.mass_week_day)]}:{self.mass_time}'
+        return f'{self.mass_church.church_name}-{self.get_mass_week_day_display()}-{self.mass_time}-{self.get_mass_language_display()}'
+
+
+class ConfessionSchedule(models.Model):
+    con_church = models.ForeignKey(
+        Church, on_delete=models.SET_NULL, null=True, help_text=_('Select Church'))
+    con_week_day = models.CharField(_('Ngày trong tuần'), help_text=_(
+        'Ngày trong tuần (Mon-Sun)=(0-6)'), choices=week_day_choice, max_length=10)
+    con_start_time = models.TimeField(
+        _('Bắt đầu'), help_text=_('thời gian bắt đầu'))
+    con_end_time = models.TimeField(
+        _('Kết thúc'), help_text=_('thời gian kết thúc'))
+    con_language = models.CharField(_('Ngôn ngữ'), help_text=_(
+        'Ngôn ngữ'), max_length=15, choices=language_choice)
+    con_father = models.ForeignKey(User, verbose_name=_(
+        'Cha giải tội'), on_delete=models.CASCADE, default=None, blank=True, null=True, related_name='con_father')
+    con_update_date = models.DateTimeField(
+        _('Last updated date'), default=timezone.now)
+    con_status = models.BooleanField(_('Status'), help_text=_(
+        'Active status'), default=True, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.con_church.church_name}-{self.get_con_week_day_display()}-{self.con_time}-{self.get_con_language_display()}'
 
 
 class DailyGospel(models.Model):
@@ -373,10 +423,8 @@ class Mass(models.Model):
         'Cha chủ tế'), on_delete=models.CASCADE, blank=True, null=True, related_name="mass_father")
     mass_church = models.ForeignKey(Church, on_delete=models.CASCADE, help_text=_(
         'chọn Nhà thờ'), blank=True, null=True)
-    mass_church_chapel = models.ForeignKey(
-        ChurchChapel, on_delete=models.SET_NULL, help_text=_('chọn Nhà thờ'), blank=True, null=True)
     mass_slots = models.SmallIntegerField(
-        _('Số chỗ'), help_text=_('Số chỗ'), default=0)
+        _('Số chỗ'), help_text=_('Số chỗ'), default=50)
     mass_slots_registered = models.SmallIntegerField(_('Số đăng ký'), help_text=_(
         'Số người đăng ký'), default=0, blank=True, null=True)
     mass_slots_attended = models.SmallIntegerField(_('Số tham dự'), help_text=_(
