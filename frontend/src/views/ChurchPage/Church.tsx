@@ -110,7 +110,6 @@ const ChurchPage: React.FC = () => {
 
 
     const handleClick = (id: number) => {
-        console.log(id);
         setCurrentChurch(churches.filter(churches => churches.id === id)[0])
         setOpenDialog(!openDialog);
     };
