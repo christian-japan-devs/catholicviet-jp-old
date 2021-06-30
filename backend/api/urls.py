@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    MonthlyTopicViewSet, NewFeedViewSet, ReMassListViewSet, MassRegister, GospelViewSet, ProvinceViewSet, UserCreate
+    MonthlyTopicViewSet, NewFeedViewSet, ReMassListViewSet, MassRegister, GospelViewSet, ChurchViewSet, ProvinceViewSet, UserCreate
 )
 
 app_name = 'api'
@@ -31,6 +31,12 @@ urlpatterns = [
         'post': 'create'
     })),
     path('massregister/<str:rid>', MassRegister.as_view({
+        'get': 'retrieve'
+    })),
+    path('church', ChurchViewSet.as_view({
+        'get': 'getlist'
+    })),
+    path('church/<str:pk>/detail', ChurchViewSet.as_view({
         'get': 'retrieve'
     })),
     path('province', ProvinceViewSet.as_view({

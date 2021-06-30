@@ -14,7 +14,8 @@ import Letter from '../Sections/Letter';
 import { apiDomain, monthlyTopicEnd, newfeedsURL } from '../../utils/apiEndpoint';
 import { toDate } from '../../utils/utils';
 import { NewFeed } from '../../components/NewFeed';
-import { LETTER, GOSPEL, NEWS, INFORM, YOUTH, EVENT, LINK_CHU_DE_CHI_TIET, LINK_BAI_VIET_CHI_TIET } from '../../utils/constants';
+
+import { MassTime } from '../MassPage/MassTime';
 
 const useStyles = makeStyles((theme: Theme) => ({
     mainGrid: {
@@ -22,7 +23,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const HomePage: React.FC = () => {
+
+
+export type Church = {
+    id: number,
+    title: string,
+    image: string,
+    subHeader?: string,
+    detailLink: string,
+    mapLink?: string,
+    massTime: MassTime[],
+}
+
+const ChurchPage: React.FC = () => {
     var initTopic: TopicProps = {
         topic: {
             id: 1,
@@ -30,7 +43,7 @@ const HomePage: React.FC = () => {
             imageText: '',
             title: '',
             description: { __html: '' },
-            linkText: LINK_CHU_DE_CHI_TIET,
+            linkText: '/nha-tho/chi-tiet/',
             month: '',
         }
     }
@@ -62,14 +75,12 @@ const HomePage: React.FC = () => {
                     description: {
                         __html: data.nf_brief_content
                     },
-                    detailUrl: LINK_BAI_VIET_CHI_TIET + data.id,
+                    detailUrl: '/bai-viet/chi-tiet/' + data.id,
                     type: data.nf_type,
                 }
                 setNewFeeds(newFeeds => [...newFeeds, newFeed]);
             }
-        }).catch((err) => {
-            //TODO:
-        });
+        })
 
         fetch(monthlyTopicEnd, {
             method: 'get',
@@ -92,7 +103,7 @@ const HomePage: React.FC = () => {
                     description: {
                         __html: data.mt_brief_content
                     },
-                    linkText: LINK_CHU_DE_CHI_TIET + data.mt_month,
+                    linkText: '/monthly-topic/detail/' + data.mt_month,
                     month: data.mt_month,
                 }
                 setMonthlyTopicTypes({
@@ -109,20 +120,20 @@ const HomePage: React.FC = () => {
                 <MonthlyTopic topic={monthlyTopic.topic} />
                 <Grid container spacing={5} className={classes.mainGrid}>
                     <Grid item xs={12} md={8}>
-                        {newFeeds.filter(newFeeds => newFeeds.type === LETTER)[0] !== undefined ?
-                            <Letter post={newFeeds.filter(newFeeds => newFeeds.type === LETTER)[0]} /> : null}
-                        {newFeeds.filter(newFeeds => newFeeds.type === GOSPEL)[0] !== undefined ?
-                            <MainSection title='Suy niệm' posts={newFeeds.filter(newFeeds => newFeeds.type === GOSPEL)} /> : null}
-                        {newFeeds.filter(newFeeds => newFeeds.type === NEWS)[0] !== undefined ?
-                            <MainSection title='Tin Tức' posts={newFeeds.filter(newFeeds => newFeeds.type === NEWS)} /> : null}
-                        {newFeeds.filter(newFeeds => newFeeds.type === EVENT)[0] !== undefined ?
-                            <MainSection title='Sự Kiện sắp tới' posts={newFeeds.filter(newFeeds => newFeeds.type === EVENT)} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Letter')[0] !== undefined ?
+                            <Letter post={newFeeds.filter(newFeeds => newFeeds.type === 'Letter')[0]} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Gospel')[0] !== undefined ?
+                            <MainSection title='Suy niệm' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Gospel')} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'News')[0] !== undefined ?
+                            <MainSection title='Tin Tức' posts={newFeeds.filter(newFeeds => newFeeds.type === 'News')} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Event')[0] !== undefined ?
+                            <MainSection title='Sự Kiện sắp tới' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Event')} /> : null}
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        {newFeeds.filter(newFeeds => newFeeds.type === INFORM)[0] !== undefined ?
-                            <Sidebar title='Thông Báo' posts={newFeeds.filter(newFeeds => newFeeds.type === INFORM)} /> : null}
-                        {newFeeds.filter(newFeeds => newFeeds.type === YOUTH)[0] !== undefined ?
-                            <Sidebar title='Giới Trẻ' posts={newFeeds.filter(newFeeds => newFeeds.type === YOUTH)} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Inform')[0] !== undefined ?
+                            <Sidebar title='Thông Báo' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Inform')} /> : null}
+                        {newFeeds.filter(newFeeds => newFeeds.type === 'Youth')[0] !== undefined ?
+                            <Sidebar title='Giới Trẻ' posts={newFeeds.filter(newFeeds => newFeeds.type === 'Youth')} /> : null}
                     </Grid>
                 </Grid>
             </Container>
@@ -130,4 +141,4 @@ const HomePage: React.FC = () => {
     );
 };
 
-export default HomePage;
+export default ChurchPage;

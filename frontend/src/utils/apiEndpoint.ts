@@ -21,6 +21,10 @@ export const newfeedDetailURL = (id: number) => `${endpoint}/newfeed/${id}`;
 export const updateNewFeedURL = (id: number, update_type: string) =>
   `${endpoint}/newfeed/${id}/update/?type=${update_type}`;
 
+//Church endpoint Api
+export const churchURL = `${endpoint}/church`;
+export const churchDetailURL = (id: number) => `${endpoint}/church/${id}/detail`;
+
 //Mass registration endpoint Api
 export const myregisterURL = (churchId: number) =>
   `${endpoint}/massregister/?churchId=${churchId}`;

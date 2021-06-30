@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from .models import Contact
 from adminapp.models import (
-    MonthlyTopic, NewFeed, Mass, DailyGospel, MassTime, Registration, Country, Province, District
+    MonthlyTopic, NewFeed, Mass, DailyGospel, MassTime, Registration, Country, Province, District, Church, MassSchedule, ConfessionSchedule
 )
 
 
@@ -69,6 +69,62 @@ class DetailNewFeedSerializer(serializers.ModelSerializer):
 
     def get_nf_language(self, obj):
         return obj.get_nf_language_display()
+
+
+class MassScheduleSerializer(serializers.ModelSerializer):
+    mass_language = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MassSchedule
+        fields = (
+            'id', 'mass_church', 'mass_week_day', 'mass_time', 'mass_language'
+        )
+
+    def get_mass_language(self, obj):
+        return obj.get_mass_language_display()
+
+    def get_mass_week_day(self, obj):
+        return obj.get_mass_week_day_display()
+
+
+class ConfessionScheduleSerializer(serializers.ModelSerializer):
+    con_father = serializers.ReadOnlyField(
+        source='con_father.userprofile.profile_full_name')
+    con_language = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ConfessionSchedule
+        fields = ('id', 'con_church', 'con_week_day', 'con_start_time', 'con_end_time',
+                  'con_language', 'con_father', 'con_update_date', 'con_status')
+
+    def get_con_language(self, obj):
+        return obj.get_con_language_display()
+
+
+class ChurchSerializer(serializers.ModelSerializer):
+    massSchedules = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Church
+        fields = (
+            'id', 'church_name', 'church_sub_name', 'church_brief_description', 'church_external_image', 'church_external_image', 'massSchedules', 'church_map_link', 'church_address', 'church_url', 'church_phone', 'church_email', 'church_language_main', 'church_country', 'church_province', 'church_district',
+        )
+
+    def get_mass_language(self, obj):
+        return obj.get_mass_language_display()
+
+
+class ChurchDetailSerializer(serializers.ModelSerializer):
+    massSchedules = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Church
+        fields = (
+            'id', 'church_name', 'church_sub_name', 'church_brief_description', 'church_external_image', 'church_external_image', 'massSchedules', 'church_map_link', 'church_address', 'church_url', 'church_phone', 'church_email', 'church_language_main', 'church_country', 'church_province', 'church_district',
+        )
+
+    def get_mass_language(self, obj):
+        return obj.get_mass_language_display()
 
 
 class ReMassSerializer(serializers.ModelSerializer):

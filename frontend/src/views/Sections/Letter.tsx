@@ -1,5 +1,4 @@
 import React from 'react';
-import Moment from 'moment';
 // Mateiral-ui/core
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import { NewFeed } from '../../components/NewFeed';
 
 import { apiDomain, newfeedDetailURL, newfeedsURL } from '../../utils/apiEndpoint';
+import { toDate } from '../../utils/utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
     markdown: {
@@ -48,7 +48,7 @@ const Letter: React.FC<Props> = ({ post }) => {
             var newFeed: NewFeed = {
                 id: res.id,
                 title: res.nf_title,
-                date: Moment(res.nf_date_created).format('H:m YYYY-MM-DD'),
+                date: toDate(res.nf_date_created),
                 image: apiDomain + res.nf_image,
                 imageText: res.nf_title,
                 content: {
