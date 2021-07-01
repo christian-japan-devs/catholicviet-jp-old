@@ -52,7 +52,6 @@ export type Props = {
 export const MonthlyTopic: React.FC<Props> = (props) => {
     const classes = useStyles();
     const topic = props.topic;
-    console.log(topic);
     return (
         <Paper className={classes.mainMonthlyTopic} style={{ backgroundImage: !!topic.image ? `url(${topic.image})` : `url(/static/media/default/topic_default_bg_01.jpg)` }}>
             {/* Increase the priority of the hero background image*/}

@@ -21,7 +21,19 @@ const useStyles = makeStyles({
     maxHeight: 320,
     paddingTop: '56.25%' //16:9
   },
-
+  seatNo: {
+    padding: "2px",
+    textAlign: "center",
+  },
+  seatNoElement:{
+    marginLeft: "100px",
+    marginRight: "100px",
+  },
+  footer: {
+    padding: "12px",
+    textAlign: "center",
+    margin: "0",
+  },
 });
 
 export type MassRegsiter = {
@@ -44,18 +56,18 @@ export type MassRegsiter = {
 
 type Props = {
   massRegister: MassRegsiter,
-  handleRegister(id:number): void
+  handleRegister:(id:number)=> void
 }
 
 export const MassRegisterCard: React.FC<Props> = ({massRegister, handleRegister}) => {
   const classes = useStyles();
-
+  console.log(massRegister);
   return (
     <Card className={classes.root}>
         <CardActionArea>
             <CardHeader 
                 title={massRegister.mass_title}
-                subheader={toDate(massRegister.mass_date)}
+                subheader={massRegister.mass_church}
             />
             <CardMedia
                 className={classes.media}
@@ -64,34 +76,40 @@ export const MassRegisterCard: React.FC<Props> = ({massRegister, handleRegister}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                    <TextField
-                            id="filled-read-only-input"
-                            label="Tổng số ghế"
-                            defaultValue={massRegister.mass_slots}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                            variant="filled"
-                        />
+                    
                 </Typography>
-                <div>
+                <div className={classes.seatNo}>
+                    <div className={classes.seatNoElement}>
                     <TextField
-                        id="filled-read-only-input"
-                        label="Số ghế còn lại"
-                        defaultValue={massRegister.mass_slots-massRegister.mass_slots_registered}
+                        id="outlined-read-only-input"
+                        label="Tổng số ghế"
+                        defaultValue={"       "+massRegister.mass_slots}
                         InputProps={{
                             readOnly: true,
                         }}
-                        variant="filled"
+                        variant="outlined"
+                        color="primary"
                     />
+                    <br/><br/>
+                    <TextField
+                        id="outlined-read-only-input"
+                        label="Số ghế còn lại"
+                        defaultValue={"        "+(massRegister.mass_slots-massRegister.mass_slots_registered)}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="outlined"
+                        color="secondary"
+                    />
+                    </div>
                 </div>
             </CardContent>
         </CardActionArea>
-        <CardActions>
-            {massRegister.mass_online_url==undefined?null:<Button size="small" color="primary" href={massRegister.mass_online_url}>Trực tuyến</Button>}
+        <CardActions className={classes.footer}>
+            {massRegister.mass_online_url==undefined?null:<Button  color="primary" href={massRegister.mass_online_url}>Trực tuyến</Button>}
             { (massRegister.mass_slots-massRegister.mass_slots_registered<=0)?null:
-              <Button size="small" color="secondary" onClick={ () => handleRegister(massRegister.id) }>Đăng ký</Button>}
-            <Button size="small" color="primary" href={LINK_BAI_DOC_CHI_TIET+massRegister.mass_date}>Bài đọc</Button>
+              <Button  color="secondary" onClick={ () => handleRegister(massRegister.id) }>Đăng ký</Button>}
+            <Button color="primary" href={LINK_BAI_DOC_CHI_TIET+massRegister.mass_date}>Bài đọc</Button>
         </CardActions>
     </Card>
   );

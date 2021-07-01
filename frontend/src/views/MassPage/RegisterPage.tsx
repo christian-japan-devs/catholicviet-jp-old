@@ -119,11 +119,11 @@ const RegisterPage: React.FC = () => {
                 <Grid container spacing={5} className={classes.mainGrid}>
                     <Grid item xs={12} md={8}>
                         <Grid container>
-                        {massRegisters.map((massRegister) => {
+                        {massRegisters.map((massRegister) => (
                             <Grid item xs={12} md={6}>
                                 <MassRegisterCard massRegister={massRegister} handleRegister={handleRegister}/>
                             </Grid>
-                        })}
+                        ))}
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={4}>
