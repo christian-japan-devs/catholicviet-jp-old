@@ -81,53 +81,6 @@ class MonthlyTopicViewSet(viewsets.ViewSet):
             print("End retrieve newfeed error: ", sys.exc_info()[0])
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# API Discription
-# Name: getNewFeed
-# Url:
-# Detail:
-# Requirements:
-# Output:
-
-
-class MonthlyTopicViewSet(viewsets.ViewSet):
-    permission_classes = (AllowAny,)
-
-    def topic(self, request):  # /api/monthly-topic
-        monthlyTopic = MonthlyTopic.objects.all().order_by(
-            '-mt_date_edited')[0:1]  # Get the newest post
-        serializer = MonthlyTopicBrefSerializer(monthlyTopic, many=True)
-        return Response(serializer.data)
-
-    # /api/monthly-topic/<str:month> for more detail.
-    def detail(self, request, month=None):
-        try:
-            monthlyTopic = NewFeed.objects.get(mt_month=month, many=True)
-            serializer = MonthlyTopicSerializer(monthlyTopic)
-            return Response(serializer.data)
-        except:
-            print("End retrieve newfeed error: ", sys.exc_info()[0])
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # /api/monthly-topic/<str:month> update like, share ...
-
-    def update(self, request, month=None):
-        try:
-            req_auth = request.auth
-            monthlyTopic = NewFeed.objects.get(mt_month=month)
-            if(req_auth):
-                req_user = request.user
-                req_type = request.data.get('type', '')
-                if(req_type):
-                    if(req_type == 'like'):
-                        monthlyTopic.mt_post_like += 1
-                        monthlyTopic.save()
-            serializer = MonthlyTopicSerializer(monthlyTopic)
-            return Response(serializer.data)
-        except:
-            print("End retrieve newfeed error: ", sys.exc_info()[0])
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 # API Discription
 # Name: getNewFeed
 # Url:
