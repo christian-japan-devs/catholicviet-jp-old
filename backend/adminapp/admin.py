@@ -4,7 +4,7 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, \
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
 from admin_auto_filters.filters import AutocompleteFilter
 from .models import Country, Province, District, UserProfile, Mass, Seat, Registration, Event
-from .models import MonthlyTopic, NewFeed, Church, ChurchImages, ChurchPost, MassTime, ChurchChapel, ChurchChapelSeat, MassSchedule
+from .models import MonthlyTopic, NewFeed, Church, ChurchImages, ChurchPost, MassTime, MassSchedule, ChurchSeat
 
 
 admin.site.site_header = 'VietCatholicJP'
@@ -82,9 +82,8 @@ admin.site.register(Church)
 admin.site.register(ChurchImages)
 admin.site.register(ChurchPost)
 admin.site.register(MassTime)
-admin.site.register(ChurchChapel)
-admin.site.register(ChurchChapelSeat)
 admin.site.register(MassSchedule)
+admin.site.register(ChurchSeat)
 admin.site.register(Mass)
 admin.site.register(Seat)
 admin.site.register(Registration)

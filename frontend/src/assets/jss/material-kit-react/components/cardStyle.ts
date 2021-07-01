@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 export const cardStyle = makeStyles((theme) => ({
   card: {
     border: "0",
+    maxWidth: '720px',
     marginBottom: "30px",
+    alignItems: 'center',
     marginTop: "30px",
     borderRadius: "6px",
     color: "rgba(0, 0, 0, 0.87)",

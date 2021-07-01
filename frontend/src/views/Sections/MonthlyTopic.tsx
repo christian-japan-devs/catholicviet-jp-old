@@ -43,7 +43,7 @@ export type Props = {
         image: string,
         imageText: string,
         title: string,
-        description: string,
+        description: { __html: string; } | undefined,
         linkText: string,
         month: string,
     }
@@ -52,6 +52,7 @@ export type Props = {
 export const MonthlyTopic: React.FC<Props> = (props) => {
     const classes = useStyles();
     const topic = props.topic;
+    console.log(topic);
     return (
         <Paper className={classes.mainMonthlyTopic} style={{ backgroundImage: !!topic.image ? `url(${topic.image})` : `url(/static/media/default/topic_default_bg_01.jpg)` }}>
             {/* Increase the priority of the hero background image*/}
@@ -63,9 +64,9 @@ export const MonthlyTopic: React.FC<Props> = (props) => {
                             {topic.title}
                         </Typography>
                         <Typography variant="h5" color="inherit" paragraph>
-                            {topic.description}
+                            <div dangerouslySetInnerHTML={topic.description}></div>
                         </Typography>
-                        <Link variant='subtitle1' color="inherit" href={topic.linkText}>
+                        <Link variant='subtitle1' style={{ textDecoration: 'none', color: 'inherit' }} href={topic.linkText}>
                             {!!topic.image ? 'Xem chi tiết.' : ""}
                         </Link>
                     </div>
