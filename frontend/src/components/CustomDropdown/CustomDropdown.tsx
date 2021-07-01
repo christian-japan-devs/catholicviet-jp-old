@@ -1,9 +1,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -20,7 +18,7 @@ import { useStyles } from '../../assets/jss/material-kit-react/components/custom
 import { Color } from '../CustomButtons/Button';
 
 type Props = {
-  hoverColor: Color
+  hoverColor?: Color
   buttonText?: React.ReactNode,
   buttonIcon?: object | string,
   dropdownList?: React.ReactNode[],
@@ -36,7 +34,7 @@ type Props = {
 type colorHeader = 'warningHover' | 'successHover' | 'dangerHover' | 'infoHover' | 'primaryHover' | 'roseHover';
 
 
-function convertColor(color: Color): colorHeader {
+function convertColor(color: Color | undefined): colorHeader {
   switch (color) {
     case 'warning':
       return 'warningHover';
@@ -57,7 +55,7 @@ export const CustomDropdown: React.FC<Props> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null as PopperProps['anchorEl']);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
-    if (anchorEl && anchorEl.referenceNode == event.target) {
+    if (anchorEl && anchorEl.referenceNode === event.target) {
       setAnchorEl(null);
     } else {
       setAnchorEl(event.currentTarget);
@@ -67,7 +65,7 @@ export const CustomDropdown: React.FC<Props> = (props) => {
     setAnchorEl(null);
   };
   const handleCloseAway = (event: React.MouseEvent<Document, MouseEvent>) => {
-    if (anchorEl && anchorEl.referenceNode == event.target) {
+    if (anchorEl && anchorEl.referenceNode === event.target) {
       return;
     }
     setAnchorEl(null);

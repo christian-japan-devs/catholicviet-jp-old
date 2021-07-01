@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 //@material-ui/core components
+import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -75,48 +76,50 @@ export const Header: React.FC<Props> = (props) => {
     });
     const brandComponent = <Button className={classes.title}><Link to='/' className={classes.title} style={{ textDecoration: 'none', fontWeight: 450 }}>{brand}</Link></Button>
     return (
-        <AppBar className={appBarClasses}>
-            <Toolbar className={classes.container}>
-                {leftLinks !== undefined ? brandComponent : null}
-                <div className={classes.flex}>
-                    {leftLinks !== undefined ? (
-                        <Hidden smDown implementation='css'>
-                            {leftLinks}
-                        </Hidden>
-                    ) : (
-                        brandComponent
-                    )}
-                </div>
-                <Hidden smDown implementation='css'>
-                    {rightLinks}
-                </Hidden>
-                <Hidden mdUp>
-                    <IconButton
-                        color='inherit'
-                        arial-label='Menu'
-                        onClick={handleDrawerToggle}
-                    >
-                        <Menu />
-                    </IconButton>
-                </Hidden>
-            </Toolbar>
-            <Hidden mdUp implementation='js'>
-                <Drawer
-                    variant="temporary"
-                    anchor={"right"}
-                    open={mobileOpen}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                    onClose={handleDrawerToggle}
-                >
-                    <div className={classes.appResponsive}>
-                        {leftLinks !== undefined ? leftLinks : brandComponent}
-                        {rightLinks}
+        <Container maxWidth='lg'>
+            <AppBar className={appBarClasses}>
+                <Toolbar className={classes.container}>
+                    {leftLinks !== undefined ? brandComponent : null}
+                    <div className={classes.flex}>
+                        {leftLinks !== undefined ? (
+                            <Hidden smDown implementation='css'>
+                                {leftLinks}
+                            </Hidden>
+                        ) : (
+                            brandComponent
+                        )}
                     </div>
-                </Drawer>
-            </Hidden>
-        </AppBar>
+                    <Hidden smDown implementation='css'>
+                        {rightLinks}
+                    </Hidden>
+                    <Hidden mdUp>
+                        <IconButton
+                            color='secondary'
+                            arial-label='Menu'
+                            onClick={handleDrawerToggle}
+                        >
+                            <Menu />
+                        </IconButton>
+                    </Hidden>
+                </Toolbar>
+                <Hidden mdUp implementation='js'>
+                    <Drawer
+                        variant="temporary"
+                        anchor={"right"}
+                        open={mobileOpen}
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        onClose={handleDrawerToggle}
+                    >
+                        <div className={classes.appResponsive}>
+                            {leftLinks !== undefined ? leftLinks : brandComponent}
+                            {rightLinks}
+                        </div>
+                    </Drawer>
+                </Hidden>
+            </AppBar>
+        </Container>
     )
 }
 

@@ -22,7 +22,6 @@ export const CardFooter: React.FC<Props> = (props) => {
             {children}
         </div>
     )
-
 }
 
 export default CardFooter;

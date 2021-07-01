@@ -8141,6 +8141,7 @@ __metadata:
     eslint-config-react-app: ^6.0.0
     history: ^5.0.0
     html-react-parser: ^1.2.6
+    moment: ^2.29.1
     prop-types: ^15.7.2
     qs: ^6.10.1
     ramda: ^0.27.1
@@ -11625,6 +11626,13 @@ fsevents@^1.2.7:
   bin:
     mkdirp: bin/cmd.js
   checksum: 1aa3a6a2d7514f094a91329ec09994f5d32d2955a4985ecbb3d86f2aaeafc4aa11521f98d606144c1d49cd9835004d9a73342709b8c692c92e59eacf37412468
+  languageName: node
+  linkType: hard
+
+"moment@npm:^2.29.1":
+  version: 2.29.1
+  resolution: "moment@npm:2.29.1"
+  checksum: 86729013febf7160de5b93da69273dd304d674b0224f9544b3abd09a87671ddd2cdd57598261ce57588910d63747ffd5590965e83c790d8bf327083c0e0a06e0
   languageName: node
   linkType: hard
 
