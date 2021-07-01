@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 //Components
 import Layout from '../Layout';
-import { MonthlyTopic, Props as TopicProps } from '../../components/TopicTheme/MonthlyTopic';
+import { MonthlyTopic, Props as TopicProps } from '../Sections/MonthlyTopic';
 import Sidebar from '../Sections/Sidebar';
 import MainSection from '../Sections/MainSection';
 import Letter from '../Sections/Letter';
