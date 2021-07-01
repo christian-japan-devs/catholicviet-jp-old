@@ -89,7 +89,6 @@ class MonthlyTopicViewSet(viewsets.ViewSet):
 # Requirements:
 # Output:
 
-
 class NewFeedViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
