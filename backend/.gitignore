@@ -8,6 +8,7 @@ build
 static
 .dbdata
 **/media/
+**/build/
 yarn.lock
 post_images
 church_images
