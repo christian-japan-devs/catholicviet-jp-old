@@ -81,6 +81,7 @@ class MonthlyTopicViewSet(viewsets.ViewSet):
             print("End retrieve newfeed error: ", sys.exc_info()[0])
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # API Discription
 # Name: getNewFeed
 # Url:
