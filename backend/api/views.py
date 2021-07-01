@@ -56,12 +56,12 @@ class MonthlyTopicViewSet(viewsets.ViewSet):
     def detail(self, request, month=None):
         try:
             monthlyTopic = NewFeed.objects.get(mt_month=month, many=True)
+            serializer = MonthlyTopicSerializer(monthlyTopic)
+            return Response(serializer.data)
         except:
             print("End retrieve newfeed error: ", sys.exc_info()[0])
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = MonthlyTopicSerializer(monthlyTopic)
-        return Response(serializer.data)
     # /api/monthly-topic/<str:month> update like, share ...
 
     def update(self, request, month=None):
@@ -103,12 +103,12 @@ class MonthlyTopicViewSet(viewsets.ViewSet):
     def detail(self, request, month=None):
         try:
             monthlyTopic = NewFeed.objects.get(mt_month=month, many=True)
+            serializer = MonthlyTopicSerializer(monthlyTopic)
+            return Response(serializer.data)
         except:
             print("End retrieve newfeed error: ", sys.exc_info()[0])
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = MonthlyTopicSerializer(monthlyTopic)
-        return Response(serializer.data)
     # /api/monthly-topic/<str:month> update like, share ...
 
     def update(self, request, month=None):
@@ -148,11 +148,11 @@ class NewFeedViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         try:
             newfeed = NewFeed.objects.get(id=pk)
+            serializer = DetailNewFeedSerializer(newfeed)
+            return Response(serializer.data)
         except:
             print("End retrieve newfeed error: ", sys.exc_info()[0])
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        serializer = DetailNewFeedSerializer(newfeed)
-        return Response(serializer.data)
 
     def update(self, request, pk=None):  # /api/newfeed/<str:id>
         print("Start update newfeed")
@@ -326,9 +326,9 @@ class GospelViewSet(viewsets.ViewSet):
 
     # /api/gospel/<str:pdate> get gospel by date %Y-%m-%d
     def retrieve(self, request, pdate=None):
-        date = datetime.today()
+        date = timezone.today()
         if pdate:
-            date = datetime.datetime.strptime(pdate, "%Y-%m-%d").date()
+            date = timezone.datetime.strptime(pdate, "%Y-%m-%d").date()
         newfeed = NewFeed.objects.get(daily_gospel_date=date)
         serializer = NewFeedSerializer(newfeed)
         return Response(serializer.data)

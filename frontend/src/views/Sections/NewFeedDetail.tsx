@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     cardMedia: {
         width: '100%',
-        height: '100%'
+        minHeight: '320px'
     }
 }));
 
@@ -91,6 +91,7 @@ type props = {
     openDetail: boolean,
     onCloseDetail: () => void;
 }
+
 const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) => {
     const classes = useStyles();
     const [fullScreen, setFullScreen] = React.useState(false);
@@ -137,7 +138,7 @@ const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) 
                 id="classic-modal-slide-description"
                 className={classes.modalBody}
             >
-                <CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />
+                {newFeed.imageText?<CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />:null}
                 <Typography variant='subtitle1' color='textSecondary'>
                     {newFeed.auth}
                 </Typography>

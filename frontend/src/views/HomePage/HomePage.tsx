@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
             imageText: '',
             title: '',
             description: { __html: '' },
-            linkText: LINK_CHU_DE_CHI_TIET,
+            linkText: '',
             month: '',
         }
     }

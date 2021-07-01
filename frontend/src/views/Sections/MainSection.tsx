@@ -65,7 +65,7 @@ const MainSection: React.FC<Props> = ({ posts, title }) => {
                 title: res.nf_title,
                 date: toDate(res.nf_date_created),
                 image: apiDomain + res.nf_image,
-                imageText: res.nf_title,
+                imageText: res.nf_image?res.nf_title:'',
                 content: {
                     __html: res.nf_content
                 },
