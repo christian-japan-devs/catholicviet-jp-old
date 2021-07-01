@@ -16,6 +16,7 @@ import { Profile } from './views/ProfilePage/Profile';
 import { AppProvider } from './contexts/AppContext';
 import ChurchPage from './views/ChurchPage/Church';
 import ChurchDetail from './views/ChurchPage/ChurchDetail';
+import RegisterPage from './views/MassPage/RegisterPage';
 //Constants
 import {
   LINK_LOGIN
@@ -28,6 +29,7 @@ import {
   , LINK_CHU_DE_CHI_TIET
   , LINK_NHA_THO
   , LINK_NHA_THO_CHI_TIET
+  , LINK_MASS_REGISTER
 } from './utils/constants';
 const App: React.FC = () => {
   return (
@@ -62,6 +64,11 @@ const App: React.FC = () => {
           <Route
             path={LINK_NHA_THO_CHI_TIET}
             component={ChurchDetail}
+          />
+          <Route
+            exact
+            path={LINK_MASS_REGISTER}
+            component={RegisterPage}
           />
         </BrowserRouter>
       </AppProvider>

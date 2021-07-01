@@ -453,7 +453,7 @@ class Mass(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            if(self.mmass_imagea):
+            if(self.mass_image):
                 self.mass_image = self.compressImage(self.mass_image)
         super(Mass, self).save(*args, **kwargs)
 

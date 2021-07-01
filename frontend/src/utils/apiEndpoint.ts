@@ -26,6 +26,8 @@ export const churchURL = `${endpoint}/church`;
 export const churchDetailURL = (id: number) => `${endpoint}/church/${id}/detail`;
 
 //Mass registration endpoint Api
+//Available Masses
+export const getListMassURL = `${endpoint}/getMass`
 export const myregisterURL = (churchId: number) =>
   `${endpoint}/massregister/?churchId=${churchId}`;
 export const massregisterCreateURL = `${endpoint}/massregister/create`;

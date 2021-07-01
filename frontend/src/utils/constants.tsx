@@ -26,4 +26,8 @@ export const YOUTH = 'Youth';
 //NEW_FEEDS LINK
 export const LINK_BAI_VIET_CHI_TIET = '/bai-viet/chi-tiet/';
 export const LINK_CHU_DE_CHI_TIET = '/chu-de-thang/chi-tiet/';
-//
+//GOSPEL LINK
+export const LINK_BAI_DOC_CHI_TIET = '/loi-chua/chi-tiet/?d=';
+
+//MASS
+export const LINK_MASS_REGISTER = '/nha-tho/dang-ky'

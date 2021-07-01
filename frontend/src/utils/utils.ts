@@ -16,5 +16,9 @@ export const authAxios = axios.create({
  * @returns {string} retrun
  */
 export const toDate = (data: string) => {
-  return Moment(data).format('H:m YYYY-MM-DD')
+  return Moment(data).format('YYYY-MM-DD')
+}
+
+export const toDateTime = (data: string) => {
+  return Moment(data).format('HH:mm YYYY-MM-DD')
 }

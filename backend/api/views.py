@@ -181,12 +181,13 @@ class ReMassListViewSet(viewsets.ModelViewSet):
         mass = Mass.objects.get(id=pk)
         serializer = ReMassSerializer(mass)
         return Response(serializer.data)
+
 # API Discription
-# Name: ReMassListViewSet
-# Serializer: ListRegistrationMassSerializer
-# Url: /api/getMass
-# Detail: Get list registration that are available
-# Requirements:
+# Name: MassRegister
+# Serializer: RegistrationSerializer
+# Url: /api/massregister
+# Detail: register for attending a Mass with authenticated user.
+# Requirements: user is authenticated
 # Output:
 
 
@@ -197,7 +198,7 @@ class MassRegister(viewsets.ViewSet):
     }
     permission_classes = (IsAuthenticated,)
 
-    # /api/massregister/  get registration history of a user.
+    # /api/massregister/  get user's registration history.
     def getlist(self, request, *args, **kwargs):
         try:
             request_user = request.user
