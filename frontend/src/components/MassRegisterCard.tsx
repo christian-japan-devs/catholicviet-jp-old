@@ -28,12 +28,19 @@ const useStyles = makeStyles({
   seatNoElement:{
     marginLeft: "100px",
     marginRight: "100px",
+    display: "block",
   },
   footer: {
     padding: "12px",
     textAlign: "center",
     margin: "0",
-  },
+    '& button':{
+        marginRight: "4px",
+    },
+    '& a':{
+        marginRight: "4px",
+    }
+  }
 });
 
 export type MassRegsiter = {
@@ -61,7 +68,6 @@ type Props = {
 
 export const MassRegisterCard: React.FC<Props> = ({massRegister, handleRegister}) => {
   const classes = useStyles();
-  console.log(massRegister);
   return (
     <Card className={classes.root}>
         <CardActionArea>
@@ -106,10 +112,10 @@ export const MassRegisterCard: React.FC<Props> = ({massRegister, handleRegister}
             </CardContent>
         </CardActionArea>
         <CardActions className={classes.footer}>
-            {massRegister.mass_online_url==undefined?null:<Button  color="primary" href={massRegister.mass_online_url}>Trực tuyến</Button>}
+            {massRegister.mass_online_url===undefined?null:<Button variant="outlined" color="primary" href={massRegister.mass_online_url}>Trực tuyến</Button>}
             { (massRegister.mass_slots-massRegister.mass_slots_registered<=0)?null:
-              <Button  color="secondary" onClick={ () => handleRegister(massRegister.id) }>Đăng ký</Button>}
-            <Button color="primary" href={LINK_BAI_DOC_CHI_TIET+massRegister.mass_date}>Bài đọc</Button>
+              <Button variant="outlined" color="secondary" onClick={ () => handleRegister(massRegister.id) }>Đăng ký</Button>}
+            <Button variant="outlined" color="primary" href={LINK_BAI_DOC_CHI_TIET+massRegister.mass_date}>Bài đọc</Button>
         </CardActions>
     </Card>
   );

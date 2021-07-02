@@ -62,9 +62,7 @@ export const MonthlyTopic: React.FC<Props> = (props) => {
                         <Typography component="h1" variant="h3" color="inherit" gutterBottom>
                             {topic.title}
                         </Typography>
-                        <Typography variant="h5" color="inherit" paragraph>
-                            <div dangerouslySetInnerHTML={topic.description}></div>
-                        </Typography>
+                        <div dangerouslySetInnerHTML={topic.description}></div>
                         <Link variant='subtitle1' style={{ textDecoration: 'none', color: 'inherit' }} href={topic.linkText}>
                             {!!topic.image ? 'Xem chi tiết.' : ""}
                         </Link>

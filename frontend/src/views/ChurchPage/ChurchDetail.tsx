@@ -16,7 +16,6 @@ import Button from "../../components/CustomButtons/Button";
 //Components
 //Utils
 import { apiDomain, churchDetailURL } from '../../utils/apiEndpoint';
-import { toDate } from '../../utils/utils';
 import { Church } from './Church';
 import { MassTime } from '../MassPage/MassTime';
 
@@ -119,10 +118,10 @@ const ChurchDetail: React.FC<props> = ({ church, openDialog, onCloseDialog }) =>
             for (var index in res) {
                 var data = res[index];
                 var massTimes: MassTime[] = []
-                for (var index in data.massSchedules) {
-                    var schedule = data.massSchedules[index];
+                for (var index1 in data.massSchedules) {
+                    var schedule = data.massSchedules[index1];
                     var massTime: MassTime = {
-                        id: parseInt(index),
+                        id: parseInt(index1),
                         day: schedule.split('-')[1],
                         time: schedule.split('-')[2],
                         language: schedule.split('-')[3]

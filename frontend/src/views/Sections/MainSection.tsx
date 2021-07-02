@@ -100,9 +100,7 @@ const MainSection: React.FC<Props> = ({ posts, title }) => {
                                             <Typography variant='subtitle1' color='textSecondary'>
                                                 {post.date}
                                             </Typography>
-                                            <Typography variant='subtitle1' paragraph>
-                                                <div dangerouslySetInnerHTML={post.description}></div>
-                                            </Typography>
+                                            <div dangerouslySetInnerHTML={post.description}></div>
                                         </CardContent>
                                     </div>
                                 </Card>
