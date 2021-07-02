@@ -482,8 +482,8 @@ class Seat(models.Model):
     #unique_together = ('seat_no','seat_mass','seat_type')
 
     def __str__(self):
-        # :{self.seat_mass_schedule.mass_schedule_chapel.church_chapel_name}:{self.seat_mass_schedule.mass_time}'
-        return f'{self.seat_no} : {self.seat_type}'
+        # {self.seat_no} : {self.seat_type}'
+        return f'{self.seat_mass_schedule.mass_church.church_name}:{self.seat_mass_schedule.mass_week_day}:{self.seat_mass_schedule.mass_time}'
 
 
 class MonthlyTopic(models.Model):

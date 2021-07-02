@@ -21,6 +21,7 @@ import Select from '@material-ui/core/Select';
 import Layout from '../Layout';
 import { MonthlyTopic, Props as TopicProps } from '../Sections/MonthlyTopic';
 import { MassRegsiter, MassRegisterCard } from '../../components/MassRegisterCard';
+import { Ticket, TicketCard } from '../../components/Card/Ticket';
 //Utils
 import { apiDomain, monthlyTopicEnd, getListMassURL, massRegisterCreateURL } from '../../utils/apiEndpoint';
 import { toDate, getHeaderWithAuthentication } from '../../utils/utils';
@@ -248,6 +249,16 @@ const RegisterPage: React.FC = () => {
                     throw res;
                 })
                 .then((res) => {
+                    var tiket = {
+                        id: number,
+                        title: string,
+                        date: string,
+                        time: string,
+                        seat?: string,
+                        code?: string,
+                        confirm?: boolean,
+                        approve?: string
+                    }
                     console.log(res)
                 })
                 .catch((err) => {
