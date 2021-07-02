@@ -97,7 +97,6 @@ const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) 
     const [fullScreen, setFullScreen] = React.useState(false);
     React.useEffect(() =>{
         const width = window.innerWidth;
-        console.log(width);
         if(width <= 900){
             setFullScreen(true);
         } else{

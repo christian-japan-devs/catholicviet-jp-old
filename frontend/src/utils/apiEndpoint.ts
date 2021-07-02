@@ -28,8 +28,8 @@ export const churchDetailURL = (id: number) => `${endpoint}/church/${id}/detail`
 //Mass registration endpoint Api
 //Available Masses
 export const getListMassURL = `${endpoint}/getmass`
-export const myregisterURL = (churchId: number) =>
+export const myRegisterByChurchIdURL = (churchId: number) =>
   `${endpoint}/massregister/?churchId=${churchId}`;
-export const massregisterCreateURL = `${endpoint}/massregister/create`;
+export const massRegisterCreateURL = `${endpoint}/massregister`;
 export const registerUpdateURL = (id: number) =>
   `${endpoint}/massregister/${id}/update`;

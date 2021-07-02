@@ -85,8 +85,8 @@ const MainSection: React.FC<Props> = ({ posts, title }) => {
             <Grid container spacing={4}>
                 {
                     posts.map((post) => (
-                        <Grid item xs={12} sm={6} >
-                            <CardActionArea key={post.title} component='a' style={{ textDecoration: 'none' }} onClick={() => handleDetailClick(post.id)}>
+                        <Grid key={post.title} item xs={12} sm={6} >
+                            <CardActionArea component='a' style={{ textDecoration: 'none' }} onClick={() => handleDetailClick(post.id)}>
                                 <Card className={classes.card}>
                                     {post.image && <CardMedia className={classes.cardMedia} image={post.image} title={post.imageText} />}
                                     <div className={classes.cardDetails}>

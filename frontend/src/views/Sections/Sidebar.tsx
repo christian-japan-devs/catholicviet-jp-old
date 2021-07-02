@@ -41,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ posts, title }) => {
             </Typography>
             <Divider />
             {posts.map((post) => (
-                <CardActionArea component='a' style={{ textDecoration: 'none' }} href={post.detailUrl}>
+                <CardActionArea key={post.id} component='a' style={{ textDecoration: 'none' }} href={post.detailUrl}>
                     <Card className={classes.card}>
                         <div className={classes.cardDetails}>
                             <CardContent>

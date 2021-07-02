@@ -22,13 +22,23 @@ const useStyles = makeStyles({
     paddingTop: '56.25%' //16:9
   },
   seatNo: {
-    padding: "2px",
+    margin: '12px',
     textAlign: "center",
   },
   seatNoElement:{
-    marginLeft: "100px",
-    marginRight: "100px",
-    display: "block",
+    display: 'inline',
+    whiteSpace:'nowrap',
+    marginRight: '20px',
+  },
+  setElement: {
+    width: '120px',
+    marginRight: '4px',
+  },
+  resize:{
+    fontSize:20
+  },
+  center:{
+    textAlign: "center",
   },
   footer: {
     padding: "12px",
@@ -73,40 +83,45 @@ export const MassRegisterCard: React.FC<Props> = ({massRegister, handleRegister}
         <CardActionArea>
             <CardHeader 
                 title={massRegister.mass_title}
-                subheader={massRegister.mass_church}
-            />
-            <CardMedia
-                className={classes.media}
-                image={massRegister.mass_image}
-                title={massRegister.mass_title}
+                subheader={massRegister.mass_date}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                    
+                <Typography variant="h6" component="h4" className={classes.center}>
+                    Thời gian {massRegister.mass_time}
+                </Typography>
+                <Typography variant="h6" component="h4">
+                    {massRegister.mass_church}
                 </Typography>
                 <div className={classes.seatNo}>
                     <div className={classes.seatNoElement}>
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Tổng số ghế"
-                        defaultValue={"       "+massRegister.mass_slots}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        variant="outlined"
-                        color="primary"
-                    />
-                    <br/><br/>
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Số ghế còn lại"
-                        defaultValue={"        "+(massRegister.mass_slots-massRegister.mass_slots_registered)}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        variant="outlined"
-                        color="secondary"
-                    />
+                        <TextField
+                            id="outlined-read-only-input"
+                            label="Tổng số ghế"
+                            defaultValue={"       "+massRegister.mass_slots}
+                            InputProps={{
+                                readOnly: true,
+                                classes: {
+                                    input: classes.resize,
+                                },
+                            }}
+                            className={classes.setElement}
+                            variant="outlined"
+                            color="primary"
+                        />
+                        <TextField
+                            id="outlined-read-only-input"
+                            label="Số ghế còn lại"
+                            defaultValue={"        "+(massRegister.mass_slots-massRegister.mass_slots_registered)}
+                            InputProps={{
+                                readOnly: true,
+                                classes: {
+                                    input: classes.resize,
+                                },
+                            }}
+                            className={classes.setElement} 
+                            variant="outlined"
+                            color="secondary"
+                        />
                     </div>
                 </div>
             </CardContent>
