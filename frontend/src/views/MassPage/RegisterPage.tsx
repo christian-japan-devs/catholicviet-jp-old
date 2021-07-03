@@ -12,7 +12,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Close from "@material-ui/icons/Close";
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -208,13 +207,13 @@ const RegisterPage: React.FC = () => {
 
     const handleRegisterCard = (id: number) => {
         //Check authenticated user
-        if(state.auth.isAuthenticated){
+        if (state.auth.isAuthenticated) {
             setRegisterFormValue({
                 ...registerFormValue,
                 mass_id: id
             });
             setOpenDialog(true);
-        }else{
+        } else {
             dispatch({
                 type: AUTH_SUCCESS,  //after login successful, redirect back to register page.
                 payload: {
@@ -227,43 +226,44 @@ const RegisterPage: React.FC = () => {
         }
     };
 
-    const handleOnSubmit = ()=>{
+    const handleOnSubmit = () => {
         //Cannot submit the default form values
-        if(registerFormValue.mass_id===-1 || registerFormValue.condition===0 || !registerFormValue.agreeWithTerm){
+        if (registerFormValue.mass_id === -1 || registerFormValue.condition === 0 || !registerFormValue.agreeWithTerm) {
 
-        }else{
-            if (state.auth.isAuthenticated){
+        } else {
+            if (state.auth.isAuthenticated) {
                 let headers = getHeaderWithAuthentication();
                 fetch(massRegisterCreateURL, {
                     method: 'post',
                     headers: headers,
                     body: JSON.stringify({
-                      mid: registerFormValue.mass_id,
-                      ucondi: registerFormValue.condition
+                        mid: registerFormValue.mass_id,
+                        ucondi: registerFormValue.condition
                     }),
                 })
-                .then((res) => {
-                    if (res.ok) {
-                      return res.json();
-                    }
-                    throw res;
-                })
-                .then((res) => {
-                    var tiket = {
-                        id: number,
-                        title: string,
-                        date: string,
-                        time: string,
-                        seat?: string,
-                        code?: string,
-                        confirm?: boolean,
-                        approve?: string
-                    }
-                    console.log(res)
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json();
+                        }
+                        throw res;
+                    })
+                    .then((res) => {
+                        var data = res[0];
+                        var tiket = {
+                            id: data.id,
+                            title: data.registration_mass,
+                            date: data.registration_date,
+                            time: data.registration_mass,
+                            seat: data.registration_seat,
+                            code: data.registration_confirm_code,
+                            confirm: data.registration_confirm_status,
+                            approve: data.registration_approve_status
+                        }
+                        console.log(res)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    });
             }
             setOpenDialog(false);
         }
@@ -281,22 +281,22 @@ const RegisterPage: React.FC = () => {
             agreeWithTerm: event.target.checked
         })
     };
-    
+
     const handleChange = (event: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) => {
         switch (event.target.name) {
-          case 'register-condition': {
-            setRegisterFormValue({
-                ...registerFormValue,
-                condition: parseInt(typeof event.target.value === 'string'?event.target.value:"0")
-            })
-            return;
-          }
+            case 'register-condition': {
+                setRegisterFormValue({
+                    ...registerFormValue,
+                    condition: parseInt(typeof event.target.value === 'string' ? event.target.value : "0")
+                })
+                return;
+            }
         }
     };
 
     if (!state.auth.isAuthenticated && redirectToLogin) {
         return <Redirect push to={LINK_LOGIN} />
-    }else{
+    } else {
         return (
             <Layout>
                 <CssBaseline />
@@ -305,15 +305,15 @@ const RegisterPage: React.FC = () => {
                     <Grid container spacing={5} className={classes.mainGrid}>
                         <Grid item xs={12} md={8}>
                             <Grid container spacing={2}>
-                            {massRegisters.map((massRegister) => (
-                                <Grid key={massRegister.id} item xs={12} md={6}>
-                                    <MassRegisterCard massRegister={massRegister} handleRegister={handleRegisterCard}/>
-                                </Grid>
-                            ))}
+                                {massRegisters.map((massRegister) => (
+                                    <Grid key={massRegister.id} item xs={12} md={6}>
+                                        <MassRegisterCard massRegister={massRegister} handleRegister={handleRegisterCard} />
+                                    </Grid>
+                                ))}
                             </Grid>
                         </Grid>
                         <Grid item xs={12} md={4}>
-                            
+
                         </Grid>
                     </Grid>
                     <Dialog
@@ -324,7 +324,7 @@ const RegisterPage: React.FC = () => {
                         open={openDialog}
                         //TransitionComponent={Transition}
                         keepMounted
-                        onClose={()=>setOpenDialog(false)}
+                        onClose={() => setOpenDialog(false)}
                         aria-labelledby="classic-modal-slide-title"
                         aria-describedby="classic-modal-slide-description"
                     >
@@ -338,49 +338,49 @@ const RegisterPage: React.FC = () => {
                                 key="close"
                                 aria-label="Close"
                                 color="inherit"
-                                onClick={()=>setOpenDialog(false)}
+                                onClick={() => setOpenDialog(false)}
                             >
                                 <Close className={classes.modalClose} />
                             </IconButton>
                             <h4 className={classes.modalTitle}>Đăng ký tham dự Thánh Lễ</h4>
                         </DialogTitle>
-                            <form noValidate>
-                                <DialogContent
-                                    id="classic-modal-slide-description"
-                                    className={classes.modalBody}
-                                >
-                                    <FormControl className={classes.formControl}>
-                                        <InputLabel htmlFor="condition-native">Sức khoẻ gần đây của bạn thế nào?</InputLabel>
-                                        <Select
-                                            native
-                                            value={registerFormValue.condition}
-                                            onChange={handleChange}
-                                            name="register-condition"
-                                        >
-                                            <option value="0">Chọn câu trả lời</option>
-                                            <option value="1">Tốt</option>
-                                            <option value="2">Không khoẻ</option>
-                                            <option value="3">Bị ốm gần đây</option>
-                                        </Select>
-                                    </FormControl>
-                                    <FormControlLabel
-                                        control={<Checkbox 
-                                                    checked={registerFormValue.agreeWithTerm}
-                                                    color="secondary" 
-                                                    name="register-agree-term" 
-                                                    onChange={handleCheckChange}/>}
-                                        label="Tôi đồng ý với các quy định chung trong mùa dịch của Nhà thờ."
-                                    />
-                                </DialogContent>
-                                <DialogActions className={classes.modalFooter}>
-                                    <Button color="secondary" onClick={()=>handleOnSubmit()}>Đăng ký</Button>
-                                    <Button color="primary" onClick={()=>setOpenDialog(false)}>Đóng</Button>
-                                </DialogActions>
-                            </form>
+                        <form noValidate>
+                            <DialogContent
+                                id="classic-modal-slide-description"
+                                className={classes.modalBody}
+                            >
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="condition-native">Sức khoẻ gần đây của bạn thế nào?</InputLabel>
+                                    <Select
+                                        native
+                                        value={registerFormValue.condition}
+                                        onChange={handleChange}
+                                        name="register-condition"
+                                    >
+                                        <option value="0">Chọn câu trả lời</option>
+                                        <option value="1">Tốt</option>
+                                        <option value="2">Không khoẻ</option>
+                                        <option value="3">Bị ốm gần đây</option>
+                                    </Select>
+                                </FormControl>
+                                <FormControlLabel
+                                    control={<Checkbox
+                                        checked={registerFormValue.agreeWithTerm}
+                                        color="secondary"
+                                        name="register-agree-term"
+                                        onChange={handleCheckChange} />}
+                                    label="Tôi đồng ý với các quy định chung trong mùa dịch của Nhà thờ."
+                                />
+                            </DialogContent>
+                            <DialogActions className={classes.modalFooter}>
+                                <Button color="secondary" onClick={() => handleOnSubmit()}>Đăng ký</Button>
+                                <Button color="primary" onClick={() => setOpenDialog(false)}>Đóng</Button>
+                            </DialogActions>
+                        </form>
                     </Dialog>
                 </Container>
             </Layout>
-        );     
+        );
     }
 };
 
