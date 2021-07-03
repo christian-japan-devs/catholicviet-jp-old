@@ -95,14 +95,14 @@ type props = {
 const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) => {
     const classes = useStyles();
     const [fullScreen, setFullScreen] = React.useState(false);
-    React.useEffect(() =>{
+    React.useEffect(() => {
         const width = window.innerWidth;
-        if(width <= 900){
+        if (width <= 900) {
             setFullScreen(true);
-        } else{
+        } else {
             setFullScreen(false);
         }
-    },[]);
+    }, []);
     return (
         <Dialog
             classes={{
@@ -137,7 +137,7 @@ const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) 
                 id="classic-modal-slide-description"
                 className={classes.modalBody}
             >
-                {newFeed.imageText?<CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />:null}
+                {newFeed.imageText ? <CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} /> : null}
                 <Typography variant='subtitle1' color='textSecondary'>
                     {newFeed.auth}
                 </Typography>

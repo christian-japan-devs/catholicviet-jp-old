@@ -4,12 +4,12 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import IconButton from "@material-ui/core/IconButton";
-import Close from "@material-ui/icons/Close";
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+import Close from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -19,11 +19,11 @@ import Select from '@material-ui/core/Select';
 //Components
 import Layout from '../Layout';
 import { MonthlyTopic, Props as TopicProps } from '../Sections/MonthlyTopic';
-import { MassRegsiter, MassRegisterCard } from '../../components/MassRegisterCard';
-import { Ticket, TicketCard } from '../../components/Card/Ticket';
+import { MassRegsiter, MassRegisterCard } from '../../components/Card/MassRegisterCard';
+import { Ticket, TicketCard } from '../../components/Card/TicketCard';
 //Utils
 import { apiDomain, monthlyTopicEnd, getListMassURL, massRegisterCreateURL } from '../../utils/apiEndpoint';
-import { toDate, getHeaderWithAuthentication } from '../../utils/utils';
+import { toDate, getHeaderWithAuthentication, cancelRegistration } from '../../utils/utils';
 import { LINK_LOGIN, LINK_CHU_DE_CHI_TIET, LINK_MASS_REGISTER } from '../../utils/constants';
 //App context
 import { AppContext } from '../../contexts/AppContext';
@@ -41,55 +41,56 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: theme.spacing(2),
     },
     modal: {
-        borderRadius: "6px",
+        borderRadius: '6px',
     },
     modalHeader: {
-        borderBottom: "none",
-        paddingTop: "24px",
-        paddingRight: "24px",
-        paddingBottom: "0",
-        paddingLeft: "24px",
-        minHeight: "16.43px",
+        borderBottom: 'none',
+        paddingTop: '24px',
+        paddingRight: '24px',
+        paddingBottom: '0',
+        paddingLeft: '24px',
+        minHeight: '16.43px',
     },
     modalTitle: {
-        margin: "0",
-        lineHeight: "1.42857143",
+        margin: '0',
+        textAlign: 'center',
+        lineHeight: '1.5',
     },
     modalCloseButton: {
-        color: "#999999",
-        marginTop: "-12px",
-        WebkitAppearance: "none",
-        padding: "0",
-        cursor: "pointer",
-        background: "0 0",
-        border: "0",
-        fontSize: "inherit",
-        opacity: ".9",
-        textShadow: "none",
+        color: '#999999',
+        marginTop: '-12px',
+        WebkitAppearance: 'none',
+        padding: '0',
+        cursor: 'pointer',
+        background: '0 0',
+        border: '0',
+        fontSize: 'inherit',
+        opacity: '.9',
+        textShadow: 'none',
         fontWeight: 700,
-        lineHeight: "1",
-        float: "right",
+        lineHeight: '1',
+        float: 'right',
     },
     modalClose: {
-        width: "16px",
-        height: "16px",
+        width: '16px',
+        height: '16px',
     },
     modalBody: {
-        paddingTop: "24px",
-        paddingRight: "24px",
-        paddingBottom: "16px",
-        paddingLeft: "24px",
-        position: "relative",
+        paddingTop: '24px',
+        paddingRight: '24px',
+        paddingBottom: '16px',
+        paddingLeft: '24px',
+        position: 'relative',
     },
     modalFooter: {
-        padding: "15px",
-        textAlign: "right",
-        paddingTop: "0",
-        margin: "0",
+        padding: '15px',
+        textAlign: 'right',
+        paddingTop: '0',
+        margin: '0',
     },
     modalFooterCenter: {
-        marginLeft: "auto",
-        marginRight: "auto",
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     container: {
         display: 'flex',
@@ -110,7 +111,7 @@ type registerForm = {
 const RegisterPage: React.FC = () => {
     const classes = useStyles();
 
-    var initTopic: TopicProps = {
+    let initTopic: TopicProps = {
         topic: {
             id: 1,
             image: '',
@@ -121,16 +122,29 @@ const RegisterPage: React.FC = () => {
             month: '',
         }
     }
-    var initRegisterForm: registerForm = {
+    let initTicket: Ticket = {
+        id: 0,
+        title: '',
+        date: '',
+        time: '',
+        name: '',
+        seat: '',
+        code: '',
+        confirm: '',
+        status: '',
+        approve: ''
+    }
+    let initRegisterForm: registerForm = {
         mass_id: -1,
         condition: 0,
         agreeWithTerm: false,
     }
-    var initMassRegister: MassRegsiter[] = [];
+    let initMassRegister: MassRegsiter[] = [];
 
     const { state, dispatch } = React.useContext(AppContext);
     const [monthlyTopic, setMonthlyTopicTypes] = React.useState(initTopic);
     const [massRegisters, setMassRegisters] = React.useState(initMassRegister);
+    const [ticket, setTicket] = React.useState(initTicket);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [registerFormValue, setRegisterFormValue] = React.useState(initRegisterForm);
     const [redirectToLogin, setRedirectToLogin] = React.useState(false);
@@ -148,9 +162,9 @@ const RegisterPage: React.FC = () => {
             }
             throw res;
         }).then((res) => {
-            for (var index in res) {
-                var data = res[index];
-                var massRegister = {
+            for (let index in res) {
+                let data = res[index];
+                let massRegister = {
                     id: data.id,
                     mass_date: toDate(data.mass_date),
                     mass_time: data.mass_time,
@@ -184,9 +198,9 @@ const RegisterPage: React.FC = () => {
             }
             throw res;
         }).then((res) => {
-            var data = res[0];
+            let data = res[0];
             if (data) {
-                var topic = {
+                let topic = {
                     id: data.id,
                     image: apiDomain + data.mt_image_main,
                     imageText: data.mt_image_main_text,
@@ -229,7 +243,7 @@ const RegisterPage: React.FC = () => {
     const handleOnSubmit = () => {
         //Cannot submit the default form values
         if (registerFormValue.mass_id === -1 || registerFormValue.condition === 0 || !registerFormValue.agreeWithTerm) {
-
+            //TODO: throw err notification.
         } else {
             if (state.auth.isAuthenticated) {
                 let headers = getHeaderWithAuthentication();
@@ -248,24 +262,25 @@ const RegisterPage: React.FC = () => {
                         throw res;
                     })
                     .then((res) => {
-                        var data = res[0];
-                        var tiket = {
-                            id: data.id,
-                            title: data.registration_mass,
-                            date: data.registration_date,
-                            time: data.registration_mass,
-                            seat: data.registration_seat,
-                            code: data.registration_confirm_code,
-                            confirm: data.registration_confirm_status,
-                            approve: data.registration_approve_status
+                        const ticket: Ticket = {
+                            id: res.id,
+                            title: res.registration_mass.mass_title,
+                            date: res.registration_date,
+                            time: res.registration_mass.mass_time,
+                            name: res.registration_user,
+                            seat: res.registration_seat,
+                            code: res.registration_confirm_code,
+                            confirm: res.registration_confirm_status,
+                            status: res.registration_status,
+                            approve: res.registration_approve_status
                         }
-                        console.log(res)
+                        setTicket(ticket);
+                        //setOpenDialog(false);
                     })
                     .catch((err) => {
-                        console.log(err)
+                        //TODO: throw err notification.
                     });
             }
-            setOpenDialog(false);
         }
         setRegisterFormValue({
             ...registerFormValue,
@@ -287,12 +302,17 @@ const RegisterPage: React.FC = () => {
             case 'register-condition': {
                 setRegisterFormValue({
                     ...registerFormValue,
-                    condition: parseInt(typeof event.target.value === 'string' ? event.target.value : "0")
+                    condition: parseInt(typeof event.target.value === 'string' ? event.target.value : '0')
                 })
                 return;
             }
         }
     };
+
+    const handleCancelRegister = (id: number, code: string) => {
+        let result = cancelRegistration("mass", id, code);
+        //TODO: Show cancel action result
+    }
 
     if (!state.auth.isAuthenticated && redirectToLogin) {
         return <Redirect push to={LINK_LOGIN} />
@@ -322,61 +342,65 @@ const RegisterPage: React.FC = () => {
                             paper: classes.modal,
                         }}
                         open={openDialog}
-                        //TransitionComponent={Transition}
                         keepMounted
                         onClose={() => setOpenDialog(false)}
-                        aria-labelledby="classic-modal-slide-title"
-                        aria-describedby="classic-modal-slide-description"
+                        aria-labelledby='classic-modal-slide-title'
+                        aria-describedby='classic-modal-slide-description'
                     >
                         <DialogTitle
-                            id="classic-modal-slide-title"
+                            id='classic-modal-slide-title'
                             disableTypography
                             className={classes.modalHeader}
                         >
                             <IconButton
                                 className={classes.modalCloseButton}
-                                key="close"
-                                aria-label="Close"
-                                color="inherit"
+                                key='close'
+                                aria-label='Close'
+                                color='inherit'
                                 onClick={() => setOpenDialog(false)}
                             >
                                 <Close className={classes.modalClose} />
                             </IconButton>
-                            <h4 className={classes.modalTitle}>Đăng ký tham dự Thánh Lễ</h4>
+                            <h4 className={classes.modalTitle}>ĐĂNG KÝ DỰ THÁNH LỄ</h4>
                         </DialogTitle>
-                        <form noValidate>
-                            <DialogContent
-                                id="classic-modal-slide-description"
-                                className={classes.modalBody}
-                            >
-                                <FormControl className={classes.formControl}>
-                                    <InputLabel htmlFor="condition-native">Sức khoẻ gần đây của bạn thế nào?</InputLabel>
-                                    <Select
-                                        native
-                                        value={registerFormValue.condition}
-                                        onChange={handleChange}
-                                        name="register-condition"
-                                    >
-                                        <option value="0">Chọn câu trả lời</option>
-                                        <option value="1">Tốt</option>
-                                        <option value="2">Không khoẻ</option>
-                                        <option value="3">Bị ốm gần đây</option>
-                                    </Select>
-                                </FormControl>
-                                <FormControlLabel
-                                    control={<Checkbox
-                                        checked={registerFormValue.agreeWithTerm}
-                                        color="secondary"
-                                        name="register-agree-term"
-                                        onChange={handleCheckChange} />}
-                                    label="Tôi đồng ý với các quy định chung trong mùa dịch của Nhà thờ."
-                                />
-                            </DialogContent>
-                            <DialogActions className={classes.modalFooter}>
-                                <Button color="secondary" onClick={() => handleOnSubmit()}>Đăng ký</Button>
-                                <Button color="primary" onClick={() => setOpenDialog(false)}>Đóng</Button>
-                            </DialogActions>
-                        </form>
+                        <DialogContent
+                            id='classic-modal-slide-description'
+                            className={classes.modalBody}
+                        >
+                            {
+                                ticket.status != "" ?
+                                    <TicketCard ticket={ticket} handleCancelRegister={handleCancelRegister} />
+                                    :
+                                    <>
+                                        <FormControl className={classes.formControl}>
+                                            <InputLabel htmlFor='condition-native'>Sức khoẻ gần đây của bạn thế nào?</InputLabel>
+                                            <Select
+                                                native
+                                                value={registerFormValue.condition}
+                                                onChange={handleChange}
+                                                name='register-condition'
+                                            >
+                                                <option value='0'>Chọn câu trả lời</option>
+                                                <option value='1'>Tốt</option>
+                                                <option value='2'>Không khoẻ</option>
+                                                <option value='3'>Bị ốm gần đây</option>
+                                            </Select>
+                                        </FormControl>
+                                        <FormControlLabel
+                                            control={<Checkbox
+                                                checked={registerFormValue.agreeWithTerm}
+                                                color='secondary'
+                                                name='register-agree-term'
+                                                onChange={handleCheckChange} />}
+                                            label='Tôi đồng ý với các quy định chung trong mùa dịch của Nhà thờ.'
+                                        />
+                                    </>
+                            }
+                        </DialogContent>
+                        <DialogActions className={classes.modalFooter}>
+                            {ticket.status === "" ? <Button color='secondary' onClick={() => handleOnSubmit()}>Đăng ký</Button> : null}
+                            <Button color='primary' onClick={() => setOpenDialog(false)}>Đóng</Button>
+                        </DialogActions>
                     </Dialog>
                 </Container>
             </Layout>

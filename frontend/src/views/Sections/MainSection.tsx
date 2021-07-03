@@ -39,7 +39,7 @@ type Props = {
 const MainSection: React.FC<Props> = ({ posts, title }) => {
     const classes = useStyles();
     const [openDetail, setOpenDetail] = React.useState(false);
-    var initNewFeed: NewFeed = {
+    let initNewFeed: NewFeed = {
         id: 0,
         title: '',
         date: '',
@@ -60,12 +60,12 @@ const MainSection: React.FC<Props> = ({ posts, title }) => {
             }
             throw res;
         }).then((res) => {
-            var newFeed: NewFeed = {
+            let newFeed: NewFeed = {
                 id: res.id,
                 title: res.nf_title,
                 date: toDate(res.nf_date_created),
                 image: apiDomain + res.nf_image,
-                imageText: res.nf_image?res.nf_title:'',
+                imageText: res.nf_image ? res.nf_title : '',
                 content: {
                     __html: res.nf_content
                 },
