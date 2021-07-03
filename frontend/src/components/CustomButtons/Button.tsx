@@ -21,7 +21,7 @@ type Props = {
   href: string,
   target?: string,
   children: React.ReactNode,
-  className?: string,
+  className: string,
   onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 };
 
@@ -57,7 +57,7 @@ const RegularButton: React.FC<Props> = (props) => {
     [classes.block]: block,
     [classes.link]: link,
     [classes.justIcon]: justIcon,
-    [(className !== undefined ? className : "")]: className,
+    [className]: className,
   });
   return (
     <Button onClick={onClick} target={target} href={href} className={btnClasses} {...rest} >

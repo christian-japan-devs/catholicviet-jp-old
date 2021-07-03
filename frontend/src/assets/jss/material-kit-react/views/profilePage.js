@@ -1,10 +1,8 @@
-//Material-ui/core
-import { makeStyles } from '@material-ui/core/';
+import { container, title } from "assets/jss/material-kit-react.js";
 
-import { container, title } from "../../material-kit-react.js";
-import imagesStyle from "../imagesStyles.js";
+import imagesStyle from "assets/jss/material-kit-react/imagesStyles.js";
 
-export const useStyles = makeStyles(() => ({
+const profilePageStyle = {
   container,
   profile: {
     textAlign: "center",
@@ -19,15 +17,16 @@ export const useStyles = makeStyles(() => ({
     margin: "1.071rem auto 0",
     maxWidth: "600px",
     color: "#999",
-    textAlign: "center",
+    textAlign: "center !important",
   },
   name: {
     marginTop: "-80px",
   },
+  ...imagesStyle,
   main: {
     background: "#FFFFFF",
-    position: 'relative',
-    zIndex: 3,
+    position: "relative",
+    zIndex: "3",
   },
   mainRaised: {
     margin: "-60px 30px 0px",
@@ -38,7 +37,7 @@ export const useStyles = makeStyles(() => ({
   title: {
     ...title,
     display: "inline-block",
-    position: 'relative',
+    position: "relative",
     marginTop: "30px",
     minHeight: "32px",
     textDecoration: "none",
@@ -58,11 +57,6 @@ export const useStyles = makeStyles(() => ({
     margin: "20px auto 50px auto",
     textAlign: "center",
   },
-  textCenter: {
-    textAlign: "center",
-  },
-  marginTop3: {
-    marginTop: '3rem',
-  },
-  ...imagesStyle,
-}));
+};
+
+export default profilePageStyle;

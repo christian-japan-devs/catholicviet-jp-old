@@ -30,10 +30,10 @@ export const HeaderLinks: React.FC<Props> = (props) => {
                     }}
                     dropdownList={
                         [
-                            <Link to='/nha-tho/dang-ky' className={classes.dropdownLink}>
+                            <Link to='/thanh-le/dang-ky' className={classes.dropdownLink}>
                                 Đăng ký
                             </Link>,
-                            <Link to='/nha-tho' className={classes.dropdownLink}>
+                            <Link to='/thanh-le/nha-tho' className={classes.dropdownLink}>
                                 Nhà thờ
                             </Link>,
                             <Link to='/lich/gio-le' className={classes.dropdownLink}>

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { cardBodyStyle } from '../../assets/jss/material-kit-react/components/cardBodyStyle';
 
 type Props = {
-    className?: string,
+    className: string,
     children: React.ReactNode,
 };
 
@@ -15,7 +15,7 @@ export const CardBody: React.FC<Props> = (props) => {
     const { className, children, ...rest } = props;
     const cardBodyClasses = classNames({
         [classes.cardBody]: true,
-        [(className !== undefined ? className : "")]: className,
+        [className]: className !== undefined,
     })
     return (
         <div className={cardBodyClasses} {...rest}>

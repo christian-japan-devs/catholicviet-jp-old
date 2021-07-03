@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 //nodejs library that concatenates classes
 import classNames from 'classnames';
 //@material-ui/core components
-import { List, ListItem, Divider } from '@material-ui/core';
+import { List, ListItem } from '@material-ui/core';
 // @material-ui/icons
 
 // core components
@@ -35,7 +35,7 @@ export const Footer: React.FC<propTypes> = (props: propTypes) => {
     <footer className={footerClasses}>
       <div className={classes.container}>
         <GridContainer className={classes.footerNav}>
-          <GridItem xs={6} sm={3}>
+          <GridItem xs={12} sm={3}>
             <List>
               <ListItem>
                 <h5 style={{ color: '#232323' }}>CatholicViet.Jp</h5>
@@ -47,7 +47,7 @@ export const Footer: React.FC<propTypes> = (props: propTypes) => {
               </ListItem>
             </List>
           </GridItem>
-          <GridItem xs={6} sm={3}>
+          <GridItem xs={12} sm={3}>
             <List >
               <ListItem>
                 <h5 style={{ fontWeight: 400 }}>Thánh Lễ</h5>
@@ -79,7 +79,7 @@ export const Footer: React.FC<propTypes> = (props: propTypes) => {
               </ListItem>
             </List>
           </GridItem>
-          <GridItem xs={6} sm={3}>
+          <GridItem xs={12} sm={3}>
             <List >
               <ListItem>
                 <h5 style={{ fontWeight: 400 }}>Phụng vụ</h5>
@@ -120,7 +120,7 @@ export const Footer: React.FC<propTypes> = (props: propTypes) => {
               </ListItem>
             </List>
           </GridItem>
-          <GridItem xs={6} sm={3}>
+          <GridItem xs={12} sm={3}>
             <List >
               <ListItem>
                 <h5 style={{ fontWeight: 400 }}>Liên lạc</h5>
@@ -164,7 +164,7 @@ export const Footer: React.FC<propTypes> = (props: propTypes) => {
             </List>
           </GridItem>
         </GridContainer>
-        <Divider />
+        <hr style={{ border: '0.5px solid' }} />
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>

@@ -4,7 +4,6 @@ export const AUTH_SET_EMAIL = 'setPassword';
 export const AUTH_SET_UPASS = 'setRepassword';
 export const AUTH_SET_OLDPASS = 'setOldPassword';
 export const AUTH_SET_REUPASS = 'setEmail';
-export const AUTH_LOADING = 'setIsLoading';
 
 export const AUTH_IS_AUTH = 'isAuthenticated';
 export const AUTH_SUCCESS = 'loginSuccess';

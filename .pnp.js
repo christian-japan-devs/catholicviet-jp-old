@@ -3753,10 +3753,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:0.5.5"
       ],
       [
-        "moment",
-        "npm:2.29.1"
-      ],
-      [
         "move-concurrently",
         "npm:1.0.1"
       ],
@@ -18144,7 +18140,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-react-app", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:6.0.0"],
             ["history", "npm:5.0.0"],
             ["html-react-parser", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:1.2.6"],
-            ["moment", "npm:2.29.1"],
             ["prop-types", "npm:15.7.2"],
             ["qs", "npm:6.10.1"],
             ["ramda", "npm:0.27.1"],
@@ -22082,15 +22077,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mkdirp-npm-1.0.4-37f6ef56b9-1aa3a6a2d7.zip/node_modules/mkdirp/",
           "packageDependencies": [
             ["mkdirp", "npm:1.0.4"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["moment", [
-        ["npm:2.29.1", {
-          "packageLocation": "./.yarn/cache/moment-npm-2.29.1-787d9fdafd-86729013fe.zip/node_modules/moment/",
-          "packageDependencies": [
-            ["moment", "npm:2.29.1"]
           ],
           "linkType": "HARD",
         }]

@@ -6,9 +6,9 @@ import classNames from 'classnames';
 import { cardStyle } from '../../assets/jss/material-kit-react/components/cardStyle';
 
 type Props = {
-    className?: string,
-    plain?: boolean,
-    carousel?: boolean,
+    className: string,
+    plain: boolean,
+    carousel: boolean,
     children: React.ReactNode,
 };
 
@@ -19,7 +19,7 @@ export const Card: React.FC<Props> = (props) => {
         [classes.card]: true,
         [classes.cardPlain]: props.plain,
         [classes.cardCarousel]: props.carousel,
-        [(className !== undefined ? className : "")]: className,
+        [className]: className !== undefined,
     })
     return (
         <div className={cardClassess} {...rest}>

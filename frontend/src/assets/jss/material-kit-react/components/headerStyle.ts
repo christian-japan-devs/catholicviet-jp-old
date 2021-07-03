@@ -44,7 +44,6 @@ export const headerStyle = makeStyles((theme) => ({
   container: {
     ...container,
     minHeight: "50px",
-    maxHeight: 'lg',
     flex: "1",
     alignItems: "center",
     justifyContent: "space-between",

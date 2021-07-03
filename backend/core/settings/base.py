@@ -170,7 +170,7 @@ LOCALE_PATHS = (
 )
 
 
-SITE_ID = 2
+SITE_ID = 1
 
 CORS_ORIGIN_ALLOW_ALL = True
 
