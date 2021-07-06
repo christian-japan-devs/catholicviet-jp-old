@@ -677,6 +677,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:dd45de44c4623086ed3b2136735a28555d8fb81ec1d9bd26340670c3fae1777ea79f67a71e3d09d6ec98d936e7ec265c3a8d355bcc0348b7517c5a2bbd58e920#npm:0.4.3"
       ],
       [
+        "@react-native-community/art",
+        "virtual:ec65874d83e6f47dc6cdf40df86430c446bea2931c6cce0f277c09b723a9573a6c361ea2b7036c8e64d85b5d1c9fadd90d87f15edb0b5f92688c78a27cdc4440#npm:1.2.0"
+      ],
+      [
         "@rollup/plugin-node-resolve",
         "virtual:17c41a44cecfa3015f0bf4e6851979f369c429baf2b6ce72a98feeea42e4f874d0f9e7a59ac7d6418392f089dc8cc429372e4e28f5940c376526030361564eab#npm:7.1.3"
       ],
@@ -1267,6 +1271,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "arrify",
         "npm:2.0.1"
+      ],
+      [
+        "art",
+        "npm:0.10.3"
       ],
       [
         "asap",
@@ -3005,6 +3013,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:2.2.0"
       ],
       [
+        "invariant",
+        "npm:2.2.4"
+      ],
+      [
         "ip",
         "npm:1.1.5"
       ],
@@ -4529,6 +4541,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.5.1"
       ],
       [
+        "qr.js",
+        "npm:0.0.0"
+      ],
+      [
         "qs",
         "npm:6.10.1"
       ],
@@ -4639,6 +4655,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "react-property",
         "npm:1.0.1"
+      ],
+      [
+        "react-qr-code",
+        "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:1.1.1"
       ],
       [
         "react-qr-reader",
@@ -11106,6 +11126,35 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@react-native-community/art", [
+        ["npm:1.2.0", {
+          "packageLocation": "./.yarn/unplugged/@react-native-community-art-virtual-83960819e9/node_modules/@react-native-community/art/",
+          "packageDependencies": [
+            ["@react-native-community/art", "npm:1.2.0"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:ec65874d83e6f47dc6cdf40df86430c446bea2931c6cce0f277c09b723a9573a6c361ea2b7036c8e64d85b5d1c9fadd90d87f15edb0b5f92688c78a27cdc4440#npm:1.2.0", {
+          "packageLocation": "./.yarn/unplugged/@react-native-community-art-virtual-83960819e9/node_modules/@react-native-community/art/",
+          "packageDependencies": [
+            ["@react-native-community/art", "virtual:ec65874d83e6f47dc6cdf40df86430c446bea2931c6cce0f277c09b723a9573a6c361ea2b7036c8e64d85b5d1c9fadd90d87f15edb0b5f92688c78a27cdc4440#npm:1.2.0"],
+            ["@types/react", "npm:17.0.5"],
+            ["@types/react-native", null],
+            ["art", "npm:0.10.3"],
+            ["invariant", "npm:2.2.4"],
+            ["prop-types", "npm:15.7.2"],
+            ["react", "npm:17.0.2"],
+            ["react-native", null]
+          ],
+          "packagePeers": [
+            "@types/react-native",
+            "@types/react",
+            "react-native",
+            "react"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@rollup/plugin-node-resolve", [
         ["npm:7.1.3", {
           "packageLocation": "./.yarn/cache/@rollup-plugin-node-resolve-npm-7.1.3-42815f6ad9-4d751a407f.zip/node_modules/@rollup/plugin-node-resolve/",
@@ -13267,6 +13316,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/arrify-npm-2.0.1-38c408f77c-2a19726815.zip/node_modules/arrify/",
           "packageDependencies": [
             ["arrify", "npm:2.0.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["art", [
+        ["npm:0.10.3", {
+          "packageLocation": "./.yarn/cache/art-npm-0.10.3-89a0695a38-d8e20b60af.zip/node_modules/art/",
+          "packageDependencies": [
+            ["art", "npm:0.10.3"]
           ],
           "linkType": "HARD",
         }]
@@ -18151,6 +18209,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:17.0.2"],
             ["react-dom", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:17.0.2"],
             ["react-helmet", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:6.1.0"],
+            ["react-qr-code", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:1.1.1"],
             ["react-redux", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:7.2.4"],
             ["react-router-dom", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:5.2.0"],
             ["react-scripts", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:4.0.3"],
@@ -19442,6 +19501,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/interpret-npm-2.2.0-3603a544e1-c89b6aa67f.zip/node_modules/interpret/",
           "packageDependencies": [
             ["interpret", "npm:2.2.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["invariant", [
+        ["npm:2.2.4", {
+          "packageLocation": "./.yarn/cache/invariant-npm-2.2.4-717fbdb119-96d8a2a4f0.zip/node_modules/invariant/",
+          "packageDependencies": [
+            ["invariant", "npm:2.2.4"],
+            ["loose-envify", "npm:1.4.0"]
           ],
           "linkType": "HARD",
         }]
@@ -24699,6 +24768,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["qr.js", [
+        ["npm:0.0.0", {
+          "packageLocation": "./.yarn/cache/qr.js-npm-0.0.0-eea89f459b-83e1d6140e.zip/node_modules/qr.js/",
+          "packageDependencies": [
+            ["qr.js", "npm:0.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["qs", [
         ["npm:6.10.1", {
           "packageLocation": "./.yarn/cache/qs-npm-6.10.1-12d3ab7795-25e50a9107.zip/node_modules/qs/",
@@ -25143,6 +25221,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/react-property-npm-1.0.1-fd74c188fd-a9e8d614ba.zip/node_modules/react-property/",
           "packageDependencies": [
             ["react-property", "npm:1.0.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["react-qr-code", [
+        ["npm:1.1.1", {
+          "packageLocation": "./.yarn/cache/react-qr-code-npm-1.1.1-34a5948141-971e7602c8.zip/node_modules/react-qr-code/",
+          "packageDependencies": [
+            ["react-qr-code", "npm:1.1.1"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:1.1.1", {
+          "packageLocation": "./.yarn/$$virtual/react-qr-code-virtual-ec65874d83/0/cache/react-qr-code-npm-1.1.1-34a5948141-971e7602c8.zip/node_modules/react-qr-code/",
+          "packageDependencies": [
+            ["react-qr-code", "virtual:129c180801e06ed395e4da371c76ab19371e66a3c2230c25e2f8aa53715d8f66998096a34403ac325c10f7034d54eaa1a82bf612b0d4bf56a1d1943388d98f11#npm:1.1.1"],
+            ["@react-native-community/art", "virtual:ec65874d83e6f47dc6cdf40df86430c446bea2931c6cce0f277c09b723a9573a6c361ea2b7036c8e64d85b5d1c9fadd90d87f15edb0b5f92688c78a27cdc4440#npm:1.2.0"],
+            ["@types/react", "npm:17.0.5"],
+            ["prop-types", "npm:15.7.2"],
+            ["qr.js", "npm:0.0.0"],
+            ["react", "npm:17.0.2"]
+          ],
+          "packagePeers": [
+            "@types/react",
+            "react"
           ],
           "linkType": "HARD",
         }]

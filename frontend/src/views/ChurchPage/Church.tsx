@@ -4,18 +4,6 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import IconButton from "@material-ui/core/IconButton";
-import Close from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { TransitionProps } from '@material-ui/core/transitions';
-import Button from "../../components/CustomButtons/Button";
 //Components
 import Layout from '../Layout';
 import ChurchCard from './ChurchCard';
@@ -45,15 +33,6 @@ export type Church = {
     massTime: MassTime[],
 }
 
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement<any, any> },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="down" ref={ref} {...props} />;
-});
-
-Transition.displayName = "Transition";
-
 const ChurchPage: React.FC = () => {
     const classes = useStyles();
     var initChurches: Church[] = [];
@@ -77,10 +56,10 @@ const ChurchPage: React.FC = () => {
             for (var index in res) {
                 var data = res[index];
                 var massTimes: MassTime[] = []
-                for (var index in data.massSchedules) {
-                    var schedule = data.massSchedules[index];
+                for (var index1 in data.massSchedules) {
+                    var schedule = data.massSchedules[index1];
                     var massTime: MassTime = {
-                        id: parseInt(index),
+                        id: parseInt(index1),
                         day: schedule.split('-')[1],
                         time: schedule.split('-')[2],
                         language: schedule.split('-')[3]

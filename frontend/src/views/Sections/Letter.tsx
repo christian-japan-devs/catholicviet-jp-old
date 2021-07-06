@@ -70,10 +70,8 @@ const Letter: React.FC<Props> = ({ post }) => {
             <Typography variant='subtitle1' color='textSecondary'>
                 {newFeed.date}
             </Typography>
-            <CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />
-            <Typography variant='subtitle1' paragraph>
-                <div dangerouslySetInnerHTML={newFeed.content}></div>
-            </Typography>
+            { newFeed.image&&<CardMedia className={classes.cardMedia} image={newFeed.image} title={newFeed.imageText} />}
+            <div dangerouslySetInnerHTML={newFeed.content}></div>
             <Divider />
         </div>
     );

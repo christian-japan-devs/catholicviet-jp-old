@@ -324,15 +324,15 @@ class ChurchPost(models.Model):
 
 
 class ChurchSeat(models.Model):
-    chapel_seat_no = models.CharField(
+    church_seat_no = models.CharField(
         _('Số ghế'), help_text=_('Số ghế'), max_length=4)
-    chapel_seat_type = models.CharField(_('Kiểu ghế'), help_text=_(
+    church_seat_type = models.CharField(_('Kiểu ghế'), help_text=_(
         'Kiểu ghế'), max_length=30, choices=seat_choice, blank=False)
-    chapel_seat_chapel = models.ForeignKey(
+    church_seat_church = models.ForeignKey(
         Church, on_delete=models.SET_NULL, null=True, help_text=_('Select Church'))
 
     def __str__(self):
-        return f'{self.chapel_seat_chapel.church_chapel_name} : {self.chapel_seat_no}'
+        return f'{self.church_seat_church.church_name} : {self.church_seat_no}'
 
 
 class MassSchedule(models.Model):
@@ -453,7 +453,7 @@ class Mass(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            if(self.mmass_imagea):
+            if(self.mass_image):
                 self.mass_image = self.compressImage(self.mass_image)
         super(Mass, self).save(*args, **kwargs)
 
@@ -482,8 +482,8 @@ class Seat(models.Model):
     #unique_together = ('seat_no','seat_mass','seat_type')
 
     def __str__(self):
-        # :{self.seat_mass_schedule.mass_schedule_chapel.church_chapel_name}:{self.seat_mass_schedule.mass_time}'
-        return f'{self.seat_no} : {self.seat_type}'
+        # {self.seat_no} : {self.seat_type}'
+        return f'{self.seat_mass_schedule.mass_church.church_name}:{self.seat_mass_schedule.mass_week_day}:{self.seat_mass_schedule.mass_time}'
 
 
 class MonthlyTopic(models.Model):

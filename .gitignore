@@ -139,3 +139,5 @@ dmypy.json
 **/secrets/*.*
 !**/secrets/*.enc.*
 keys.txt
+
+package-lock.json

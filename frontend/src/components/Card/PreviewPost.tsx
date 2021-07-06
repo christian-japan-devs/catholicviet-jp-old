@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type propTypes = {
+type props = {
     post: {
         title: string,
         auth?: string,
@@ -34,9 +34,8 @@ type propTypes = {
     }
 }
 
-const PreviewPost: React.FC<propTypes> = (props: propTypes) => {
+const PreviewPost: React.FC<props> = ({post}) => {
     const classes = useStyles();
-    const { post } = props;
     return (
         <Grid item xs={12} md={6} sm={6}>
             <CardActionArea component='a' style={{ textDecoration: 'none' }} href={post.detail}>
