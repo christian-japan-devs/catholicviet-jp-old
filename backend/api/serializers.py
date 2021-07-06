@@ -163,11 +163,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
     registration_user = serializers.ReadOnlyField(
         source='registration_user.userprofile.profile_full_name')
     registration_mass = DetailMassSerializer()
+    registration_seat = serializers.ReadOnlyField(
+        source='registration_seat.seat_no')
 
     class Meta:
         model = Registration
         fields = (
-            'id', 'registration_mass', 'registration_date', 'registration_user', 'registration_confirm_code', 'registration_status', 'registration_approve_status', 'registration_confirm_status'
+            'id', 'registration_mass', 'registration_date', 'registration_user', 'registration_seat', 'registration_confirm_code', 'registration_status', 'registration_approve_status', 'registration_confirm_status'
         )
 
     def get_registration_status(self, obj):

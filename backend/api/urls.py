@@ -26,7 +26,7 @@ urlpatterns = [
     path('getmass/<str:pk>', ReMassListViewSet.as_view({
         'get': 'retrieve'
     })),
-    path('massregister/', MassRegister.as_view({
+    path('massregister', MassRegister.as_view({
         'get': 'getlist',
         'post': 'create'
     })),

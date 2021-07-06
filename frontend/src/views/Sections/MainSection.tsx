@@ -39,7 +39,7 @@ type Props = {
 const MainSection: React.FC<Props> = ({ posts, title }) => {
     const classes = useStyles();
     const [openDetail, setOpenDetail] = React.useState(false);
-    var initNewFeed: NewFeed = {
+    let initNewFeed: NewFeed = {
         id: 0,
         title: '',
         date: '',
@@ -60,12 +60,12 @@ const MainSection: React.FC<Props> = ({ posts, title }) => {
             }
             throw res;
         }).then((res) => {
-            var newFeed: NewFeed = {
+            let newFeed: NewFeed = {
                 id: res.id,
                 title: res.nf_title,
                 date: toDate(res.nf_date_created),
                 image: apiDomain + res.nf_image,
-                imageText: res.nf_image?res.nf_title:'',
+                imageText: res.nf_image ? res.nf_title : '',
                 content: {
                     __html: res.nf_content
                 },
@@ -85,8 +85,8 @@ const MainSection: React.FC<Props> = ({ posts, title }) => {
             <Grid container spacing={4}>
                 {
                     posts.map((post) => (
-                        <Grid item xs={12} sm={6} >
-                            <CardActionArea key={post.title} component='a' style={{ textDecoration: 'none' }} onClick={() => handleDetailClick(post.id)}>
+                        <Grid key={post.title} item xs={12} sm={6} >
+                            <CardActionArea component='a' style={{ textDecoration: 'none' }} onClick={() => handleDetailClick(post.id)}>
                                 <Card className={classes.card}>
                                     {post.image && <CardMedia className={classes.cardMedia} image={post.image} title={post.imageText} />}
                                     <div className={classes.cardDetails}>
@@ -100,9 +100,7 @@ const MainSection: React.FC<Props> = ({ posts, title }) => {
                                             <Typography variant='subtitle1' color='textSecondary'>
                                                 {post.date}
                                             </Typography>
-                                            <Typography variant='subtitle1' paragraph>
-                                                <div dangerouslySetInnerHTML={post.description}></div>
-                                            </Typography>
+                                            <div dangerouslySetInnerHTML={post.description}></div>
                                         </CardContent>
                                     </div>
                                 </Card>

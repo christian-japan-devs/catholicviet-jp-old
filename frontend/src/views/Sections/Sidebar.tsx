@@ -41,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ posts, title }) => {
             </Typography>
             <Divider />
             {posts.map((post) => (
-                <CardActionArea component='a' style={{ textDecoration: 'none' }} href={post.detailUrl}>
+                <CardActionArea key={post.id} component='a' style={{ textDecoration: 'none' }} href={post.detailUrl}>
                     <Card className={classes.card}>
                         <div className={classes.cardDetails}>
                             <CardContent>
@@ -54,9 +54,7 @@ const Sidebar: React.FC<Props> = ({ posts, title }) => {
                                 <Typography variant='subtitle1' color='textSecondary'>
                                     {post.date}
                                 </Typography>
-                                <Typography variant='subtitle1' paragraph>
-                                    <div dangerouslySetInnerHTML={post.description}></div>
-                                </Typography>
+                                <div dangerouslySetInnerHTML={post.description}></div>
                             </CardContent>
                         </div>
                     </Card>

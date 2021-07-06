@@ -89,54 +89,6 @@ class MonthlyTopicViewSet(viewsets.ViewSet):
 # Requirements:
 # Output:
 
-
-class MonthlyTopicViewSet(viewsets.ViewSet):
-    permission_classes = (AllowAny,)
-
-    def topic(self, request):  # /api/monthly-topic
-        monthlyTopic = MonthlyTopic.objects.all().order_by(
-            '-mt_date_edited')[0:1]  # Get the newest post
-        serializer = MonthlyTopicBrefSerializer(monthlyTopic, many=True)
-        return Response(serializer.data)
-
-    # /api/monthly-topic/<str:month> for more detail.
-    def detail(self, request, month=None):
-        try:
-            monthlyTopic = NewFeed.objects.get(mt_month=month, many=True)
-            serializer = MonthlyTopicSerializer(monthlyTopic)
-            return Response(serializer.data)
-        except:
-            print("End retrieve newfeed error: ", sys.exc_info()[0])
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # /api/monthly-topic/<str:month> update like, share ...
-
-    def update(self, request, month=None):
-        try:
-            req_auth = request.auth
-            monthlyTopic = NewFeed.objects.get(mt_month=month)
-            if(req_auth):
-                req_user = request.user
-                req_type = request.data.get('type', '')
-                if(req_type):
-                    if(req_type == 'like'):
-                        monthlyTopic.mt_post_like += 1
-                        monthlyTopic.save()
-            serializer = MonthlyTopicSerializer(monthlyTopic)
-            return Response(serializer.data)
-        except:
-            print("End retrieve newfeed error: ", sys.exc_info()[0])
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# API Discription
-# Name: getNewFeed
-# Url:
-# Detail:
-# Requirements:
-# Output:
-
-
-
 class NewFeedViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
@@ -229,12 +181,13 @@ class ReMassListViewSet(viewsets.ModelViewSet):
         mass = Mass.objects.get(id=pk)
         serializer = ReMassSerializer(mass)
         return Response(serializer.data)
+
 # API Discription
-# Name: ReMassListViewSet
-# Serializer: ListRegistrationMassSerializer
-# Url: /api/getMass
-# Detail: Get list registration that are available
-# Requirements:
+# Name: MassRegister
+# Serializer: RegistrationSerializer
+# Url: /api/massregister
+# Detail: register for attending a Mass with authenticated user.
+# Requirements: user is authenticated
 # Output:
 
 
@@ -245,7 +198,7 @@ class MassRegister(viewsets.ViewSet):
     }
     permission_classes = (IsAuthenticated,)
 
-    # /api/massregister/  get registration history of a user.
+    # /api/massregister/  get user's registration history.
     def getlist(self, request, *args, **kwargs):
         try:
             request_user = request.user
@@ -341,7 +294,6 @@ class GospelViewSet(viewsets.ViewSet):
 # Detail: Get list mass schedule
 # Requirements:
 # Output:
-
 
 
 class MassTimeViewSet(viewsets.ViewSet):

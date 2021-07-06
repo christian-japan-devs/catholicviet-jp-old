@@ -596,8 +596,6 @@ def singleRegister(mass_id, user_condi, user):
     random_code = get_random_string(length=24, allowed_chars=CODERANGE)
     registration.registration_confirm_code = random_code
     registration.save()
-    # print(booking.booking_confirm_code)
-    # print(ALLOWED_HOSTS)
     registration.registration_code = HOST_NAME+"register/cfmatt/?"+USER_ID+"=" + \
         str(user.pk)+"&"+BOOKING_ID+"="+str(registration.pk) + \
         "&"+MASS_ID+"="+str(mass_id)+"&"+CODE+"="+random_code
@@ -620,7 +618,7 @@ def singleRegister(mass_id, user_condi, user):
         mass.mass_total_registered += 1
         mass.save()
         registration.registration_status = APPROVED   # Mean that was accecpted
-        if today.weekday() >= SATURDAY:
+        if today.weekday() >= SATURDAY:               # Change here to a day before the Mass
             registration.registration_confirm_status = CONFIRMED
         seat = seatContent[SEAT]
         registration.registration_seat = seat
