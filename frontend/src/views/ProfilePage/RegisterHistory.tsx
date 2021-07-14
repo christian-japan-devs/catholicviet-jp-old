@@ -1,68 +1,67 @@
 
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
 // Shared componentss
+
+import { Ticket, TicketCard } from '../../components/Card/TicketCard';
 //Utils
-import {
-    ValidateEmail
-} from '../../utils/formValidation';
-import {
-    AUTH_SET_EMAIL
-    , AUTH_SET_ERROR_AT
-} from '../../utils/actionTypes';
-//App context
-import { AppContext } from '../../contexts/AppContext';
-//Auth actions
-import { useAuth } from '../../hooks/authAction';
+import { apiDomain, massRegisterURL } from '../../utils/apiEndpoint';
+import { toDate, getHeaderWithAuthentication, cancelRegistration } from '../../utils/utils';
 
-export type Props = {
-    hiden: boolean;
-};
-
-
-/**
- * Function: ResetPasswordRequest
- * Description:
- * TODO: check if token is still valid no need to send email.
- * Input:
- * 1) AuthDispatch
- * 2) Data
- * Output:
- */
 export const RegisterHistoryTab = () => {
-    const { state, dispatch } = React.useContext(AppContext);
+    let initTicket: Ticket[] = [];
 
-    //Handle Submit change
-    const handleOnSubmit = async (evt: React.FormEvent) => {
-        evt.preventDefault();
-    };
+    const [tickets, setTickets] = React.useState(initTicket);
 
-    //Handle form input change
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        switch (event.target.name) {
-            case 'email': {
-                dispatch({
-                    type: AUTH_SET_EMAIL,
-                    payload: event.target.value,
-                });
-                return;
-            }
-        }
-    };
+    React.useEffect(() => {
 
-    const handleOnClear = () => {
-        dispatch({
-            type: AUTH_SET_EMAIL,
-            payload: "",
-        });
+        let headers = getHeaderWithAuthentication();
+        fetch(massRegisterURL, {
+            method: 'get',
+            headers: headers,
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                throw res;
+            })
+            .then((res) => {
+                for (let index in res) {
+                    let data = res[index];
+                    let ticket: Ticket = {
+                        id: data.id,
+                        title: data.registration_mass.mass_title,
+                        date: data.registration_date,
+                        time: data.registration_mass.mass_time,
+                        name: data.registration_user,
+                        seat: data.registration_seat,
+                        code: data.registration_confirm_code,
+                        confirm: data.registration_confirm_status,
+                        status: data.registration_status,
+                        approve: data.registration_approve_status
+                    }
+                    setTickets(tickets => [...tickets, ticket]);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                //TODO: throw err notification.
+            });
+    }, []);
+
+    const handleCancelRegister = (id: number, code: string) => {
+        let result = cancelRegistration("mass", id, code);
+        //TODO: Show cancel action result
     }
 
     //Load register history
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
+            { tickets.map((ticket) => (
+                <TicketCard ticket={ticket} handleCancelRegister={handleCancelRegister} />
+            ))}
         </Container>
     );
 };

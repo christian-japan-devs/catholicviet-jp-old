@@ -198,7 +198,7 @@ class MassRegister(viewsets.ViewSet):
     }
     permission_classes = (IsAuthenticated,)
 
-    # /api/massregister/  get user's registration history.
+    # /api/massregister  get user's registration history.
     def getlist(self, request, *args, **kwargs):
         try:
             request_user = request.user
