@@ -22,7 +22,7 @@ import { MonthlyTopic, Props as TopicProps } from '../Sections/MonthlyTopic';
 import { MassRegsiter, MassRegisterCard } from '../../components/Card/MassRegisterCard';
 import { Ticket, TicketCard } from '../../components/Card/TicketCard';
 //Utils
-import { apiDomain, monthlyTopicEnd, getListMassURL, massRegisterCreateURL } from '../../utils/apiEndpoint';
+import { apiDomain, monthlyTopicEnd, getListMassURL, massRegisterURL } from '../../utils/apiEndpoint';
 import { toDate, getHeaderWithAuthentication, cancelRegistration } from '../../utils/utils';
 import { LINK_LOGIN, LINK_CHU_DE_CHI_TIET, LINK_MASS_REGISTER } from '../../utils/constants';
 //App context
@@ -247,7 +247,7 @@ const RegisterPage: React.FC = () => {
         } else {
             if (state.auth.isAuthenticated) {
                 let headers = getHeaderWithAuthentication();
-                fetch(massRegisterCreateURL, {
+                fetch(massRegisterURL, {
                     method: 'post',
                     headers: headers,
                     body: JSON.stringify({

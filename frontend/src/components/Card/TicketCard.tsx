@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     card: {
         maxWidth: '320px',
         textAlign: 'center',
+        marginTop: '12px',
     },
     seatNo: {
         margin: '12px',
