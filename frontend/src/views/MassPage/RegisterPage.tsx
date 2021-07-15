@@ -21,6 +21,7 @@ import Layout from '../Layout';
 import { MonthlyTopic, Props as TopicProps } from '../Sections/MonthlyTopic';
 import { MassRegsiter, MassRegisterCard } from '../../components/Card/MassRegisterCard';
 import { Ticket, TicketCard } from '../../components/Card/TicketCard';
+import { Notification, NotificationDialog } from '../../components/Notification';
 //Utils
 import { apiDomain, monthlyTopicEnd, getListMassURL, massRegisterURL } from '../../utils/apiEndpoint';
 import { toDate, getHeaderWithAuthentication, cancelRegistration } from '../../utils/utils';
@@ -111,6 +112,12 @@ type registerForm = {
 const RegisterPage: React.FC = () => {
     const classes = useStyles();
 
+    let initNoti: Notification = {
+        title: '',
+        content: '',
+        type: ''
+    }
+
     let initTopic: TopicProps = {
         topic: {
             id: 1,
@@ -148,6 +155,8 @@ const RegisterPage: React.FC = () => {
     const [openDialog, setOpenDialog] = React.useState(false);
     const [registerFormValue, setRegisterFormValue] = React.useState(initRegisterForm);
     const [redirectToLogin, setRedirectToLogin] = React.useState(false);
+    const [notiDialog, setNotiDialog] = React.useState(false);
+    const [notification, setNotification] = React.useState(initNoti);
 
     React.useEffect(() => {
 
@@ -262,20 +271,30 @@ const RegisterPage: React.FC = () => {
                         throw res;
                     })
                     .then((res) => {
-                        const ticket: Ticket = {
-                            id: res.id,
-                            title: res.registration_mass.mass_title,
-                            date: res.registration_date,
-                            time: res.registration_mass.mass_time,
-                            name: res.registration_user,
-                            seat: res.registration_seat,
-                            code: res.registration_confirm_code,
-                            confirm: res.registration_confirm_status,
-                            status: res.registration_status,
-                            approve: res.registration_approve_status
+                        if (res.status === "ok") {
+                            const ticket: Ticket = {
+                                id: res.data.id,
+                                title: res.data.registration_mass.mass_title,
+                                date: res.data.registration_date,
+                                time: res.data.registration_mass.mass_time,
+                                name: res.data.registration_user,
+                                seat: res.data.registration_seat,
+                                code: res.data.registration_confirm_code,
+                                confirm: res.data.registration_confirm_status,
+                                status: res.data.registration_status,
+                                approve: res.data.registration_approve_status
+                            }
+                            setTicket(ticket);
+                        } else {
+                            setOpenDialog(false);
+                            let noti: Notification = {
+                                title: "Kết quả đăng ký",
+                                content: res.content,
+                                type: "warning"
+                            }
+                            setNotification(noti);
+                            setNotiDialog(true);
                         }
-                        setTicket(ticket);
-                        //setOpenDialog(false);
                     })
                     .catch((err) => {
                         //TODO: throw err notification.
@@ -402,6 +421,7 @@ const RegisterPage: React.FC = () => {
                             <Button color='primary' onClick={() => setOpenDialog(false)}>Đóng</Button>
                         </DialogActions>
                     </Dialog>
+                    <NotificationDialog notification={notification} onOpen={notiDialog} onCloseDetail={() => setNotiDialog(false)} />
                 </Container>
             </Layout>
         );

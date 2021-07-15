@@ -226,12 +226,20 @@ class MassRegister(viewsets.ViewSet):
             user_condition = request.data[USERCONDITION]
             # get single register of a Mass for an User
             register = singleRegister(mass_id, user_condition, request_user)
+            result = {
+                STATUS: register[STATUS],
+                DATA: "",
+                MESSAGE: register[CONTENT]
+            }
             # status here maybe approved or waiting
-            if register[STATUS] != ERROR:
+            if register[STATUS] == OK:
                 serializer = RegistrationSerializer(register[RESULT])
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:                # Register was error
-                return Response(register, status=status.HTTP_400_BAD_REQUEST)
+                result[DATA] = serializer.data
+                return Response(result, status=status.HTTP_200_OK)
+            elif register[STATUS] == WARNING:
+                return Response(register, status=status.HTTP_200_OK)
+            else:  # Register has error
+                return Response(register, status=status.HTTP_204_NO_CONTENT)
         except:
             print("End get user registration error: ", sys.exc_info()[0])
             return Response({ERROR: "System error"}, status=status.HTTP_404_NOT_FOUND)
