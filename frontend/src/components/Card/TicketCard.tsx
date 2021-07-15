@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     card: {
         maxWidth: '320px',
         textAlign: 'center',
+        marginTop: '12px',
     },
     seatNo: {
         margin: '12px',
@@ -75,7 +76,7 @@ export const TicketCard: React.FC<props> = ({ ticket, handleCancelRegister }) =>
                 title={ticket.title}
                 subheader={ticket.time + " ngày " + toDate(ticket.date)}
             />
-            {ticket.confirm === "CF" ?
+            { (ticket.confirm === "CF" && ticket.status === "A") ?
                 <QRCode
                     value={ticket.code + ":" + ticket.id}
                     size={300}
@@ -106,6 +107,16 @@ export const TicketCard: React.FC<props> = ({ ticket, handleCancelRegister }) =>
                             </div>
                         </div>
                         : null
+                }
+                {
+                    ticket.status === "W" ?
+                        <div>Đang chờ duyệt</div> :
+                        ticket.status === "C" ?
+                            <div>Đã huỷ</div> :
+                            ticket.status === "D" ?
+                                <div>Bị từ chối</div> :
+                                ticket.status === "P" ?
+                                    <div>Đã tham dự</div> : null
                 }
             </CardContent>
             <CardActions className={classes.footer}>

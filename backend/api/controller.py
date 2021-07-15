@@ -322,7 +322,7 @@ def checkUserRegistered(p_user, p_relation, p_mass):
         for registration in registrations:
             if registration:
                 if registration.registration_status == APPROVED or registration.registration_status == WAITING:
-                    result[STATUS] = ERROR
+                    result[STATUS] = WARNING
                     result[RESULT] = REGISTERED
                     result[CONTENT] = MESS_REGISTER_0003
                     return result
@@ -583,9 +583,7 @@ def singleRegister(mass_id, user_condi, user):
     # Check if user have registered for this Mass (or previous Mass in VietNamese)
     check_result = checkUserRegistered(user, None, mass)
     if check_result[RESULT] == REGISTERED or check_result[STATUS] == ERROR:
-        result[CONTENT] = check_result[CONTENT]
-        # result[REDIRECT]=REGISTER_MYRE
-        return result
+        return check_result
         # messages.warning(request,check_result[CONTENT])
         # return redirect(REGISTER_MYRE)
 
@@ -607,7 +605,6 @@ def singleRegister(mass_id, user_condi, user):
         print("registration watting..")
         result[CONTENT] = check_result[CONTENT]
         result["object"] = registration
-        result[REDIRECT] = REGISTER_MYRE
         return result
     mass_schedule = mass.mass_schedule
     seatContent = getSeatNo(users_profile.profile_age,
