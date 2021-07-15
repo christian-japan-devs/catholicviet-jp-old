@@ -144,7 +144,7 @@ const NewFeedDetail: React.FC<props> = ({ newFeed, openDetail, onCloseDetail }) 
                 <Typography variant='subtitle1' color='textSecondary'>
                     {newFeed.date}
                 </Typography>
-                <div dangerouslySetInnerHTML={newFeed.content}></div>
+                <div style={{ fontSize: 16 }} dangerouslySetInnerHTML={newFeed.content}></div>
             </DialogContent>
             <DialogActions className={classes.modalFooter}>
                 <Button color="transparent" simple size="sm" href="">

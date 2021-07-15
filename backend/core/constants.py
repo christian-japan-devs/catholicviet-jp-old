@@ -58,6 +58,8 @@ RESULT = "result"
 CONTENT = "content"
 BLANK = ""
 REDIRECT = "redirect"
+DATA = "data"
+MESSAGE = "message"
 
 # Booking status
 WAITING = "W"

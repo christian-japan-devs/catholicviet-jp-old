@@ -30,6 +30,6 @@ export const churchDetailURL = (id: number) => `${endpoint}/church/${id}/detail`
 export const getListMassURL = `${endpoint}/getmass`
 export const myRegisterByChurchIdURL = (churchId: number) =>
   `${endpoint}/massregister/?churchId=${churchId}`;
-export const massRegisterCreateURL = `${endpoint}/massregister`;
+export const massRegisterURL = `${endpoint}/massregister`;
 export const registerUpdateURL = (id: number) =>
   `${endpoint}/massregister/${id}/update`;
